@@ -1,0 +1,6 @@
+echo "hello world" > test OR  echo "hello world" 1> test
+echo "hello world" >> test OR  echo "hello world" 1>> test
+cat < test OR cat 0< test
+ls libft ABC 2> test ==> Redirect msgerorr(fd ==> 2) to file;
+ls libft ABC 1> test 2>&1
+ls /tmp/ ABC 2>&1 | less

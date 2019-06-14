@@ -1,0 +1,6 @@
+unsetenv TERM SEG
+/bin/echo SEG
+
+0 : ls
+1 : who
+3 : ls -la
