@@ -6,7 +6,7 @@
 /*   By: mfilahi <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/04 21:51:41 by mfilahi           #+#    #+#             */
-/*   Updated: 2019/05/14 17:12:58 by mfilahi          ###   ########.fr       */
+/*   Updated: 2019/06/14 15:54:11 by aariss           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define MINISHELL_H
 # include "libft.h"
 # include "line_edition.h"
+# include "parsin.h"
 # include <unistd.h>
 # include <stdlib.h>
 # include <sys/wait.h>
