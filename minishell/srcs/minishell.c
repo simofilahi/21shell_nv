@@ -6,7 +6,7 @@
 /*   By: mfilahi <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/04 19:53:19 by mfilahi           #+#    #+#             */
-/*   Updated: 2019/05/14 17:22:40 by mfilahi          ###   ########.fr       */
+/*   Updated: 2019/06/14 15:49:38 by aariss           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -181,10 +181,10 @@ int		recall_readline(char *line, int *flag)
 	return (1);
 }
 
-char **ft_parsing(char *path, int fd ,int index)
+t__mc	*ft_parsing(char *path, int fd ,int index)
 {
 	char	*line;
-	char	**tab;
+	t__mc	*lst;
 	int 	flag;
 	char	*tmp;
 	char	*s;
@@ -207,17 +207,17 @@ char **ft_parsing(char *path, int fd ,int index)
 			break;
 	}
 	keephistory(line, fd, index);
-	tab = ft_strsplit(line, ';');
+	lst = mc_maker(line);
 	free(line);
-	return (tab);
+	return (lst);
 }
 
 
 void	minishell(t_env **head_ref)
 {
-	char		**tab;
-	char		**command;
-	int			i;
+	t__mc		*lst;
+	//char		**command;
+	//int			i;
 	int 		fd;
 	int			index;
 	char		*homepath;
@@ -233,14 +233,17 @@ void	minishell(t_env **head_ref)
 	while ("21sh")
 	{
 		ft_putstr_fd("\033[1;34m$> \033[0m", 1);
-		tab = ft_parsing(homepath, fd, index);
-		i = 0;
-		while (tab[i])
+		lst = ft_parsing(homepath, fd, index);
+		while (lst)
 		{
-			command = ft_strsplit(tab[i++], ' ');
-			_minishell(command, head_ref);
+			//command = ft_strsplit(tab[i++], ' ');
+			_minishell(lst->cmd, head_ref);
+			lst = lst->next;
 		}
-		ft_free2d(tab);
+		/*
+		 *		ft_free2d(tab);
+		 *		Hadi khassha tfreeya list li tsawbat machi tab li kayn ;)
+		 */
 		index++;
 	}
 }

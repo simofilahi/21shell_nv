@@ -6,7 +6,7 @@
 #    By: mfilahi <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/05/03 16:07:14 by mfilahi           #+#    #+#              #
-#    Updated: 2019/05/14 16:42:22 by mfilahi          ###   ########.fr        #
+#    Updated: 2019/06/14 16:02:48 by aariss           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,6 +16,7 @@ OBJS_DIR = objs
 LIBFT_HEADER = -I libft/
 SRCS_SH_DIR = minishell/srcs
 SRCS_RL_DIR = readline/srcs
+SRCS_PR_DIR = minishell/srcs/parsin
 INCS_RL_DIR = -I readline/includes/  $(LIBFT_HEADER)
 INCS_SH_DIR = -I minishell/includes/ $(INCS_RL_DIR)
 LIBS_DIR = libft/libft.a -ltermcap
@@ -43,8 +44,13 @@ SRCS_SH = $(SRCS_SH_DIR)/execute.c \
 		  $(SRCS_SH_DIR)/own_cmds.c \
 		  $(SRCS_SH_DIR)/srcs.c \
 
+SRCS_PR = $(SRCS_PR_DIR)/extras.c \
+		  $(SRCS_PR_DIR)/get.c \
+		  $(SRCS_PR_DIR)/parsin.c
+
 OBJECT_RL = $(patsubst %, $(OBJS_DIR)/%, $(notdir $(SRCS_RL:.c=.o)))
 OBJECT_SH = $(patsubst %, $(OBJS_DIR)/%, $(notdir $(SRCS_SH:.c=.o)))
+OBJECT_PR = $(patsubst %, $(OBJS_DIR)/%, $(notdir $(SRCS_PR:.c=.o)))
 
 CC = gcc
 CFLAGS = -Wall -Werror -Wextra
@@ -57,10 +63,10 @@ ED = \033[0m
 
 all: $(NAME)
 
-$(NAME): $(OBJS_DIR) $(OBJECT_RL) $(OBJECT_SH)
+$(NAME): $(OBJS_DIR) $(OBJECT_RL) $(OBJECT_SH) $(OBJECT_PR)
 	@make -C libft/
 	@echo "$(BoldBlue)Linking...$(ED)"
-	@$(CC) $(OBJECT_RL) $(OBJECT_SH) $(LIBS_DIR) -o $(NAME)
+	@$(CC) $(OBJECT_RL) $(OBJECT_SH) $(OBJECT_PR) $(LIBS_DIR) -o $(NAME)
 	@echo "$(BoldGreen)                                                  ";
 	@echo '      ___           ___           ___           ___       ___ ';
 	@echo '     /\  \         /\__\         /\  \         /\__\     /\__\';
@@ -87,6 +93,9 @@ $(OBJS_DIR)/%.o : $(SRCS_SH_DIR)/%.c
 	@echo "$(BoldYellow)Compiling 21shell Srcs...$(ED)"
 	@$(CC) $(CFLAGS) $(INCS_SH_DIR) -c $< -o $@
 
+$(OBJS_DIR)/%.o : $(SRCS_PR_DIR)/%.c
+	@echo "$(BoldYellow)Compiling 21shell Srcs...$(ED)"
+	@$(CC) $(CFLAGS) $(INCS_SH_DIR) -c $< -o $@
 clean:
 	@echo "$(BoldRed)Remove Libft binaries...$(ED)"
 	@make -C libft/ clean
