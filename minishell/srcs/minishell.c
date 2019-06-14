@@ -174,7 +174,7 @@ int		recall_readline(char *line, int *flag)
 		else if (!metacharacters(line[index]) && ft_isprint(line[index]))
 		{
 			if (c || d)
-			 	*flag = 0;
+			 	*flag = 0;		 
 		}
 		index++;
 	}
