@@ -105,13 +105,20 @@ void	keephistory(char *line, int fd, int index)
 	write(fd, "\n", 1);
 }
 
-int 	metacharacters(char ch)
+int 	_metacharacters(char ch, int flag)
 {
-	if (ch == SQUOTE ||\
-		ch == DQUOTE ||\
-		ch == BACKSLACH ||\
-		ch == PIPE)
-		return (1);
+	if (flag)
+	{
+		if (ch == SQUOTE ||\
+			ch == DQUOTE)
+			return (1);
+	}
+	else
+	{
+		if (ch == BACKSLACH ||\
+			ch == PIPE)
+			return (1);
+	}
 	return (0);
 }
 
@@ -125,7 +132,7 @@ int		beforepipe(char *line, int index)
 		{
 			j = 0;
 			while (j < index)
-				if (!ft_isspace(line[j++]) && !metacharacters(line[j++]))
+				if (!ft_isspace(line[j++]))
 					return (1);
 		}
 		return (0);
@@ -146,35 +153,43 @@ int		recall_readline(char *line, int *flag)
 	index = 0;
 	while (line[index])
 	{
-		if (metacharacters(line[index]) && (!a && !b))
+		if (_metacharacters(line[index], 1) && (!a && !b))
 		{
 			if (line[index] == SQUOTE)
 				a = 1;
 			else if (line[index] == DQUOTE)
 				b = 1;
+			if (a || b)
+				*flag = 1;
+		}
+		else if (_metacharacters(line[index], 0) && (!c && !d) && (!a && !b))
+		{
 			if (line[index] == BACKSLACH)
 				c = 1;
 			else if (line[index] == PIPE && beforepipe(line, index))
 				d = 1;
-			if (a || b || c || d)
+			if (c || d)
 				*flag = 1;
 		}
-		else if (metacharacters(line[index]) && (a || b))
+		else if (_metacharacters(line[index], 1) && (a || b))
 		{
 			if ((line[index] == SQUOTE && a) ||\
 				 (line[index] == DQUOTE && line[index - 1] != BACKSLACH && b))
 				*flag = 0;
 		}
-		else if (metacharacters(line[index]) && (c || d))
+		else if (_metacharacters(line[index], 0) && (c || d))
 		{
 			if ((c && line[index - 1] == BACKSLACH && line[index] == PIPE) ||\
 				 (d && line[index - 1] == PIPE && line[index] == BACKSLACH))
 				*flag = 0;
 		}
-		else if (!metacharacters(line[index]) && ft_isprint(line[index]))
+		else if (!_metacharacters(line[index], 0) && ft_isprint(line[index]))
 		{
-			if (c || d)
-			 	*flag = 0;		 
+			if (c && (!a && !b))
+			 	*flag = 0;
+			if (d && (!a && !b))
+				*flag = 0;
+			//if (d && beforepipe(line, index))
 		}
 		index++;
 	}
@@ -195,6 +210,7 @@ t__mc	*ft_parsing(char *path, int fd ,int index)
 	{
 		if (flag)
 		{
+			ft_putchar_fd('\n', 1);
 			ft_putstr_fd("\033[1;34m...\033[0m", 1);
 			tmp = ft_strdup(line);
 			ft_strdel(&line);
@@ -216,8 +232,6 @@ t__mc	*ft_parsing(char *path, int fd ,int index)
 void	minishell(t_env **head_ref)
 {
 	t__mc		*lst;
-	//char		**command;
-	//int			i;
 	int 		fd;
 	int			index;
 	char		*homepath;
@@ -234,9 +248,9 @@ void	minishell(t_env **head_ref)
 	{
 		ft_putstr_fd("\033[1;34m$> \033[0m", 1);
 		lst = ft_parsing(homepath, fd, index);
+		ft_putchar_fd('\n', 1);
 		while (lst)
 		{
-			//command = ft_strsplit(tab[i++], ' ');
 			_minishell(lst->cmd, head_ref);
 			lst = lst->next;
 		}

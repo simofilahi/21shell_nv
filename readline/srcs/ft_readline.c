@@ -94,7 +94,7 @@ void	get_input(t_package *p)
 		ft_bzero(p->buffer, BUFFER_SIZE);
 	}
 	end_key(p);
-	ft_putchar_fd('\n', 1);
+	//ft_putchar_fd('\n', 1);
 }
 
 char	*ft_readline(char *path, int ll_index)
@@ -107,7 +107,7 @@ char	*ft_readline(char *path, int ll_index)
 	termcap_config();
 	get_input(p);
 	normal_mode();
-	line = ft_strdup(p->line);
+	line = ft_strjoin(p->line, "\n");
 	free(p->line);
 	free(p->holdcopy);
 	free(p);
