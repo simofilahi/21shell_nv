@@ -138,6 +138,10 @@ int		beforepipe(char *line, int index)
 		return (0);
 }
 
+/*
+** recall readline in cases where qoutes or backslach or pipe found;
+*/
+
 int		recall_readline(char *line, int *flag)
 {
 	int		a;
@@ -155,9 +159,9 @@ int		recall_readline(char *line, int *flag)
 	{
 		if (_metacharacters(line[index], 1) && (!a && !b))
 		{
-			if (line[index] == SQUOTE && (!_metacharacters(line[index - 1], 0)))
+			if (line[index] == SQUOTE && ((!_metacharacters(line[index - 1], 0)) || d))
 				a = 1;
-			else if (line[index] == DQUOTE && (!_metacharacters(line[index - 1], 0)))
+			else if (line[index] == DQUOTE && ((!_metacharacters(line[index - 1], 0)) || d))
 				b = 1;
 			if (a || b)
 				*flag = 1;
@@ -166,7 +170,7 @@ int		recall_readline(char *line, int *flag)
 		{
 			if (line[index] == BACKSLACH && !_metacharacters(line[index + 1], 1))
 				c = 1;
-			else if (line[index] == PIPE && beforepipe(line, index) && !_metacharacters(line[index + 1], 1))
+			else if (line[index] == PIPE && beforepipe(line, index))
 				d = 1;
 			if (c || d)
 				*flag = 1;
