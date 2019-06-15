@@ -102,7 +102,7 @@ void	keephistory(char *line, int fd, int index)
 	tmp = ft_strjoin(ret, ":");
 	historyline = ft_strjoin(tmp, line);
 	write(fd, historyline, ft_strlen(historyline));
-	write(fd, "\n", 1);
+	//write(fd, "\n", 1);
 }
 
 int 	_metacharacters(char ch, int flag)
@@ -155,18 +155,18 @@ int		recall_readline(char *line, int *flag)
 	{
 		if (_metacharacters(line[index], 1) && (!a && !b))
 		{
-			if (line[index] == SQUOTE)
+			if (line[index] == SQUOTE && (!_metacharacters(line[index - 1], 0)))
 				a = 1;
-			else if (line[index] == DQUOTE)
+			else if (line[index] == DQUOTE && (!_metacharacters(line[index - 1], 0)))
 				b = 1;
 			if (a || b)
 				*flag = 1;
 		}
 		else if (_metacharacters(line[index], 0) && (!c && !d) && (!a && !b))
 		{
-			if (line[index] == BACKSLACH)
+			if (line[index] == BACKSLACH && !_metacharacters(line[index + 1], 1))
 				c = 1;
-			else if (line[index] == PIPE && beforepipe(line, index))
+			else if (line[index] == PIPE && beforepipe(line, index) && !_metacharacters(line[index + 1], 1))
 				d = 1;
 			if (c || d)
 				*flag = 1;
@@ -185,11 +185,8 @@ int		recall_readline(char *line, int *flag)
 		}
 		else if (!_metacharacters(line[index], 0) && ft_isprint(line[index]))
 		{
-			if (c && (!a && !b))
+			if ((c && (!a && !b)) || (d && (!a && !b)))
 			 	*flag = 0;
-			if (d && (!a && !b))
-				*flag = 0;
-			//if (d && beforepipe(line, index))
 		}
 		index++;
 	}
