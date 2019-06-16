@@ -64,6 +64,10 @@ void	child_pid(char **command, t_env **head_ref)
 	g_signal_num = 0;
 }
 
+/*
+** call functoin of (builtin command or system command);
+*/
+
 void	_minishell(char **command, t_env **head_ref)
 {
 	int		j;
@@ -92,6 +96,10 @@ void	_minishell(char **command, t_env **head_ref)
 	ft_free2d(command);
 }
 
+/* 
+**store line or mutli line into history file
+*/
+
 void	keephistory(char *line, int fd, int index)
 {
 	char	*ret;
@@ -102,8 +110,15 @@ void	keephistory(char *line, int fd, int index)
 	tmp = ft_strjoin(ret, ":");
 	historyline = ft_strjoin(tmp, line);
 	write(fd, historyline, ft_strlen(historyline));
-	//write(fd, "\n", 1);
+	ft_strdel(&ret);
+	ft_strdel(&tmp);
+	ft_strdel(&historyline);
 }
+
+
+/*
+** check in line if any of metacharacters found;
+*/
 
 int 	_metacharacters(char ch, int flag)
 {
@@ -121,6 +136,11 @@ int 	_metacharacters(char ch, int flag)
 	}
 	return (0);
 }
+
+
+/*
+** - check before token pipe if there is any characters;
+*/
 
 int		beforepipe(char *line, int index)
 {
@@ -179,7 +199,11 @@ int		recall_readline(char *line, int *flag)
 		{
 			if ((line[index] == SQUOTE && a) ||\
 				 (line[index] == DQUOTE && line[index - 1] != BACKSLACH && b))
-				*flag = 0;
+				{
+					a = 0;
+					b = 0;
+					*flag = 0;
+				}
 		}
 		else if (_metacharacters(line[index], 0) && (c || d))
 		{
@@ -196,6 +220,13 @@ int		recall_readline(char *line, int *flag)
 	}
 	return (1);
 }
+
+/*
+** - receive line from readline;
+** - call recal_readline if quotes not complete or backslach or pipe found;
+** - keepline into history line ;
+** - send line to parser function; 
+*/
 
 t__mc	*ft_parsing(char *path, int fd ,int index)
 {
@@ -229,6 +260,11 @@ t__mc	*ft_parsing(char *path, int fd ,int index)
 	return (lst);
 }
 
+/*
+** create history file;
+** made infinte loop;
+** get parsing line && and send it to execute;
+*/
 
 void	minishell(t_env **head_ref)
 {
@@ -262,6 +298,11 @@ void	minishell(t_env **head_ref)
 		index++;
 	}
 }
+
+/*
+** store copy of env;
+** call minishell funciotn;
+*/
 
 int		main(int argc, char **argv, char **envp)
 {

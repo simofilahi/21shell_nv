@@ -24,7 +24,9 @@ void	change_pos(t_package *p, int check)
 	else
 		flag = increment_row(p, 1);
 	tputs(RC, 1, my_putchar);
-	if (flag > 0 || (flag_1 > 0 && check))
+	if (flag > 0 ||\
+		(flag_1 > 0 && check) ||\
+		(flag_1 > 0 && p->line[p->index] == '\n'))
 		move_cursor(KEYUP);
 	if (p->posx == p->w.ws_col || p->line[p->index] == '\n')
 	{
@@ -81,4 +83,3 @@ void	print_readablechar(t_package *p)
 				+ p->init_y;
 	p->last_y = last_line;
 }
-
