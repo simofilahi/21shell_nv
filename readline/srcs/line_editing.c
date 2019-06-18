@@ -103,3 +103,4 @@ void paste_of_mouse(t_package *p)
 	}
 	free(string);
 }
+

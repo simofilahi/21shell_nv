@@ -29,10 +29,7 @@ char	*dollar_handle_simple(char *toto, char *line, int *i, t_env *env)
 		}
 	}
 	else
-	{
-		ft_putendl("tata");
 		toto = ft_joinchar(toto, '$');
-	}
 	return (toto);
 }
 
@@ -208,10 +205,7 @@ char	*parsin(char *line, t_env *env)
 				i = i + t;
 			}
 			else if (line[i] == '$' && ft_strlen(line + i + 1) > 1)/*			HERE TOO*/
-			{
-				ft_putnbr(ft_strlen(line + i + 1));
 				toto = dollar_handle_simple(toto, line, &i, env);
-			}
 			else if (line[i] == '~')
 				toto = ft_strjoin(toto, get_var("HOME=", &env));
 			else

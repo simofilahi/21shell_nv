@@ -118,23 +118,22 @@ char	*equal_actions(t_env **head_ref, char *s1, char *s2, int flag)
 	return (ft_strdup(s1));
 }
 
-void	add_node(t_env **head_ref, char *s1, char *s2, int flag)
+void	add_node(t_env **head_ref, char *s, int flag)
 {
 	t_env	*new_node;
 	t_env	*current;
-	char	*s;
 	int		len;
 
-	s = equal_actions(head_ref, s1, s2, flag);
 	if (!(new_node = malloc(sizeof(t_env))))
 		return ;
-	len = ft_strlen(s);
-	if (s[len - 1] == '=' && !s[len])
+	if (!flag)
+	{
 		new_node->var = ft_strdup(s);
+		new_node->value = NULL;
+	}
 	else 
 	{
 		len = len_of_var(s);
-		free(new_node->var);
 		new_node->var = ft_strsub(s, 0, len);
 		new_node->value = ft_strdup(s + len);
 	}

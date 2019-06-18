@@ -34,7 +34,7 @@ void	print_env(t_env **head_ref)
 	current = *head_ref;
 	while (current)
 	{
-		if(current->var)
+		if (current->var)
 			ft_putstr_fd(current->var, 1);
 		if (current->value)
 			ft_putstr_fd(current->value, 1);
@@ -60,23 +60,25 @@ char	*get_var(char *deli, t_env **head_ref)
 void	swap(t_env **head_ref, char *path)
 {
 	t_env	*current;
-	char	*var;
+	char	*pwdvar;
 
-	if (!(var = get_var("PWD=", head_ref)))
+	if (!(get_var("OLDPWD=", head_ref)))
+			return ;
+	else if (!(pwdvar = get_var("PWD=", head_ref)))
 			return ;
 	current = *head_ref;
 	while (current)
 	{
 		if (ft_strncmp("OLDPWD=", current->var, 7) == 0)
 		{
-			free(current->var);
-			current->var = ft_strjoin("OLDPWD=", var);
-			free(var);
+			ft_strdel(&current->value);
+			current->value = ft_strdup(pwdvar);
+			ft_strdel(&pwdvar);
 		}
 		if (ft_strncmp("PWD=", current->var, 4) == 0)
 		{
-			free(current->var);
-			current->var = ft_strjoin("PWD=", path);
+			ft_strdel(&current->value);
+			current->value = ft_strdup(path);
 		}
 		current = current->next;
 	}

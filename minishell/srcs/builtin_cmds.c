@@ -74,11 +74,20 @@ void	which_cmd(char **command, t_env **head_ref)
 	free(tab);
 }
 
-void setenv_cmd(char **ptrcmd, t_env **head_ref)
+int specialchar(char *s)
+{
+	while (*s)
+		if (!ft_isalpha(*s++))
+			return (1);
+	return (0);
+}
+
+int  setenv_cmd(char *arg, char *sarg, t_env **head_ref, int flag)
 {
 	char *tmp;
+	char *s;
 
-	if (ptrcmd[1] == NULL)
+	/*if (ptrcmd[1] == NULL)
 		print_env(head_ref);
 	else if (ptrcmd[1][0] == '=')
 	{
@@ -99,10 +108,32 @@ void setenv_cmd(char **ptrcmd, t_env **head_ref)
 			ptrcmd[2][(ft_strlen(ptrcmd[2]) - 1)] != '=')
 			add_node(head_ref, ptrcmd[1] ,ptrcmd[2], 0);
 	else
-		_env_gerror();
+		_env_gerror();*/
+	tmp = NULL;
+	if (specialchar(arg))
+	{
+		ft_putendl_fd("setenv: Variable name must contain alphanumeric characters.", 2);
+		return (0);
+	}
+	else
+	{
+		s = ft_strjoin(arg, "=");
+		del_node(head_ref, s);
+		tmp = s;
+	}
+	if (flag)
+	{
+		s = ft_strjoin(tmp, sarg);
+		add_node(head_ref, s, flag);
+	}
+	else
+		add_node(head_ref, s, flag);
+	if (tmp)
+		ft_strdel(&tmp);
+	return (1);
 }
 
-void	builtin_cmds(char *argc, int *j, t_env **head_ref)
+/*void	builtin_cmds(char *argc, int *j,t_env **head_ref)
 {
 	int i;
 
@@ -115,14 +146,14 @@ void	builtin_cmds(char *argc, int *j, t_env **head_ref)
 		del_node(head_ref, argc);
 	else if(*j == 5)
 		print_env(head_ref);
-/*	else if(*j == 6) 
-		which_cmd(argc, head_ref);*/
+	else if(*j == 6) 
+		which_cmd(argc, head_ref);
 	else if (*j == 7)
 	{
 		free_list(head_ref);
 		exit(0);
 	}
-}
+}*/
 
 int		own_commands(char *cmd)
 {
