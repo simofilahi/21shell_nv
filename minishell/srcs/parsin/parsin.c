@@ -6,11 +6,60 @@
 /*   By: aariss <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/13 11:52:21 by aariss            #+#    #+#             */
-/*   Updated: 2019/06/14 15:55:55 by aariss           ###   ########.fr       */
+/*   Updated: 2019/06/18 10:03:53 by aariss           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parsin.h"
+
+char	*dollar_handle_simple(char *toto, char *line, int *i, t_env *env)
+{
+	(*i)++;
+	if (ft_strlen(line + (*i)) != 0)
+	{
+		while (env)
+		{
+			if (ft_strncmp(line + *i, env->var, ft_strlen(env->var) - 1) == 0)
+			{
+				toto = ft_strjoin(toto, env->value);
+				(*i) = (*i) + (ft_strlen(env->var) - 2);
+				break ;
+			}
+			env = env->next;
+		}
+	}
+	else
+	{
+		ft_putendl("tata");
+		toto = ft_joinchar(toto, '$');
+	}
+	return (toto);
+}
+
+char	*dollar_handle_quoted(char *toto, char *line, int *i, int quote, t_env *env)
+{
+	if (quote == 39)
+	{
+		toto = ft_joinchar(toto, '$');
+		return (toto);
+	}
+	else if (quote == '"')
+	{ 
+		/*  MAY BE MORE USEFULL TO CALL THE FUNCTION dollar_handle_simple HERE INSTEAD...JUST A THOUGHT  */
+		(*i)++;
+		while (env)
+		{
+			if (ft_strncmp(line + *i, env->var, ft_strlen(env->var) - 1) == 0)
+			{
+				toto = ft_strjoin(toto, env->value);
+				(*i) = (*i) + (ft_strlen(env->var) - 2);
+				break ;
+			}
+			env = env->next;
+		}
+	}
+	return (toto);
+}
 
 char	*skip_quote(char *line)
 {
@@ -109,16 +158,18 @@ char	*skip_char(char *toto, char *line, int *i, int definer, int quote)
 	return (toto);
 }
 
-char	*parsin(char *line)
+char	*parsin(char *line, t_env *env)
 {
-	int		i;
-	int		keeper;
-	int		t;
-	char	*toto;
+	int			i;
+	int			keeper;
+	int			t;
+	char		*toto;
+	t_defined	*lst;
 
 	i = 0;
 	t = 0;
 	toto = ft_strdup("");
+	lst = init_cases();
 	if (line)
 	{
 		while (line[i])
@@ -134,13 +185,15 @@ char	*parsin(char *line)
 				{
 					if (line[i] == 92)
 						toto = skip_char(toto,line, &i, 1, keeper);
+					else if (line[i] == '$' && ft_strlen(line + i + 1) > 2) /*  		FIX THE SINGLE $ ISSUE*/
+						toto = dollar_handle_quoted(toto, line, &i, keeper, env);
 					else
 						toto = ft_joinchar(toto, line[i]);
 					i++;
 				}
 				toto = ft_joinchar(toto, line[i]);
 			}
-			else if (ft_istoken(line[i]))
+			else if (ft_istoken(line[i]) && is_one_of_them(line + i, lst))
 			{
 				toto = ft_joinchar(toto, -1);
 				toto = skip_token(toto, line + i, &t);
@@ -154,6 +207,13 @@ char	*parsin(char *line)
 				toto = ft_joinchar(toto, -3);
 				i = i + t;
 			}
+			else if (line[i] == '$' && ft_strlen(line + i + 1) > 1)/*			HERE TOO*/
+			{
+				ft_putnbr(ft_strlen(line + i + 1));
+				toto = dollar_handle_simple(toto, line, &i, env);
+			}
+			else if (line[i] == '~')
+				toto = ft_strjoin(toto, get_var("HOME=", &env));
 			else
 				toto = ft_joinchar(toto, line[i]);
 			i++;
@@ -189,13 +249,15 @@ t__mc	*mc_lst(char **mc)
 	return (head);
 }
 
-t__mc	*mc_maker(char *line)
+t__mc	*mc_maker(char *line, t_env *env)
 {
 	char	**slice;
 	char	*parsed;
 	t__mc	*lst;
 
-	parsed = parsin(line);
+	parsed = parsin(line, env);
+	if (parsed[ft_strlen(parsed)] == '\n')
+		parsed[ft_strlen(parsed)] = '\0';
 	slice = ft_strsplit(parsed, -3);
 	lst = mc_lst(slice);
 	return (lst);

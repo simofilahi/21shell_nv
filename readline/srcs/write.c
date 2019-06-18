@@ -12,6 +12,12 @@
 
 #include "line_edition.h"
 
+/*
+** - increment row (that mean when terminal scrolling in last line);
+** - recover position of cursor after saving in print_readablechar;
+** - if posx equal to (p->w.ws_col ==> (last column in line)) move cursor down one line and increment posy (that meaning row);
+*/
+
 void	change_pos(t_package *p, int check)
 {
 	int	flag;
@@ -37,6 +43,10 @@ void	change_pos(t_package *p, int check)
 	else
 		move_cursor(RIGHTKEY);
 }
+
+/* 
+** print character by character and check if new line is found;
+*/
 
 int		print(t_package *p, int index, int col)
 {
@@ -64,6 +74,17 @@ int		print(t_package *p, int index, int col)
 	}
 	return (check);
 }
+
+/*
+** - insert a character into line by index;
+** - save position of cursor;
+** - clear screen;
+** - make cursor invisible;
+** - print line by call print function; 
+** - change position of cursor after print line;
+** - make cursor visible;
+** - calcul last_line index;
+*/
 
 void	print_readablechar(t_package *p)
 {

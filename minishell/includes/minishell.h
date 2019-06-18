@@ -6,7 +6,7 @@
 /*   By: mfilahi <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/04 21:51:41 by mfilahi           #+#    #+#             */
-/*   Updated: 2019/06/14 15:54:11 by aariss           ###   ########.fr       */
+/*   Updated: 2019/06/18 10:11:16 by aariss           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,41 +34,61 @@
 
 int				g_signal_num;
 
-typedef struct	s_env
+typedef struct	s_env t_env;
+struct		s_env
 {
 	char			*var;
 	char			*value;
 	struct s_env	*next;
-}				t_env;
+};
 
+typedef struct	s__mc t__mc;
 
-void			minishell(t_env **head_ref);
-void			child_pid(char **command, t_env **head_ref);
-void			sys_cmd(char **command, char *path_found, t_env **head_ref);
-void			execute(char **command, char *path_found, t_env **head_ref);
-char			**get_env(t_env **head_ref);
-int				len_of_list(t_env **head_ref);
-void			builtin_cmds(char *ptrcmd, int *j, t_env **head_ref);
-void			which_cmd(char **command, t_env **head_ref);
-int				cmd_is_found(char **tab, char **ptrcmd, char *temp);
-void			_env_gerror();
-int				own_commands(char *ptab);
-t_env			*del_node(t_env **head_ref, char *str);
-void			add_node(t_env **head_ref, char *s1, char *s2, int flag);
-void			echo_cmd(char *cmd, int flag);
-void			ft_chdir(char *path, t_env **head_ref);
-void			_chdir_gerror(char *path, int flag);
-void			swap(t_env **head_ref, char *path);
-char			*get_var(char *deli, t_env **head_ref);
-void			ft_handle(char *line);
-void			print_env(t_env **head_ref);
-t_env			*copy_of_env(char **tab);
-void			createlist(t_env **head_ref, t_env **tail, char *var);
-char			**get_path(t_env **head_ref);
-int				find_path(char *penv);
-void			signal_handler(int sign);
-void			free_list(t_env **head_ref);
-char			*ft_readline(char *path, int ll_index);
-void			setenv_cmd(char **ptrcmd, t_env **head_ref);
+struct		s__mc
+{
+		char			**cmd;
+			struct s__mc	*next;
+};
+
+typedef	struct	s_defined t_defined;
+
+struct		s_defined
+{
+	char				*data;
+	struct s_defined	*next;
+};
+
+void		minishell(t_env **head_ref, char *homepath, int fd, int index);
+t__mc		*mc_maker(char *line, t_env *env);
+char		*parsin(char *line, t_env *env);
+t_defined	*init_cases(void);
+int			is_one_of_them(char *name, t_defined *lst);
+void		child_pid(char **command, t_env **head_ref);
+void		sys_cmd(char **command, char *path_found, t_env **head_ref);
+void		execute(char **command, char *path_found, t_env **head_ref);
+char		**get_env(t_env **head_ref);
+int			len_of_list(t_env **head_ref);
+void		builtin_cmds(char *ptrcmd, int *j, t_env **head_ref);
+void		which_cmd(char **command, t_env **head_ref);
+int			cmd_is_found(char **tab, char **ptrcmd, char *temp);
+void		_env_gerror(void);
+int			own_commands(char *ptab);
+t_env		*del_node(t_env **head_ref, char *str);
+void		add_node(t_env **head_ref, char *s1, char *s2, int flag);
+void		echo_cmd(char *cmd, int flag);
+void		ft_chdir(char *path, t_env **head_ref);
+void		_chdir_gerror(char *path, int flag);
+void		swap(t_env **head_ref, char *path);
+char		*get_var(char *deli, t_env **head_ref);
+void		ft_handle(char *line);
+void		print_env(t_env **head_ref);
+t_env		*copy_of_env(char **tab);
+void		createlist(t_env **head_ref, t_env **tail, char *var);
+char		**get_path(t_env **head_ref);
+int			find_path(char *penv);
+void		signal_handler(int sign);
+void		free_list(t_env **head_ref);
+char		*ft_readline(char *homepath, int index, int *ctrl_d);
+void		setenv_cmd(char **ptrcmd, t_env **head_ref);
 
 #endif

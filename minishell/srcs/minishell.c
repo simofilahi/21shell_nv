@@ -64,18 +64,12 @@ void	child_pid(char **command, t_env **head_ref)
 	g_signal_num = 0;
 }
 
-/*
-** call functoin of (builtin command or system command);
-*/
-
 void	_minishell(char **command, t_env **head_ref)
 {
 	int		j;
 	int		i;
 
 	j = 0;
-	if (command[j] == NULL)
-		minishell(head_ref);
 	if ((j = own_commands(command[0])))
 	{
 		(j == 3) ? setenv_cmd(command, head_ref) : 0;
@@ -96,10 +90,6 @@ void	_minishell(char **command, t_env **head_ref)
 	ft_free2d(command);
 }
 
-/* 
-**store line or mutli line into history file
-*/
-
 void	keephistory(char *line, int fd, int index)
 {
 	char	*ret;
@@ -110,15 +100,7 @@ void	keephistory(char *line, int fd, int index)
 	tmp = ft_strjoin(ret, ":");
 	historyline = ft_strjoin(tmp, line);
 	write(fd, historyline, ft_strlen(historyline));
-	ft_strdel(&ret);
-	ft_strdel(&tmp);
-	ft_strdel(&historyline);
 }
-
-
-/*
-** check in line if any of metacharacters found;
-*/
 
 int 	_metacharacters(char ch, int flag)
 {
@@ -136,11 +118,6 @@ int 	_metacharacters(char ch, int flag)
 	}
 	return (0);
 }
-
-
-/*
-** - check before token pipe if there is any characters;
-*/
 
 int		beforepipe(char *line, int index)
 {
@@ -162,7 +139,7 @@ int		beforepipe(char *line, int index)
 ** recall readline in cases where qoutes or backslach or pipe found;
 */
 
-int		recall_readline(char *line, int *flag)
+int		qoutes_handler(char *line, int *flag)
 {
 	int		a;
 	int		b;
@@ -199,11 +176,11 @@ int		recall_readline(char *line, int *flag)
 		{
 			if ((line[index] == SQUOTE && a) ||\
 				 (line[index] == DQUOTE && line[index - 1] != BACKSLACH && b))
-				{
-					a = 0;
-					b = 0;
-					*flag = 0;
-				}
+			{
+				a = 0;
+				b = 0;
+				*flag = 0;
+			}
 		}
 		else if (_metacharacters(line[index], 0) && (c || d))
 		{
@@ -221,32 +198,27 @@ int		recall_readline(char *line, int *flag)
 	return (1);
 }
 
-/*
-** - receive line from readline;
-** - call recal_readline if quotes not complete or backslach or pipe found;
-** - keepline into history line ;
-** - send line to parser function; 
-*/
-
-t__mc	*ft_parsing(char *path, int fd ,int index)
+char	*recall_readline(char *line, char *homepath)
 {
-	char	*line;
-	t__mc	*lst;
 	int 	flag;
 	char	*tmp;
 	char	*s;
+	int 	ctrl_d;
 
 	flag = 0;
-	line = ft_readline(path, index - 1);
-	while (recall_readline(line, &flag))
+	while (qoutes_handler(line, &flag))
 	{
 		if (flag)
 		{
-			ft_putchar_fd('\n', 1);
-			ft_putstr_fd("\033[1;34m...\033[0m", 1);
+			ft_putstr_fd("\033[1;32m...\033[0m", 1);
 			tmp = ft_strdup(line);
 			ft_strdel(&line);
-			s = ft_readline(path, 0);
+			if (!(s = ft_readline(homepath, 0, &ctrl_d)))
+			{
+				ft_putchar_fd('\n', 1);
+				return (NULL);
+			}
+			ft_putchar_fd('\n', 1);
 			line = ft_strjoin(tmp, s);
 			ft_strdel(&tmp);
 			ft_strdel(&s);
@@ -254,66 +226,76 @@ t__mc	*ft_parsing(char *path, int fd ,int index)
 		else
 			break;
 	}
-	keephistory(line, fd, index);
-	lst = mc_maker(line);
-	free(line);
-	return (lst);
+	return (line);
 }
 
-/*
-** create history file;
-** made infinte loop;
-** get parsing line && and send it to execute;
-*/
+char	*call_readline(t_env **head_ref, char *homepath, int fd, int index)
+{
+		int			ctrl_d;
+		char		*line;
 
-void	minishell(t_env **head_ref)
+		line = ft_readline(homepath, index, &ctrl_d);
+		ft_putchar_fd('\n', 1);
+		if (!line)
+			return (NULL);
+		else if (line[0] == '\n')
+			minishell(head_ref, homepath, fd, index);
+		else if (!(line = recall_readline(line, homepath)))
+			minishell(head_ref, homepath, fd, index);
+		return (line);
+}
+
+void	minishell(t_env **head_ref, char *homepath, int fd, int index)
 {
 	t__mc		*lst;
-	int 		fd;
-	int			index;
-	char		*homepath;
-	char		*tmp;
+	char		*line;
 
-
-	homepath = get_var("HOME=", head_ref);
-	tmp = homepath;
-	homepath = ft_strjoin(homepath, "/.21sh_history");
-	ft_strdel(&tmp);
-	fd = open(homepath, O_RDWR | O_TRUNC | O_CREAT | O_APPEND);
-	index = 1;
 	while ("21sh")
 	{
 		ft_putstr_fd("\033[1;34m$> \033[0m", 1);
-		lst = ft_parsing(homepath, fd, index);
-		ft_putchar_fd('\n', 1);
+		if (!(line = call_readline(head_ref, homepath, fd, index - 1)))
+				break;
+		keephistory(line, fd, index);
+		lst = mc_maker(line, *head_ref);
 		while (lst)
 		{
 			_minishell(lst->cmd, head_ref);
 			lst = lst->next;
 		}
-		/*
-		 *		ft_free2d(tab);
-		 *		Hadi khassha tfreeya list li tsawbat machi tab li kayn ;)
-		 */
 		index++;
 	}
 }
 
-/*
-** store copy of env;
-** call minishell funciotn;
-*/
+int		create_hfile(t_env **head_ref, char **homepath)
+{
+	int			fd;
+	char		*tmp;
 
-int		main(int argc, char **argv, char **envp)
+	*homepath = get_var("HOME=", head_ref);
+	tmp = *homepath;
+	*homepath = ft_strjoin(*(homepath), "/.21sh_history");
+	ft_strdel(&tmp);
+	if ((fd = open(*homepath, O_RDWR | O_TRUNC | O_CREAT | O_APPEND)) < 0)
+		return (0);
+	return (fd);
+}
+
+int		main(int ac, char **av, char **envp)
 {
 	t_env	*head_ref;
+	int		fd;
+	char	*homepath;
 
-	(void)argc;
-	(void)argv;
+	(void)ac;
+	(void)av;
+	homepath = NULL;
 	g_signal_num = 0;
 	signal(SIGINT, signal_handler);
 	head_ref = copy_of_env(envp);
-	minishell(&head_ref);
+	fd = create_hfile(&head_ref, &homepath);
+	minishell(&head_ref, homepath, fd, 1);
+	ft_strdel(&homepath);
 	free_list(&head_ref);
+	ft_putendl_fd("\033[01;33mBye!\033[0m", 2);
 	return (0);
 }

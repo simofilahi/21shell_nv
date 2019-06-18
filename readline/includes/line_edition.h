@@ -22,6 +22,9 @@
 # include <fcntl.h>
 # include <unistd.h>
 
+// 
+#include <stdio.h>
+
 # define TRUE 1
 # define FALSE 0
 # define BUFF_SIZE 100
@@ -50,6 +53,7 @@ typedef struct		s_package
 	int				len;
 	char			*path;
 	int				ll_index;
+	int				*ctrl_d;
 	struct termios	oldconf;
 	struct winsize	w;
 }					t_package;
@@ -80,7 +84,7 @@ void				forwardkey(t_package *p);
 void				ft_alt_upkey(t_package *p);
 void				ft_history_downkey(t_package *p);
 void				ft_history_upkey(t_package *p);
-void				ctrl_d();
+int					ctrl_d();
 void				left_key_with_history(int tmp, int x, int y, t_package *p);
 /*
 ** copy/cut/paste
@@ -125,14 +129,14 @@ void				print_readablechar();
 ** read from stdin
 */
 void				read_line();
-char				*ft_readline(char *path, int ll_index);
+char				*ft_readline(char *path, int ll_index, int *ctrl_d);
 /*
 ** others :
 **			- initialization memeber of structure
 **			- func cloud to store @ of structure
 **			- count lines if newline is found
 */
-void				init_structure_members(char *path, int ll_index);
+void				init_structure_members(char *path, int ll_index, int *ctrl_d);
 t_package			*cloud(t_package *p);
 int					get_n_line(int fd, char **line, int n);
 int					new_line_is_found(char *line);

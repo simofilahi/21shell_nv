@@ -34,12 +34,16 @@ void print_history_line(t_package *p)
 void ft_history_upkey(t_package *p)
 {
 	int fd;
+	FILE *FDD;
 
+	FDD = fopen("/dev/ttys002", "a+");
 	if (p->ll_index > -1)
 	{
 		ft_strdel(&p->line);
 		p->line = NULL;
 		fd = open(p->path, O_RDONLY);
+		fprintf(FDD, "p->path %s\n", p->path);
+		fprintf(FDD, "p->ll_index %d\n", p->ll_index);
 		if (!gline(fd, &p->line, p->ll_index--))
 		{
 			p->ll_index++;

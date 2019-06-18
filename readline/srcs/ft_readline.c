@@ -18,7 +18,11 @@
 
 void	get_input_2(t_package *p, int sum)
 {
-	if (sum == CUTKEY_AC)
+	if (sum == CUTKEY)
+		cut_line_key(&p->holdcopy, &p->line);
+	else if (sum == CUTKEY_BC)
+		cut_before_cursor_key(&p->holdcopy, &p->line, p->index);
+	else if (sum == CUTKEY_AC)
 		cut_after_cursor_key(&p->holdcopy, &p->line, p->index);
 	else if (sum == PASTEKEY)
 		paste_key(p);
@@ -26,8 +30,6 @@ void	get_input_2(t_package *p, int sum)
 		ft_history_upkey(p);
 	else if (sum == KEYDOWN)
 		ft_history_downkey(p);
-	else if (sum == CTRL_D)
-		ctrl_d(p);
 	else if ((p->buffer[0] >= 32 && p->buffer[0] <= 126) &&\
 			(p->buffer[1] >= 32 && p->buffer[1] <= 126))
 	{
@@ -41,7 +43,11 @@ void	get_input_2(t_package *p, int sum)
 
 void	get_input_1(t_package *p, int sum)
 {
-	if (sum == ENDKEY && checking(p->line, p->index, 3))
+	if (sum == BACKSPACE && checking(p->line, p->index, 2))
+		backspace_key(p);
+	else if (sum == HOMEKEY && p->index > 0)
+		home_key();
+	else if (sum == ENDKEY && checking(p->line, p->index, 3))
 		end_key(p);
 	else if (sum == FORWARDKEY && checking(p->line, p->index, 3))
 		forwardkey(p);
@@ -57,10 +63,6 @@ void	get_input_1(t_package *p, int sum)
 		copy_before_cursor_key(&p->holdcopy, p->line, p->index);
 	else if (sum == COPYKEY_AC)
 		copy_after_cursor_key(&p->holdcopy, p->line, p->index);
-	else if (sum == CUTKEY)
-		cut_line_key(&p->holdcopy, &p->line);
-	else if (sum == CUTKEY_BC)
-		cut_before_cursor_key(&p->holdcopy, &p->line, p->index);
 	else
 		get_input_2(p, sum);
 }
@@ -79,37 +81,47 @@ void	get_input(t_package *p)
 		sum = *((int *)p->buffer);
 		if (sum == 10)
 			break ;
+		else if (sum == CTRL_D)
+		{
+			if (!(ctrl_d(p)))
+				break ;
+		}
 		else if (sum >= 32 && sum <= 126)
 			print_readablechar(p);
 		else if (sum == RIGHTKEY && checking(p->line, p->index, 1))
 			right_key(p);
 		else if (sum == LEFTKEY && checking(p->line, p->index, 2))
 			left_key(p);
-		else if (sum == BACKSPACE && checking(p->line, p->index, 2))
-			backspace_key(p);
-		else if (sum == HOMEKEY && p->index > 0)
-			home_key();
 		else
 			get_input_1(p, sum);
 		ft_bzero(p->buffer, BUFFER_SIZE);
 	}
 	end_key(p);
-	//ft_putchar_fd('\n', 1);
+	if (sum == 10)
+	{
+		char *tmp;
+		
+		tmp = p->line;
+		p->line = ft_strjoin(p->line, "\n");
+		ft_strdel(&tmp);
+	}
 }
 
-char	*ft_readline(char *path, int ll_index)
+char	*ft_readline(char *path, int ll_index, int *ctrl_d)
 {
 	t_package	*p;
 	char		*line;
 
-	init_structure_members(path, ll_index);
+	line = NULL;
+	init_structure_members(path, ll_index, ctrl_d);
 	p = cloud(NULL);
 	termcap_config();
 	get_input(p);
 	normal_mode();
-	line = ft_strjoin(p->line, "\n");
-	free(p->line);
-	free(p->holdcopy);
+	if (ft_strlen(p->line) > 0)
+		line = ft_strdup(p->line);
+	ft_strdel(&p->line);
+	ft_strdel(&p->holdcopy);
 	free(p);
 	return (line);
 }

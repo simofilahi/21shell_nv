@@ -46,7 +46,8 @@ SRCS_SH = $(SRCS_SH_DIR)/execute.c \
 
 SRCS_PR = $(SRCS_PR_DIR)/extras.c \
 		  $(SRCS_PR_DIR)/get.c \
-		  $(SRCS_PR_DIR)/parsin.c
+		  $(SRCS_PR_DIR)/parsin.c \
+		   $(SRCS_PR_DIR)/check.c
 
 OBJECT_RL = $(patsubst %, $(OBJS_DIR)/%, $(notdir $(SRCS_RL:.c=.o)))
 OBJECT_SH = $(patsubst %, $(OBJS_DIR)/%, $(notdir $(SRCS_SH:.c=.o)))

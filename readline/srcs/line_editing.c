@@ -12,20 +12,24 @@
 
 #include "line_edition.h"
 
-void	ctrl_d(void)
+int		ctrl_d(void)
 {
 	t_package *p;
 
 	p = cloud(NULL);
-	if (!(p->index == (int)ft_strlen(p->line) \
-				|| p->line[p->index - 1] == '\n'))
+	if (!(p->index == (int)ft_strlen(p->line) &&\
+		 ft_strlen(p->line) > 0) ||\
+		 p->line[p->index - 1] == '\n')
 	{
+		if (ft_strlen(p->line) == 0)
+			return (0);
 		delete_element(p->line, p->index);
 		tputs(SC, 1, my_putchar);
 		clear_screen();
 		print_line(p->line, p->index);
 		tputs(RC, 1, my_putchar);
 	}
+	return (1);
 }
 
 int		checking(char *line, int index, int key)
@@ -52,7 +56,7 @@ int		checking(char *line, int index, int key)
 	return (FALSE);
 }
 
-void	init_structure_members(char *path, int ll_index)
+void	init_structure_members(char *path, int ll_index, int *ctrl_d)
 {
 	t_package		*p;
 	struct termios	def_conf;
@@ -70,6 +74,7 @@ void	init_structure_members(char *path, int ll_index)
 	p->posx = 3;
 	p->init_y = p->posy;
 	p->last_y = p->init_y;
+	p->ctrl_d = ctrl_d;
 	ioctl(0, TIOCGWINSZ, &p->w);
 	cloud(p);
 }
