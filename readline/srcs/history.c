@@ -6,7 +6,7 @@
 /*   By: mfilahi <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/02 20:26:35 by mfilahi           #+#    #+#             */
-/*   Updated: 2019/05/04 12:21:33 by mfilahi          ###   ########.fr       */
+/*   Updated: 2019/06/18 10:52:59 by aariss           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,6 @@ void ft_history_upkey(t_package *p)
 		p->line = NULL;
 		fd = open(p->path, O_RDONLY);
 		fprintf(FDD, "p->path %s\n", p->path);
-		fprintf(FDD, "p->ll_index %d\n", p->ll_index);
 		if (!gline(fd, &p->line, p->ll_index--))
 		{
 			p->ll_index++;
@@ -53,6 +52,7 @@ void ft_history_upkey(t_package *p)
 			p->line = ft_strnew(1);
 			return ;
 		}
+		fprintf(FDD, "HI\n");
 		close(fd);
 		home_key();
 		clear_screen();

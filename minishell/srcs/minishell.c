@@ -6,7 +6,7 @@
 /*   By: mfilahi <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/04 19:53:19 by mfilahi           #+#    #+#             */
-/*   Updated: 2019/06/14 15:49:38 by aariss           ###   ########.fr       */
+/*   Updated: 2019/06/18 10:55:32 by aariss           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -275,7 +275,7 @@ int		create_hfile(t_env **head_ref, char **homepath)
 	tmp = *homepath;
 	*homepath = ft_strjoin(*(homepath), "/.21sh_history");
 	ft_strdel(&tmp);
-	if ((fd = open(*homepath, O_RDWR | O_TRUNC | O_CREAT | O_APPEND)) < 0)
+	if ((fd = open(*homepath, O_RDWR | O_CREAT | O_TRUNC | O_APPEND, 0777)) < 0)
 		return (0);
 	return (fd);
 }

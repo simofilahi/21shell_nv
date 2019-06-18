@@ -6,7 +6,7 @@
 #    By: mfilahi <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/05/03 16:07:14 by mfilahi           #+#    #+#              #
-#    Updated: 2019/06/14 16:02:48 by aariss           ###   ########.fr        #
+#    Updated: 2019/06/18 15:37:58 by aariss           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -45,9 +45,8 @@ SRCS_SH = $(SRCS_SH_DIR)/execute.c \
 		  $(SRCS_SH_DIR)/srcs.c \
 
 SRCS_PR = $(SRCS_PR_DIR)/extras.c \
-		  $(SRCS_PR_DIR)/get.c \
 		  $(SRCS_PR_DIR)/parsin.c \
-		   $(SRCS_PR_DIR)/check.c
+		  $(SRCS_PR_DIR)/check.c
 
 OBJECT_RL = $(patsubst %, $(OBJS_DIR)/%, $(notdir $(SRCS_RL:.c=.o)))
 OBJECT_SH = $(patsubst %, $(OBJS_DIR)/%, $(notdir $(SRCS_SH:.c=.o)))

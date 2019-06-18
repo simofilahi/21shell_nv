@@ -5,8 +5,9 @@
 # include <sys/stat.h>
 # include <fcntl.h>
 # include "libft.h"
-# define BUFF_SIZE 100
+# define BUFF_S 4096
 
 int		gline(const int fd, char **line_target, int delimiter);
+char	*ft_jchar(char *s, char c);
 
 #endif
