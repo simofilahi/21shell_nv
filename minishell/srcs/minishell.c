@@ -6,7 +6,7 @@
 /*   By: mfilahi <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/04 19:53:19 by mfilahi           #+#    #+#             */
-/*   Updated: 2019/06/14 15:49:38 by aariss           ###   ########.fr       */
+/*   Updated: 2019/06/18 10:55:32 by aariss           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,70 +64,13 @@ void	child_pid(char **command, t_env **head_ref)
 	g_signal_num = 0;
 }
 
-void	_minishell(char **arg, t_env **head_ref)
+void	_minishell(char **arg, char *homepath, t_env **head_ref)
 {
 	int		j;
-	int		i;
 
 	j = 0;
 	if ((j = own_commands(arg[0])))
-	{
-			/*(j == 3) ? setenv_cmd(command, head_ref) : 0;
-			(j == 4) ? del_node(command, head_ref) : 0;
-			if (j == 3 || j == 4)
-				return ;
-			else if (command[1])
-			{
-				i = 0;
-				while (command[++i])
-					builtin_cmds(command[i], &j, head_ref);
-			}
-			else
-				builtin_cmds(command[0], &j, head_ref);
-			i = 1;
-			while (argc[i])
-			{
-
-				i++;
-			}*/
-			i = 1;
-			int flag;
-
-			flag = 0;
-			if (j == 5)
-				print_env(head_ref);
-			while (arg[i])
-			{
-				if ((j == 2 && i == 2) || (j == 3 && i == 3))
-					return ;
-				else if (j == 1)
-				{
-					if (ft_strcmp(arg[1], "-n") == 0 && i == 1)
-						flag = 1;
-					else
-						echo_cmd(arg[i], arg[i + 1], flag);
-				}
-				else if (j == 2)
-					ft_chdir(arg[i], head_ref);
-				else if (j == 3)
-				{
-					if (i == 2 && arg[i + 1])
-						flag = 1;
-					else
-						flag = 0;
-					if (!setenv_cmd(arg[i], arg[i + 1], head_ref, flag))
-						return ;
-					i += 2;
-				}
-				/*else if (j == 4)
-					unsetenv_cmd(arg[i], head_ref);*/
-				/*else if (j == 6)
-					which_cmd(arg, head_ref);*/
-				else if (j == 7)
-					exit(0);
-				i++;
-			}
-	}
+		builtin_cmds(arg, head_ref, homepath, j);
 	else
 		child_pid(arg, head_ref);
 	ft_free2d(arg);
@@ -302,7 +245,7 @@ void	minishell(t_env **head_ref, char *homepath, int fd, int index)
 		lst = mc_maker(line, *head_ref);
 		while (lst)
 		{
-			_minishell(lst->cmd, head_ref);
+			_minishell(lst->cmd, homepath, head_ref);
 			lst = lst->next;
 		}
 		index++;
@@ -318,7 +261,7 @@ int		create_hfile(t_env **head_ref, char **homepath)
 	tmp = *homepath;
 	*homepath = ft_strjoin(*(homepath), "/.21sh_history");
 	ft_strdel(&tmp);
-	if ((fd = open(*homepath, O_RDWR | O_TRUNC | O_CREAT | O_APPEND)) < 0)
+	if ((fd = open(*homepath, O_RDWR | O_CREAT | O_TRUNC | O_APPEND, 0777)) < 0)
 		return (0);
 	return (fd);
 }

@@ -12,7 +12,6 @@
 
 #include "minishell.h"
 
-
 int		len_of_var(char *s)
 {
 	int	index;
@@ -22,6 +21,10 @@ int		len_of_var(char *s)
 		index++;
 	return (index);
 }
+
+/*
+** Create linked list to store environment;
+*/
 
 void	createlist(t_env **head, t_env **tail, char *s)
 {
@@ -46,6 +49,11 @@ void	createlist(t_env **head, t_env **tail, char *s)
 	}
 }
 
+/*
+** - get path values from environment;
+** - split and store each path in case into tab;
+*/
+
 char	**get_env(t_env **head_ref)
 {
 	t_env	*current;
@@ -66,57 +74,41 @@ char	**get_env(t_env **head_ref)
 	return (tab);
 }
 
-t_env	*del_node(t_env **head_ref, char *str)
+/*
+** del variable from environment;
+*/
+
+void	del_node(char *s, t_env **head_ref)
 {
 	t_env	*current;
 	t_env	*prev;
-	char	*s;
+	char	*str;
 
 	current = *head_ref;
 	prev = current;
-	if (!str)
-		return (NULL);
-	s = (str[ft_strlen(str) - 1] != '=') ? \
-		ft_strjoin(str, "=") : ft_strdup(str);
+	str = (s[ft_strlen(s) - 1] != '=') ? \
+		ft_strjoin(s, "=") : ft_strdup(s);
 	while (current &&
-			(ft_strncmp(s, current->var, ft_strlen(s)) != 0))
+			(ft_strcmp(str, current->var) != 0))
 	{
 		prev = current;
 		current = current->next;
 	}
 	if (current == NULL)
-		return (NULL);
+		return ;
 	prev->next = current->next;
 	if (current == *head_ref)
 		*head_ref = (*head_ref)->next;
-	free(current->var);
+	ft_strdel(&current->var);
+	if (current->value)
+		ft_strdel(&current->value);
 	free(current);
-	free(s);
-	return (*head_ref);
+	ft_strdel(&str);
 }
 
-char	*equal_actions(t_env **head_ref, char *s1, char *s2, int flag)
-{
-	char *s;
-
-	if (s1 && !s2 && flag)
-	{
-		del_node(head_ref, s1);
-		return (ft_strjoin(s1, "="));
-	}
-	if (s1 && s2 && flag)
-		del_node(head_ref, s2);
-	if (s1 && s2 && !flag)
-	{
-		ft_putendl_fd("here", 1);
-		del_node(head_ref, s1);
-		s = ft_strjoin(s1, "=");
-		free(s1);
-		s1 = ft_strjoin(s, s2);
-		free(s);
-	}
-	return (ft_strdup(s1));
-}
+/*
+** add variable into environment;
+*/
 
 void	add_node(t_env **head_ref, char *s, int flag)
 {
@@ -142,5 +134,4 @@ void	add_node(t_env **head_ref, char *s, int flag)
 	while (current->next)
 		current = current->next;
 	current->next = new_node;
-	free(s);
 }
