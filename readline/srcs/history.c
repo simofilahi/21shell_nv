@@ -6,7 +6,7 @@
 /*   By: mfilahi <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/02 20:26:35 by mfilahi           #+#    #+#             */
-/*   Updated: 2019/06/18 10:52:59 by aariss           ###   ########.fr       */
+/*   Updated: 2019/06/19 11:02:30 by aariss           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,10 @@
 
 void print_history_line(t_package *p)
 {
+	/*p->posy = p->init_y;
+	p->posx = 3;
+	p->w.ws_row  = p->init_row;*/
+
 	while (p->line[p->index])
 	{
 		(p->posx == p->w.ws_col - 1 || p->line[p->index] == '\n') ?\
@@ -37,22 +41,20 @@ void ft_history_upkey(t_package *p)
 	FILE *FDD;
 
 	FDD = fopen("/dev/ttys002", "a+");
+	fprintf(FDD, "p->ll_index %d\n", p->ll_index);
 	if (p->ll_index > -1)
 	{
+		home_key();
+		clear_screen();
 		ft_strdel(&p->line);
-		p->line = NULL;
+		p->line = ft_strnew(1);
 		fd = open(p->path, O_RDONLY);
-		fprintf(FDD, "p->path %s\n", p->path);
 		if (!gline(fd, &p->line, p->ll_index--))
 		{
 			p->ll_index++;
 			close(fd);
-			home_key();
-			clear_screen();
-			p->line = ft_strnew(1);
 			return ;
 		}
-		fprintf(FDD, "HI\n");
 		close(fd);
 		home_key();
 		clear_screen();
@@ -66,16 +68,15 @@ void ft_history_downkey(t_package *p)
 
 	if (p->ll_index > -1)
 	{
+		home_key();
+		clear_screen();
 		ft_strdel(&p->line);
-		p->line = NULL;
+		p->line = ft_strnew(1);
 		fd = open(p->path, O_RDONLY);
 		if (!gline(fd, &p->line, ++p->ll_index))
 		{
 			--p->ll_index;
 			close(fd);
-			home_key();
-			clear_screen();
-			p->line = ft_strnew(1);
 			return ;
 		}
 		close(fd);

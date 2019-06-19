@@ -6,7 +6,7 @@
 /*   By: aariss <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/13 11:52:21 by aariss            #+#    #+#             */
-/*   Updated: 2019/06/19 10:52:03 by aariss           ###   ########.fr       */
+/*   Updated: 2019/06/19 11:26:40 by aariss           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,11 +26,14 @@ int     ft_count_till(char *s, int c)
 
 char    *dollar_get_simple(char *name, t_env *env, char **ptr)
 {
+	char	*str;
+
 	while (env)
 	{
+		str = ft_strfchr(env->var, '=');
 		if (ft_strncmp(name, env->var, (ft_strlen(env->var) - 1)) == 0)
 		{
-			*ptr = name;
+			*ptr = str;
 			return (env->value);
 		}
 		env = env->next;
@@ -41,12 +44,13 @@ char    *dollar_get_simple(char *name, t_env *env, char **ptr)
 char    *dollar_get_quoted(char *name, t_env *env, char **ptr)
 {
 	char	*str;
+
 	while (env)
 	{
 		str = ft_strfchr(env->var, '=');
 		if (ft_strncmp(name, str, ft_strlen(str)) == 0)
 		{
-			*ptr = name;
+			*ptr = str;
 			return (env->value);
 		}
 		env = env->next;
@@ -98,10 +102,8 @@ char	*dollar_handle_quoted(char *toto, char *line, int *i, int quote, t_env *env
 		{
 			(*i)++;
 			while (ft_isalpha(line[*i]))
-			{
-				ft_putchar(line[*i]);
 				(*i)++;
-			}
+			(*i)--;
 		}
 	}
 	return (toto);

@@ -17,31 +17,39 @@ void		ft_chdir(char *path, t_env **head_ref)
 	char	buff[1024];
 	char	*cwd;
 	DIR		*dir;
+	char	*tmp;
 
 	ft_bzero(buff, 1024);
 	cwd =  getcwd(buff, sizeof(buff));
-	if (access(path, F_OK) == 0)
+	tmp = (ft_strcmp(path, "-") == 0) ? get_var("OLDPWD=", head_ref) : ft_strdup(path);
+	if (access(tmp, F_OK) == 0)
 	{
-		(!(dir = (opendir(path)))) ? _chdir_gerror(path, 0) : closedir(dir);
+		(!(dir = (opendir(tmp)))) ? _chdir_gerror(tmp, 0) : closedir(dir);
 		if (!dir)
 			return ;
-		if (access(path, X_OK) == 0)
+		if (access(tmp, X_OK) == 0)
 		{
-			chdir(path);
+			chdir(tmp);
 			swap(head_ref, cwd);
 			return ;
 		}
-		_chdir_gerror(path, 1);
+		_chdir_gerror(tmp, 1);
 	}
-	_chdir_gerror(path, 2);
+	_chdir_gerror(tmp, 2);
+	ft_strdel(&tmp);
 }
 
-void	echo_cmd(char *cmd, int flag)
+void	echo_cmd(char *arg, char *narg, int flag)
 {
-	if (cmd == NULL)
+	if (arg == NULL)
 		ft_putchar_fd('\n', 1);
-	else if (cmd && flag)
-		ft_putendl_fd(cmd, 1);
-	else
-		ft_putstr_fd(cmd, 1);
+	else if (arg && !narg && flag)
+		ft_putstr_fd(arg, 1);
+	else if (arg && !narg && !flag)
+		ft_putendl_fd(arg, 1);
+	else if (arg && narg)
+	{
+		ft_putstr_fd(arg, 1);
+		ft_putchar_fd(' ', 1);
+	}
 }

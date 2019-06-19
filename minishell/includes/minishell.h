@@ -68,14 +68,14 @@ void		sys_cmd(char **command, char *path_found, t_env **head_ref);
 void		execute(char **command, char *path_found, t_env **head_ref);
 char		**get_env(t_env **head_ref);
 int			len_of_list(t_env **head_ref);
-void		builtin_cmds(char *ptrcmd, int *j, t_env **head_ref);
-void		which_cmd(char **command, t_env **head_ref);
+void		builtin_cmds(char **arg, t_env **head_ref, char *homepath, int j);
+void		which_cmd(char *arg, t_env **head_ref);
 int			cmd_is_found(char **tab, char **ptrcmd, char *temp);
 void		_env_gerror(void);
 int			own_commands(char *ptab);
-t_env		*del_node(t_env **head_ref, char *str);
-void		add_node(t_env **head_ref, char *s1, char *s2, int flag);
-void		echo_cmd(char *cmd, int flag);
+void		del_node(char *s, t_env **head_ref);
+void		add_node(t_env **head_ref, char *s1, int flag);
+void		echo_cmd(char *arg, char *narg, int flag);
 void		ft_chdir(char *path, t_env **head_ref);
 void		_chdir_gerror(char *path, int flag);
 void		swap(t_env **head_ref, char *path);
@@ -89,6 +89,6 @@ int			find_path(char *penv);
 void		signal_handler(int sign);
 void		free_list(t_env **head_ref);
 char		*ft_readline(char *homepath, int index, int *ctrl_d);
-void		setenv_cmd(char **ptrcmd, t_env **head_ref);
+int			setenv_cmd(char *arg, char *sarg, t_env **head_ref, int flag);
 
 #endif

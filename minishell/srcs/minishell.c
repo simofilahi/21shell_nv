@@ -64,30 +64,16 @@ void	child_pid(char **command, t_env **head_ref)
 	g_signal_num = 0;
 }
 
-void	_minishell(char **command, t_env **head_ref)
+void	_minishell(char **arg, char *homepath, t_env **head_ref)
 {
 	int		j;
-	int		i;
 
 	j = 0;
-	if ((j = own_commands(command[0])))
-	{
-		(j == 3) ? setenv_cmd(command, head_ref) : 0;
-	//	(j == 4) ? del_node(head_ref, argc) : 0;
-		if (j == 3 || j == 4)
-			return ;
-		else if (command[1])
-		{
-			i = 0;
-			while (command[++i])
-				builtin_cmds(command[i], &j, head_ref);
-		}
-		else
-			builtin_cmds(command[0], &j, head_ref);
-	}
+	if ((j = own_commands(arg[0])))
+		builtin_cmds(arg, head_ref, homepath, j);
 	else
-		child_pid(command, head_ref);
-	ft_free2d(command);
+		child_pid(arg, head_ref);
+	ft_free2d(arg);
 }
 
 void	keephistory(char *line, int fd, int index)
@@ -259,7 +245,7 @@ void	minishell(t_env **head_ref, char *homepath, int fd, int index)
 		lst = mc_maker(line, *head_ref);
 		while (lst)
 		{
-			_minishell(lst->cmd, head_ref);
+			_minishell(lst->cmd, homepath, head_ref);
 			lst = lst->next;
 		}
 		index++;

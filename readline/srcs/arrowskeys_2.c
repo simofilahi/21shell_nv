@@ -122,7 +122,9 @@ void	home_key()
 		tmp = p->posy;
 		while (tmp > p->init_y)
 		{
+			tputs(SVC, 1, my_putchar);
 			ft_alt_upkey(p);
+			tputs(EVC, 1, my_putchar);
 			tmp--;
 		}
 		p->posx = 3;
