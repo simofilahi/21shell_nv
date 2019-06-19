@@ -111,6 +111,8 @@ void builtin_cmds(char **arg, t_env **head_ref, char *homepath, int j)
 	flag = 0;
 	if (j == 5)
 		print_env(head_ref);
+	else if (j == 1 && !arg[1])
+		echo_cmd(arg[i], arg[i], flag);
 	else if (j == 7)
 	{
 		ft_strdel(&homepath);
@@ -126,7 +128,6 @@ void builtin_cmds(char **arg, t_env **head_ref, char *homepath, int j)
 		{
 			if (ft_strcmp(arg[1], "-n") == 0 && i == 1)
 				flag = 1;
-			else
 			echo_cmd(arg[i], arg[i + 1], flag);
 		}
 		else if (j == 2)

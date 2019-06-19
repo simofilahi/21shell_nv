@@ -43,6 +43,8 @@ void	echo_cmd(char *arg, char *narg, int flag)
 {
 	if (arg == NULL)
 		ft_putchar_fd('\n', 1);
+	else if (ft_strcmp(arg, "-n") == 0 && !narg)
+		return ;
 	else if (arg && !narg && flag)
 		ft_putstr_fd(arg, 1);
 	else if (arg && !narg && !flag)

@@ -47,7 +47,7 @@ typedef struct	s__mc t__mc;
 struct		s__mc
 {
 		char			**cmd;
-			struct s__mc	*next;
+		struct s__mc	*next;
 };
 
 typedef	struct	s_defined t_defined;
@@ -58,7 +58,27 @@ struct		s_defined
 	struct s_defined	*next;
 };
 
-void		minishell(t_env **head_ref, char *homepath, int fd, int index);
+typedef	struct	s_var t_var;
+
+struct		s_var
+{
+	int		a;
+	int		b;
+	int		c;
+	int		d;
+	int		index;
+};
+
+typedef	struct	s_holder t_holder;
+
+struct		s_holder
+{
+	t_env	*head_ref;
+	t__mc	*lst;
+	char	*homepath;
+};
+
+void		minishell(t_holder *h, int fd, int index);
 t__mc		*mc_maker(char *line, t_env *env);
 char		*parsin(char *line, t_env *env);
 t_defined	*init_cases(void);

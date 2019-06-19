@@ -84,6 +84,10 @@ int		ft_alt_downkey_2(t_package *p, int randomindex, int *sub)
 	return (1);
 }
 
+/*
+** 
+*/
+
 void	ft_alt_downkey(t_package *p)
 {
 	int			randomindex;
@@ -108,6 +112,10 @@ void	ft_alt_downkey(t_package *p)
 	if (!(ft_alt_downkey_2(p, randomindex, &sub)))
 		return ;
 }
+
+/*
+** move cursor to begin of line;
+*/
 
 void	home_key()
 {
