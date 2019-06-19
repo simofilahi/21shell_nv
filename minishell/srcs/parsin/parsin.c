@@ -6,56 +6,102 @@
 /*   By: aariss <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/13 11:52:21 by aariss            #+#    #+#             */
-/*   Updated: 2019/06/18 10:03:53 by aariss           ###   ########.fr       */
+/*   Updated: 2019/06/19 10:52:03 by aariss           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parsin.h"
 
+int     ft_count_till(char *s, int c)
+{
+	int i;
+
+	i = 0;
+	while (s[i] && s[i] != c)
+	{
+		i++;
+	}
+	return (i);
+}
+
+char    *dollar_get_simple(char *name, t_env *env, char **ptr)
+{
+	while (env)
+	{
+		if (ft_strncmp(name, env->var, (ft_strlen(env->var) - 1)) == 0)
+		{
+			*ptr = name;
+			return (env->value);
+		}
+		env = env->next;
+	}
+	return (NULL);
+}
+
+char    *dollar_get_quoted(char *name, t_env *env, char **ptr)
+{
+	char	*str;
+	while (env)
+	{
+		str = ft_strfchr(env->var, '=');
+		if (ft_strncmp(name, str, ft_strlen(str)) == 0)
+		{
+			*ptr = name;
+			return (env->value);
+		}
+		env = env->next;
+	}
+	return (NULL);
+}
+
 char	*dollar_handle_simple(char *toto, char *line, int *i, t_env *env)
 {
-	(*i)++;
-	if (ft_strlen(line + (*i)) != 0)
+	char	*str;
+	char	*ptr;
+
+	ptr = NULL;
+	str = dollar_get_simple(line + *i + 1, env, &ptr);
+	if (str)
 	{
-		while (env)
-		{
-			if (ft_strncmp(line + *i, env->var, ft_strlen(env->var) - 1) == 0)
-			{
-				toto = ft_strjoin(toto, env->value);
-				(*i) = (*i) + (ft_strlen(env->var) - 2);
-				break ;
-			}
-			env = env->next;
-		}
+		toto = ft_strjoin(toto, str);
+		(*i) = (*i) + ft_strlen(ptr);
 	}
 	else
 	{
-		ft_putendl("tata");
-		toto = ft_joinchar(toto, '$');
+		(*i)++;
+		while (ft_isalpha(line[*i]))
+			(*i)++;
 	}
 	return (toto);
 }
 
 char	*dollar_handle_quoted(char *toto, char *line, int *i, int quote, t_env *env)
 {
+	char	*str;
+	char	*ptr;
+	char	*kali;
+
 	if (quote == 39)
-	{
 		toto = ft_joinchar(toto, '$');
-		return (toto);
-	}
 	else if (quote == '"')
 	{ 
 		/*  MAY BE MORE USEFULL TO CALL THE FUNCTION dollar_handle_simple HERE INSTEAD...JUST A THOUGHT  */
-		(*i)++;
-		while (env)
+		ptr = NULL;
+		kali = ft_strfchr_alpha(line + *i + 1);
+		str = dollar_get_quoted(kali, env, &ptr);
+		if (str)
 		{
-			if (ft_strncmp(line + *i, env->var, ft_strlen(env->var) - 1) == 0)
+			toto = ft_strjoin(toto, str);
+			(*i) = (*i) + ft_strlen(ptr);
+		}
+		else
+		{
+			(*i)++;
+			while (ft_isalpha(line[*i]))
 			{
-				toto = ft_strjoin(toto, env->value);
-				(*i) = (*i) + (ft_strlen(env->var) - 2);
-				break ;
+				ft_putchar(line[*i]);
+				(*i)++;
 			}
-			env = env->next;
 		}
 	}
 	return (toto);
@@ -172,7 +218,7 @@ char	*parsin(char *line, t_env *env)
 	lst = init_cases();
 	if (line)
 	{
-		while (line[i])
+		while (i < (int)ft_strlen(line))
 		{
 			if (line[i] == 92)
 				toto = skip_char(toto, line, &i, 0, 0);
@@ -208,10 +254,7 @@ char	*parsin(char *line, t_env *env)
 				i = i + t;
 			}
 			else if (line[i] == '$' && ft_strlen(line + i + 1) > 1)/*			HERE TOO*/
-			{
-				ft_putnbr(ft_strlen(line + i + 1));
 				toto = dollar_handle_simple(toto, line, &i, env);
-			}
 			else if (line[i] == '~')
 				toto = ft_strjoin(toto, get_var("HOME=", &env));
 			else
