@@ -6,7 +6,7 @@
 /*   By: mfilahi <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/04 21:51:41 by mfilahi           #+#    #+#             */
-/*   Updated: 2019/06/18 10:11:16 by aariss           ###   ########.fr       */
+/*   Updated: 2019/06/19 14:45:19 by aariss           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,17 @@ struct		s_defined
 	struct s_defined	*next;
 };
 
+/*
+ **********	$ Functions ********
+ */
+char    *dollar_get_simple(char *name, t_env *env, char **ptr);
+char    *dollar_get_quoted(char *name, t_env *env, char **ptr);
+char	*dollar_handle_simple(char *toto, char *line, int *i, t_env *env);
+char	*dollar_handle_quoted(char *toto, char *line, int *i, int quote, t_env *env);
+
+/*
+ **********	Others ********
+ */
 void		minishell(t_env **head_ref, char *homepath, int fd, int index);
 t__mc		*mc_maker(char *line, t_env *env);
 char		*parsin(char *line, t_env *env);

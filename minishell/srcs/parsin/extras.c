@@ -6,21 +6,11 @@
 /*   By: aariss <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/11 15:14:25 by aariss            #+#    #+#             */
-/*   Updated: 2019/06/19 10:52:41 by aariss           ###   ########.fr       */
+/*   Updated: 2019/06/19 14:21:26 by aariss           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parsin.h"
-
-int		ft_count_falpha(char *s)
-{
-	int	i;
-
-	i = 0;
-	while (s[i] && ft_isalpha(s[i]))
-		i++;
-	return (i);
-}
 
 char    *ft_strfchr_alpha(char *s)
 {
@@ -56,16 +46,6 @@ char    *ft_strfchr(char *s, int c)
 	}
 	str[i] = '\0';
 	return (str);
-}
-
-int		count_tab(char **tab)
-{
-	int i;
-
-	i = 0;
-	while (tab[i])
-		i++;
-	return (i);
 }
 
 char	*ft_joinchar(char *s, char c)

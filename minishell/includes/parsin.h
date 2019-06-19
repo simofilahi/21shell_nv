@@ -6,7 +6,7 @@
 /*   By: aariss <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/11 15:07:07 by aariss            #+#    #+#             */
-/*   Updated: 2019/06/19 08:49:01 by aariss           ###   ########.fr       */
+/*   Updated: 2019/06/19 14:40:17 by aariss           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,23 +18,18 @@
 # include "minishell.h"
 
 /*
- ******** Data Structures ********
- */
-
-
-/*
  ******** Check Functions ********
  */
 
 int		ft_istoken(int c);
 int		ft_isquote(int c);
-int		ft_ischarspecial(int c);
 
 /*
  ******** Count Functions ********
  */
 int		count_tab(char **tab);
 int     ft_count_till(char *s, int c);
+int		ft_count_falpha(char *s);
 
 /*
  ******** Others ********
