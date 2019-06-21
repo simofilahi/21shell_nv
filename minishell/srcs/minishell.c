@@ -6,7 +6,7 @@
 /*   By: mfilahi <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/04 19:53:19 by mfilahi           #+#    #+#             */
-/*   Updated: 2019/06/18 10:55:32 by aariss           ###   ########.fr       */
+/*   Updated: 2019/06/19 09:37:18 by aariss           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,27 @@ void	sys_cmd(char **command, char *path_found, t_env **head_ref)
 	execute(command, path_found, head_ref);
 }
 
+char	*get_binary_path(char **cmd, t_env **head_ref)
+{
+	char 	**tab;
+	char	*tmp;
+	int		i;
+
+
+	i = 0;
+	tab = get_path(head_ref);
+	tmp = ft_strjoin("/", *cmd);
+	while (tab[i])
+	{	
+		*cmd = ft_strjoin(tab[i], tmp);
+		if (access(*cmd, F_OK) == 0)
+			break ;
+		free(tab[i]);
+		i++;
+	}
+	return (*cmd);
+}
+
 void	child_pid(char **command, t_env **head_ref)
 {
 	pid_t	child_pid;
@@ -64,31 +85,164 @@ void	child_pid(char **command, t_env **head_ref)
 	g_signal_num = 0;
 }
 
-/*void	_child_pid(char **command, t_env **head_ref)
+int		specialtoken(char **argv)
 {
-	
-}*/
+	t_defined *lst;
+	int			 i;
+	int			counter;
 
-/*int		specialtoken(char **agc)
-{
-	while (*(*argc))
-		if (ft_strcmp(*agc, ))
-			return (1);
+	lst = init_cases();
+	i = 0;
+	counter = 0;
+	while (argv[i])
+	{
+		if (is_one_of_them(argv[i], lst))
+			counter++;
+		i++;
+	}
+	if (counter)
+		return (counter);
 	return (0);
-}*/
+}
+
+int		count_words(char **args, int index)
+{
+	t_defined *lst;
+	int		   counter;
+	int		   i;
+	int		   j;
+
+	lst = init_cases();
+	counter = 0;
+	i = 0;
+	j= 0;
+	while (args[i])
+	{
+		if (!is_one_of_them(args[i], lst))
+			counter++;
+		else 
+		{
+			if (index == j)
+				return (counter);
+			counter = 0;
+			j++;
+		}
+		i++;
+	}
+	return (counter);
+}
+
+char	**get_arg(char **argv, int index)
+{
+	int	 len;
+	int  i;
+	int  j;
+	int  f;
+	t_defined *lst;
+	char **arg;
+
+	len = count_words(argv, index);
+	lst = init_cases();
+	if (!(arg = (char **)malloc(sizeof(char *) * (len + 1))))
+		return (NULL);
+	i = 0;
+	j = 0;
+	f = 0;
+	while (argv[i])
+	{
+		if (!is_one_of_them(argv[i], lst))
+		{	
+			if (index == f)
+			{
+				arg[j] = ft_strdup(argv[i]);
+				j++;
+			}
+		}
+		else 
+		{
+			if (index == f)
+				return (arg);
+			f++;
+		}
+		i++;
+	}
+	return (arg);
+}
+
+void	_child_pid(t_holder *h, int count)
+{
+	char	**env;
+	char	**arg;
+	char		**av1;
+
+	int	   fds[2];
+	int	   status;
+	pid_t  child;
+	int i;
+	env = get_env(&h->head_ref);
+	pipe(fds);
+	i = 0;
+	while (i <= count)
+	{
+		child = fork();
+		if (child == 0)
+		{
+			if (i == 0)
+			{
+				av1 = get_arg(h->lst->cmd, i);
+				av1[0]  = get_binary_path(&av1[0], &h->head_ref);
+				dup2(fds[0], 0);
+				close(fds[0]);
+				close(fds[1]);
+				execve(av1[0], av1, env);
+				waitpid(child, &status, 0);
+			}
+			else
+			{
+				arg = get_arg(h->lst->cmd, i);
+				arg[0]  = get_binary_path(&arg[0], &h->head_ref);
+				close(fds[0]);
+				dup2(fds[1], 1);
+				execve(arg[0], arg, env);
+				close(fds[1]);
+			}
+		}
+		else
+		{
+			waitpid(child, &status, 0);				
+		}
+		i++;
+	}
+
+	//waitpid(child, &status, 0);	
+	/*int i;
+	
+	i = -1;
+	while (arg[++i])
+		printf("%s\n", arg[i]);
+
+	arg = get_arg(h->lst->cmd, 1);
+	i = -1;
+	while (arg[++i])
+		printf("%s\n", arg[i]);*/
+}
 
 void	_minishell(t_holder *h)
 {
 	int		j;
+	int		count;
 
 	j = 0;
 	if ((j = own_commands(h->lst->cmd[0])))
-		builtin_cmds(h->lst->cmd, &h->head_ref, h->homepath, j);
+		builtin_cmds(h, j);
 	else
 	{
-		/*if (specialtoken(h->lst->cmd))
-			_child_pid(h->lst->cmd, &h->head_ref);
-		else*/
+		if ((count = specialtoken(h->lst->cmd)))
+		{
+			_child_pid(h, count);
+			//ft_putstr_fd("Hello\n", 1);
+		}
+		else
 			child_pid(h->lst->cmd, &h->head_ref);
 	}
 	ft_free2d(h->lst->cmd);
@@ -206,21 +360,19 @@ char	*recall_readline(char *line, char *homepath)
 	int 	flag;
 	char	*tmp;
 	char	*s;
-	int 	ctrl_d;
 
 	flag = 0;
 	while (qoutes_handler(line, &flag))
 	{
 		if (flag)
 		{
-			ft_putstr_fd("\033[1;32m...\033[0m", 1);
 			tmp = ft_strdup(line);
-			ft_strdel(&line);
-			if (!(s = ft_readline(homepath, 0, &ctrl_d)))
+			if (!(s = ft_readline("...", homepath, -2)))
 			{
 				ft_putchar_fd('\n', 1);
-				return (NULL);
+				return (line);
 			}
+			ft_strdel(&line);
 			ft_putchar_fd('\n', 1);
 			line = ft_strjoin(tmp, s);
 			ft_strdel(&tmp);
@@ -234,25 +386,19 @@ char	*recall_readline(char *line, char *homepath)
 
 char	*call_readline(t_holder *h, int index, int *flag)
 {
-		int			ctrl_d;
 		char		*line;
 
-		line = ft_readline(h->homepath, index, &ctrl_d);
+		line = ft_readline("$> ",h->homepath, index);
 		ft_putchar_fd('\n', 1);
+		*flag = 0;
 		if (!line)
-			return (NULL);
-		else if (line[0] == '\n')
 		{
-			while (line [0] == '\n')
-			{
-				ft_putstr_fd("\033[1;34m$> \033[0m", 1);
-				line = ft_readline(h->homepath, index, &ctrl_d);
-				ft_putchar_fd('\n', 1);
-			}
-		}
-		else if (!(line = recall_readline(line, h->homepath)))
 			*flag = 1;
-		return (line);
+			return (NULL);
+		}
+		else if (line[0] == '\n')
+			  return (NULL);
+		return (recall_readline(line, h->homepath));
 }
 
 void	minishell(t_holder *h, int fd, int index)
@@ -263,9 +409,8 @@ void	minishell(t_holder *h, int fd, int index)
 	flag = 0;
 	while ("21sh")
 	{
-		ft_putstr_fd("\033[1;34m$> \033[0m", 1);
-		if (!(line = call_readline(h, index - 1, &flag)) && !flag)
-				break;
+		while (!(line = call_readline(h, index - 1, &flag)) && !flag)
+				;
 		if (!flag)
 		{
 			keephistory(line, fd, index);
@@ -277,6 +422,8 @@ void	minishell(t_holder *h, int fd, int index)
 				h->lst = h->lst->next;
 			}
 		}
+		else
+			break ;
 		index++;
 	}
 }

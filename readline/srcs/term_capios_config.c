@@ -54,7 +54,7 @@ struct termios	termios_config(void)
 	return (oldconf);
 }
 
-void			termcap_config(void)
+int			termcap_config(void)
 {
 	char	*termtype;
 	int		success;
@@ -65,13 +65,14 @@ void			termcap_config(void)
 	termtype = getenv("TERM");
 	if (termtype == NULL)
 	{
-		ft_putendl_fd("variable TERM not found", 2);
-		normal_mode();
+		ft_putstr_fd("variable TERM not found", 2);
+		return (0);
 	}
 	success = tgetent(ap, termtype);
 	if (success == -1 || success == 0)
 	{
-		ft_putendl_fd("set a valid TERM value", 2);
-		normal_mode();
+		ft_putstr_fd("set a valid TERM value", 2);
+		return (0);
 	}
+	return (1);
 }

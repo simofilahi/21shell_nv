@@ -6,7 +6,7 @@
 /*   By: mfilahi <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/04 21:51:41 by mfilahi           #+#    #+#             */
-/*   Updated: 2019/06/18 10:11:16 by aariss           ###   ########.fr       */
+/*   Updated: 2019/06/19 14:45:19 by aariss           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,7 @@ struct		s_defined
 	struct s_defined	*next;
 };
 
+
 typedef	struct	s_var t_var;
 
 struct		s_var
@@ -78,6 +79,17 @@ struct		s_holder
 	char	*homepath;
 };
 
+/*
+ **********	$ Functions ********
+ */
+char    *dollar_get_simple(char *name, t_env *env, char **ptr);
+char    *dollar_get_quoted(char *name, t_env *env, char **ptr);
+char	*dollar_handle_simple(char *toto, char *line, int *i, t_env *env);
+char	*dollar_handle_quoted(char *toto, char *line, int *i, int quote, t_env *env);
+
+/*
+ **********	Others ********
+ */
 void		minishell(t_holder *h, int fd, int index);
 t__mc		*mc_maker(char *line, t_env *env);
 char		*parsin(char *line, t_env *env);
@@ -88,7 +100,7 @@ void		sys_cmd(char **command, char *path_found, t_env **head_ref);
 void		execute(char **command, char *path_found, t_env **head_ref);
 char		**get_env(t_env **head_ref);
 int			len_of_list(t_env **head_ref);
-void		builtin_cmds(char **arg, t_env **head_ref, char *homepath, int j);
+void		builtin_cmds(t_holder *h, int j);
 void		which_cmd(char *arg, t_env **head_ref);
 int			cmd_is_found(char **tab, char **ptrcmd, char *temp);
 void		_env_gerror(void);
@@ -108,7 +120,7 @@ char		**get_path(t_env **head_ref);
 int			find_path(char *penv);
 void		signal_handler(int sign);
 void		free_list(t_env **head_ref);
-char		*ft_readline(char *homepath, int index, int *ctrl_d);
+char		*ft_readline(char prompt[3], char *path, int ll_index);
 int			setenv_cmd(char *arg, char *sarg, t_env **head_ref, int flag);
 
 #endif

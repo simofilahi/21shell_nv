@@ -6,57 +6,11 @@
 /*   By: aariss <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/13 11:52:21 by aariss            #+#    #+#             */
-/*   Updated: 2019/06/18 10:03:53 by aariss           ###   ########.fr       */
+/*   Updated: 2019/06/19 15:03:47 by aariss           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parsin.h"
-
-char	*dollar_handle_simple(char *toto, char *line, int *i, t_env *env)
-{
-	(*i)++;
-	if (ft_strlen(line + (*i)) != 0)
-	{
-		while (env)
-		{
-			if (ft_strncmp(line + *i, env->var, ft_strlen(env->var) - 1) == 0)
-			{
-				toto = ft_strjoin(toto, env->value);
-				(*i) = (*i) + (ft_strlen(env->var) - 2);
-				break ;
-			}
-			env = env->next;
-		}
-	}
-	else
-		toto = ft_joinchar(toto, '$');
-	return (toto);
-}
-
-char	*dollar_handle_quoted(char *toto, char *line, int *i, int quote, t_env *env)
-{
-	if (quote == 39)
-	{
-		toto = ft_joinchar(toto, '$');
-		return (toto);
-	}
-	else if (quote == '"')
-	{ 
-		/*  MAY BE MORE USEFULL TO CALL THE FUNCTION dollar_handle_simple HERE INSTEAD...JUST A THOUGHT  */
-		(*i)++;
-		while (env)
-		{
-			if (ft_strncmp(line + *i, env->var, ft_strlen(env->var) - 1) == 0)
-			{
-				toto = ft_strjoin(toto, env->value);
-				(*i) = (*i) + (ft_strlen(env->var) - 2);
-				break ;
-			}
-			env = env->next;
-		}
-	}
-	return (toto);
-}
 
 char	*skip_quote(char *line)
 {
@@ -169,7 +123,7 @@ char	*parsin(char *line, t_env *env)
 	lst = init_cases();
 	if (line)
 	{
-		while (line[i])
+		while (i < (int)ft_strlen(line))
 		{
 			if (line[i] == 92)
 				toto = skip_char(toto, line, &i, 0, 0);
@@ -200,9 +154,7 @@ char	*parsin(char *line, t_env *env)
 			else if (line[i]  == ';')
 			{
 				toto = ft_joinchar(toto, -3);
-				toto = skip_token(toto, line + i, &t);
-				toto = ft_joinchar(toto, -3);
-				i = i + t;
+				i++;
 			}
 			else if (line[i] == '$' && ft_strlen(line + i + 1) > 1)/*			HERE TOO*/
 				toto = dollar_handle_simple(toto, line, &i, env);

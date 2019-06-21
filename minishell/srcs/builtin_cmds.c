@@ -97,56 +97,63 @@ int  setenv_cmd(char *arg, char *sarg, t_env **head_ref, int flag)
 	}
 	else
 		add_node(head_ref, s, flag);
-	if (tmp != NULL)
-		ft_strdel(&tmp);
+	(tmp != NULL) ? ft_strdel(&tmp) : 0;
 	return (1);
 }
 
-void builtin_cmds(char **arg, t_env **head_ref, char *homepath, int j)
+void free_structure(t_holder *h)
 {
-	int i;
-	int flag;
+		ft_strdel(&h->homepath);
+		free_list(&h->head_ref);
+		//_free_list(h->lst);
+		free(h);
+}
 
-	i = 1;
-	flag = 0;
-	if (j == 5)
-		print_env(head_ref);
-	else if (j == 1 && !arg[1])
-		echo_cmd(arg[i], arg[i], flag);
-	else if (j == 7)
-	{
-		ft_strdel(&homepath);
-		free_list(head_ref);
-		ft_putendl_fd("\033[01;33mBye!\033[0m", 2);
-		exit(0);
-	}
-	while (arg[i])
+void _builtin_cmds(t_holder *h, int j, int i, int flag)
+{
+	while (h->lst->cmd[i])
 	{
 		if ((j == 2 && i == 2) || (j == 3 && i == 3))
 			return ;
 		else if (j == 1)
 		{
-			if (ft_strcmp(arg[1], "-n") == 0 && i == 1)
+			if ((ft_strcmp(h->lst->cmd[1], "-n") == 0) && i == 1)
 				flag = 1;
-			echo_cmd(arg[i], arg[i + 1], flag);
+			echo_cmd(h->lst->cmd[i], h->lst->cmd[i + 1], flag);
 		}
 		else if (j == 2)
-			ft_chdir(arg[i], head_ref);
+			ft_chdir(h->lst->cmd[i], &h->head_ref);
 		else if (j == 3)
 		{
-			if (arg[i + 1])
-				flag = 1;
-			else
-				flag = 0;
-			if (!setenv_cmd(arg[i], arg[i + 1], head_ref, flag) || flag)
+			flag = (h->lst->cmd[i + 1]) ? 1 : 0;
+			if (!setenv_cmd(h->lst->cmd[i], h->lst->cmd[i + 1], &h->head_ref, flag) || flag)
 				return ;
 		}
 		else if (j == 4)
-			del_node(arg[i], head_ref);
+			del_node(h->lst->cmd[i], &h->head_ref);
 		else if (j == 6)
-			which_cmd(arg[i], head_ref);
+			which_cmd(h->lst->cmd[i], &h->head_ref);
 		i++;
 	}
+}
+
+void builtin_cmds(t_holder *h, int j)
+{
+	int flag;
+	
+	flag = 0;
+	if (j == 5)
+		print_env(&h->head_ref);
+	else if (j == 1 && !h->lst->cmd[1])
+		echo_cmd(NULL, NULL, flag);
+	else if (j == 7)
+	{
+		free_structure(h);
+		ft_putendl_fd("\033[01;33mBye!\033[0m", 2);
+		exit(0);
+	}
+	else
+		_builtin_cmds(h, j, 1, flag);
 }
 
 int		own_commands(char *cmd)

@@ -30,14 +30,7 @@
 # define BUFF_SIZE 100
 # define BUFFER_SIZE 100000
 
-// 
-
-typedef struct		s_hlst
-{
-	char			*line;
-	struct s_hlst	*next;
-	struct s_hlst	*prev;
-}					t_hlst;
+//
 
 typedef struct		s_package
 {
@@ -53,7 +46,6 @@ typedef struct		s_package
 	int				len;
 	char			*path;
 	int				ll_index;
-	int				*ctrl_d;
 	struct termios	oldconf;
 	struct winsize	w;
 }					t_package;
@@ -106,7 +98,7 @@ void				paste_of_mouse(t_package *p);
 */
 void				normal_mode(void);
 struct termios		termios_config(void);
-void				termcap_config(void);
+int					termcap_config(void);
 int					my_putchar(int c);
 /*
 ** cursor actions
@@ -129,14 +121,14 @@ void				print_readablechar();
 ** read from stdin
 */
 void				read_line();
-char				*ft_readline(char *path, int ll_index, int *ctrl_d);
+char				*ft_readline(char prompt[3], char *path, int ll_index);
 /*
 ** others :
 **			- initialization memeber of structure
 **			- func cloud to store @ of structure
 **			- count lines if newline is found
 */
-void				init_structure_members(char *path, int ll_index, int *ctrl_d);
+void				init_structure_members(char *path, int ll_index);
 t_package			*cloud(t_package *p);
 int					get_n_line(int fd, char **line, int n);
 int					new_line_is_found(char *line);

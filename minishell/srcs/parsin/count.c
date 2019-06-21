@@ -1,39 +1,45 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   check.c                                            :+:      :+:    :+:   */
+/*   count.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aariss <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/06/18 08:40:45 by aariss            #+#    #+#             */
-/*   Updated: 2019/06/19 14:55:29 by aariss           ###   ########.fr       */
+/*   Created: 2019/06/19 14:20:47 by aariss            #+#    #+#             */
+/*   Updated: 2019/06/19 14:21:47 by aariss           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parsin.h"
 
-int		ft_isquote(int c)
+int		count_tab(char **tab)
 {
-		if (c == 39 || c == '"')
-			return (1);
-		return (0);
+	int i;
+
+	i = 0;
+	while (tab[i])
+		i++;
+	return (i);
 }
 
-int		ft_istoken(int c)
+int		ft_count_falpha(char *s)
 {
-	if (c == '|' || c == '>' || c == '<'
-			|| c == '&' || c == '1' || c == '2')
-		return (1);
-	return (0);
+	int	i;
+
+	i = 0;
+	while (s[i] && ft_isalpha(s[i]))
+		i++;
+	return (i);
 }
 
-int		is_one_of_them(char *name, t_defined *lst)
+int     ft_count_till(char *s, int c)
 {
-	while (lst)
+	int i;
+
+	i = 0;
+	while (s[i] && s[i] != c)
 	{
-		if (ft_strncmp(name, lst->data, ft_strlen(lst->data)) == 0)
-			return (1);
-		lst = lst->next;
+		i++;
 	}
-	return (0);
+	return (i);
 }

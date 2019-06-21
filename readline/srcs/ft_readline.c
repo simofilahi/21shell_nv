@@ -18,7 +18,13 @@
 
 void	get_input_2(t_package *p, int sum)
 {
-	if (sum == CUTKEY)
+	if (sum == COPYKEY)
+		copy_line_key(&p->holdcopy, p->line);
+	else if (sum == COPYKEY_BC)
+		copy_before_cursor_key(&p->holdcopy, p->line, p->index);
+	else if (sum == COPYKEY_AC)
+		copy_after_cursor_key(&p->holdcopy, p->line, p->index);
+	else if (sum == CUTKEY)
 		cut_line_key(&p->holdcopy, &p->line);
 	else if (sum == CUTKEY_BC)
 		cut_before_cursor_key(&p->holdcopy, &p->line, p->index);
@@ -43,7 +49,13 @@ void	get_input_2(t_package *p, int sum)
 
 void	get_input_1(t_package *p, int sum)
 {
-	if (sum == BACKSPACE && checking(p->line, p->index, 2))
+	if (sum >= 32 && sum <= 126)
+		print_readablechar(p);
+	else if (sum == RIGHTKEY && checking(p->line, p->index, 1))
+		right_key(p);
+	else if (sum == LEFTKEY && checking(p->line, p->index, 2))
+			left_key(p);
+	else if (sum == BACKSPACE && checking(p->line, p->index, 2))
 		backspace_key(p);
 	else if (sum == HOMEKEY && p->index > 0)
 		home_key();
@@ -57,12 +69,6 @@ void	get_input_1(t_package *p, int sum)
 		ft_alt_upkey(p);
 	else if (sum == ALT_DOWNKEY)
 		ft_alt_downkey(p);
-	else if (sum == COPYKEY)
-		copy_line_key(&p->holdcopy, p->line);
-	else if (sum == COPYKEY_BC)
-		copy_before_cursor_key(&p->holdcopy, p->line, p->index);
-	else if (sum == COPYKEY_AC)
-		copy_after_cursor_key(&p->holdcopy, p->line, p->index);
 	else
 		get_input_2(p, sum);
 }
@@ -71,11 +77,15 @@ void	get_input_1(t_package *p, int sum)
 ** read data from stdin & check any key pressed
 */
 
-void	get_input(t_package *p)
+void	get_input(char *s, t_package *p)
 {
-	int sum;
+	int		sum;
+	char	*tmp;
 
-	ft_bzero(p->buffer, BUFFER_SIZE);
+
+	ft_putstr_fd("\033[1;34m", 1);
+	ft_putstr_fd(s, 1);
+	ft_putstr_fd("\033[0m", 1);
 	while ((read(0, p->buffer, BUFFER_SIZE)) > 0)
 	{
 		sum = *((int *)p->buffer);
@@ -86,12 +96,6 @@ void	get_input(t_package *p)
 			if (!(ctrl_d(p)))
 				break ;
 		}
-		else if (sum >= 32 && sum <= 126)
-			print_readablechar(p);
-		else if (sum == RIGHTKEY && checking(p->line, p->index, 1))
-			right_key(p);
-		else if (sum == LEFTKEY && checking(p->line, p->index, 2))
-			left_key(p);
 		else
 			get_input_1(p, sum);
 		ft_bzero(p->buffer, BUFFER_SIZE);
@@ -99,24 +103,22 @@ void	get_input(t_package *p)
 	end_key(p);
 	if (sum == 10)
 	{
-		char *tmp;
-		
 		tmp = p->line;
 		p->line = ft_strjoin(p->line, "\n");
 		ft_strdel(&tmp);
 	}
 }
 
-char	*ft_readline(char *path, int ll_index, int *ctrl_d)
+char	*ft_readline(char prompt[3], char *path, int ll_index)
 {
 	t_package	*p;
 	char		*line;
 
 	line = NULL;
-	init_structure_members(path, ll_index, ctrl_d);
+	init_structure_members(path, ll_index);
 	p = cloud(NULL);
-	termcap_config();
-	get_input(p);
+	if (termcap_config())
+		get_input(&prompt[0], p);
 	normal_mode();
 	if (ft_strlen(p->line) > 0)
 		line = ft_strdup(p->line);

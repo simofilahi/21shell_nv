@@ -56,10 +56,9 @@ int		checking(char *line, int index, int key)
 	return (FALSE);
 }
 
-void	init_structure_members(char *path, int ll_index, int *ctrl_d)
+void	init_structure_members(char *path, int ll_index)
 {
 	t_package		*p;
-	struct termios	def_conf;
 
 	p = ft_memalloc(sizeof(struct s_package));
 	p->len = 20;
@@ -67,14 +66,20 @@ void	init_structure_members(char *path, int ll_index, int *ctrl_d)
 	p->holdcopy = ft_strnew(1);
 	p->path = path;
 	p->ll_index = ll_index;
-	def_conf = termios_config();
+	p->oldconf = termios_config();
 	get_pos(&p->posy, &p->posx);
-	p->oldconf = def_conf;
+	if (p->posx > 1)
+	{
+		tputs(SRV, 1, my_putchar);
+		ft_putchar_fd('%', 1);
+		tputs(ERV, 1, my_putchar);
+		ft_putchar_fd('\n', 1);
+	}
 	p->posy -= 1;
 	p->posx = 3;
 	p->init_y = p->posy;
 	p->last_y = p->init_y;
-	p->ctrl_d = ctrl_d;
+	ft_bzero(p->buffer, BUFFER_SIZE);
 	ioctl(0, TIOCGWINSZ, &p->w);
 	cloud(p);
 }

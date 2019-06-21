@@ -6,20 +6,46 @@
 /*   By: aariss <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/11 15:14:25 by aariss            #+#    #+#             */
-/*   Updated: 2019/06/18 08:51:39 by aariss           ###   ########.fr       */
+/*   Updated: 2019/06/19 14:21:26 by aariss           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parsin.h"
 
-int		count_tab(char **tab)
+char    *ft_strfchr_alpha(char *s)
 {
-	int i;
+	char        *str;
+	size_t      i;
 
+	if (!(str = (char*)malloc(sizeof(char) * (ft_count_falpha(s) + 1))))
+		return (0);
 	i = 0;
-	while (tab[i])
+	while (s[i] && ft_isalpha(s[i]))
+	{
+		str[i] = s[i];
 		i++;
-	return (i);
+	}
+	str[i] = '\0';
+	return (str);
+}
+
+char    *ft_strfchr(char *s, int c)
+{
+	char        *str;
+	size_t      i;
+	int         len;
+
+	len = ft_count_till(s, c);
+	if (!(str = (char*)malloc(sizeof(char) * (ft_count_till(s, c) + 1))))
+		return (0);
+	i = 0;
+	while (s[i] && s[i] != c)
+	{
+		str[i] = s[i];
+		i++;
+	}
+	str[i] = '\0';
+	return (str);
 }
 
 char	*ft_joinchar(char *s, char c)
