@@ -6,11 +6,27 @@
 /*   By: aariss <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/11 15:14:25 by aariss            #+#    #+#             */
-/*   Updated: 2019/06/19 14:21:26 by aariss           ###   ########.fr       */
+/*   Updated: 2019/06/19 15:10:11 by aariss           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parsin.h"
+
+void	print_lst(t__mc	*lst)
+{
+	int	i;
+
+	while (lst)
+	{
+		i = 0;
+		while (i < count_tab(lst->cmd))
+		{
+			printf("%s", lst->cmd[i]);
+			i++;
+		}
+		lst = lst->next;
+	}
+}
 
 char    *ft_strfchr_alpha(char *s)
 {

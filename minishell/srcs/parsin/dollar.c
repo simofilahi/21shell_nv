@@ -6,7 +6,7 @@
 /*   By: aariss <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/19 14:42:23 by aariss            #+#    #+#             */
-/*   Updated: 2019/06/19 14:43:08 by aariss           ###   ########.fr       */
+/*   Updated: 2019/06/20 10:58:47 by aariss           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,6 @@ char	*dollar_handle_quoted(char *toto, char *line, int *i, int quote, t_env *env
 		toto = ft_joinchar(toto, '$');
 	else if (quote == '"')
 	{ 
-		/*  MAY BE MORE USEFULL TO CALL THE FUNCTION dollar_handle_simple HERE INSTEAD...JUST A THOUGHT  */
 		ptr = NULL;
 		kali = ft_strfchr_alpha(line + *i + 1);
 		str = dollar_get_quoted(kali, env, &ptr);

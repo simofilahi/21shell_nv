@@ -6,7 +6,7 @@
 /*   By: aariss <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/13 11:52:21 by aariss            #+#    #+#             */
-/*   Updated: 2019/06/19 15:03:47 by aariss           ###   ########.fr       */
+/*   Updated: 2019/06/20 10:59:12 by aariss           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,7 +136,7 @@ char	*parsin(char *line, t_env *env)
 				{
 					if (line[i] == 92)
 						toto = skip_char(toto,line, &i, 1, keeper);
-					else if (line[i] == '$' && ft_strlen(line + i + 1) > 2) /*  		FIX THE SINGLE $ ISSUE*/
+					else if (line[i] == '$' && ft_strlen(line + i + 1) > 2)
 						toto = dollar_handle_quoted(toto, line, &i, keeper, env);
 					else
 						toto = ft_joinchar(toto, line[i]);
@@ -154,11 +154,9 @@ char	*parsin(char *line, t_env *env)
 			else if (line[i]  == ';')
 			{
 				toto = ft_joinchar(toto, -3);
-				toto = skip_token(toto, line + i, &t);
-				toto = ft_joinchar(toto, -3);
-				i = i + t;
+				i++;
 			}
-			else if (line[i] == '$' && ft_strlen(line + i + 1) > 1)/*			HERE TOO*/
+			else if (line[i] == '$' && ft_strlen(line + i + 1) > 1)
 				toto = dollar_handle_simple(toto, line, &i, env);
 			else if (line[i] == '~')
 				toto = ft_strjoin(toto, get_var("HOME=", &env));

@@ -6,7 +6,7 @@
 /*   By: mfilahi <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/04 19:53:19 by mfilahi           #+#    #+#             */
-/*   Updated: 2019/06/19 09:37:18 by aariss           ###   ########.fr       */
+/*   Updated: 2019/06/21 15:59:55 by aariss           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,12 +42,17 @@ void	sys_cmd(char **command, char *path_found, t_env **head_ref)
 
 void	child_pid(char **command, t_env **head_ref)
 {
+	int		fds[2];
 	pid_t	child_pid;
 	char	*path_found;
 
+	pipe(fds);
 	child_pid = fork();
 	if (child_pid == 0)
 	{
+		dup2(fds[0], STDIN_FILENO);
+		close(fds[0]);
+		close(fds[1]);
 		path_found = ft_strdup(command[0]);
 		if (command[0][0] == '/')
 			execute(command, path_found, head_ref);

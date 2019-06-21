@@ -6,7 +6,7 @@
 /*   By: mfilahi <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/04 21:51:41 by mfilahi           #+#    #+#             */
-/*   Updated: 2019/06/19 14:45:19 by aariss           ###   ########.fr       */
+/*   Updated: 2019/06/19 15:17:52 by aariss           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,9 @@
 #define HASH '#'
 #define PIPE '|'
 
+/*
+ **********	DATA STRUCTURES ********
+ */
 int				g_signal_num;
 
 typedef struct	s_env t_env;
