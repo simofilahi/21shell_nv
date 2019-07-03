@@ -6,7 +6,7 @@
 /*   By: mfilahi <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/04 21:51:41 by mfilahi           #+#    #+#             */
-/*   Updated: 2019/06/19 15:17:52 by aariss           ###   ########.fr       */
+/*   Updated: 2019/07/03 14:34:00 by aariss           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,8 @@
 # include <stdio.h>
 
 /*
-** metacharacters
-*/
+ ** metacharacters
+ */
 #define BACKSLACH '\\'
 #define SQUOTE '\''
 #define DQUOTE '"'
@@ -49,8 +49,8 @@ typedef struct	s__mc t__mc;
 
 struct		s__mc
 {
-		char			**cmd;
-			struct s__mc	*next;
+	char			**cmd;
+	struct s__mc	*next;
 };
 
 typedef	struct	s_defined t_defined;
@@ -60,6 +60,56 @@ struct		s_defined
 	char				*data;
 	struct s_defined	*next;
 };
+
+
+typedef	struct	s_var t_var;
+
+struct		s_var
+{
+	int		a;
+	int		b;
+	int		c;
+	int		d;
+	int		index;
+};
+
+typedef	struct	s_info t_info;
+
+struct		s_info
+{
+	char			*file;
+	int				sfd;
+	int				dfd;
+	int				read_meth;
+	struct s_info	*next;
+};
+
+typedef	struct	s_god t_god;
+
+struct		s_god
+{
+	char			**cmd;
+	struct s_info	*demi_god;
+	struct s_god	*next;
+};
+
+typedef	struct	s_holder t_holder;
+
+struct		s_holder
+{
+	t_env	*head_ref;
+	t__mc	*lst;
+	char	*homepath;
+};
+/*
+ **********	BUILDING Functions ********
+ */
+
+char	**get_piped(char **argv, int index);
+int		pipecount(char **argv, int delim);
+void	voidy(char **cmd);
+int		retrieve_the_digit(char *name, int	delimiter);
+int		count_arg(char **cmd, t_defined *lst);
 
 /*
  **********	$ Functions ********
@@ -72,7 +122,12 @@ char	*dollar_handle_quoted(char *toto, char *line, int *i, int quote, t_env *env
 /*
  **********	Others ********
  */
-void		minishell(t_env **head_ref, char *homepath, int fd, int index);
+int			count_words(char **args, int index);
+char		**get_arg(char **argv, int index, char **which_token);
+int			specialtoken(char **argv);
+void		khilo(t_god *lst, t_env *env);
+t_god		*god_like(char **cmd);
+void		minishell(t_holder *h, int fd, int index);
 t__mc		*mc_maker(char *line, t_env *env);
 char		*parsin(char *line, t_env *env);
 t_defined	*init_cases(void);
@@ -82,7 +137,7 @@ void		sys_cmd(char **command, char *path_found, t_env **head_ref);
 void		execute(char **command, char *path_found, t_env **head_ref);
 char		**get_env(t_env **head_ref);
 int			len_of_list(t_env **head_ref);
-void		builtin_cmds(char **arg, t_env **head_ref, char *homepath, int j);
+void		builtin_cmds(t_holder *h, int j);
 void		which_cmd(char *arg, t_env **head_ref);
 int			cmd_is_found(char **tab, char **ptrcmd, char *temp);
 void		_env_gerror(void);
@@ -102,7 +157,7 @@ char		**get_path(t_env **head_ref);
 int			find_path(char *penv);
 void		signal_handler(int sign);
 void		free_list(t_env **head_ref);
-char		*ft_readline(char *homepath, int index, int *ctrl_d);
+char		*ft_readline(char prompt[3], char *path, int ll_index);
 int			setenv_cmd(char *arg, char *sarg, t_env **head_ref, int flag);
 
 #endif

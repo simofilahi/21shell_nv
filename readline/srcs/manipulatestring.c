@@ -6,7 +6,7 @@
 /*   By: mfilahi <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/02 15:00:34 by mfilahi           #+#    #+#             */
-/*   Updated: 2019/05/04 12:22:29 by mfilahi          ###   ########.fr       */
+/*   Updated: 2019/06/26 10:41:35 by aariss           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,6 @@ void	insert_element_1(char *string, char *ptr, int key, char ch)
 	while (ptr[j])
 		string[i++] = ptr[j++];
 	string[i] = '\0';
-	free(ptr);
 }
 
 char	*insert_element(char *string, char ch, int key, int *lline)
@@ -53,14 +52,14 @@ char	*insert_element(char *string, char ch, int key, int *lline)
 	char	*ptr;
 
 	len = ft_strlen(string);
-	if (len - 2 == *lline)
+	ptr = ft_strdup(string);
+	if (len >= *lline)
 	{
-		ptr = string;
-		*lline += 20;
+		*lline += (len > *lline) ? len + 20 : 20;
+		ft_strdel(&string);
 		if (!(string = ft_strnew(*lline)))
 			return (NULL);
 		ft_strcpy(string, ptr);
-		free(ptr);
 	}
 	if (key == len)
 	{
@@ -69,6 +68,7 @@ char	*insert_element(char *string, char ch, int key, int *lline)
 	}
 	else if (!(key < 0) && key < len)
 		insert_element_1(string, ptr, key, ch);
+	ft_strdel(&ptr);
 	return (string);
 }
 

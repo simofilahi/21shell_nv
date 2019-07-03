@@ -21,5 +21,7 @@
 # define MCDOL tgetstr("do", NULL)
 # define SVC tgetstr("vi", NULL)
 # define EVC tgetstr("ve", NULL)
+# define SRV tgetstr("mr", NULL)
+# define ERV tgetstr("me", NULL)
 
 #endif

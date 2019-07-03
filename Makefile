@@ -6,7 +6,7 @@
 #    By: mfilahi <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/05/03 16:07:14 by mfilahi           #+#    #+#              #
-#    Updated: 2019/06/19 14:46:15 by aariss           ###   ########.fr        #
+#    Updated: 2019/07/03 09:49:30 by aariss           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -43,6 +43,8 @@ SRCS_SH = $(SRCS_SH_DIR)/execute.c \
 		  $(SRCS_SH_DIR)/minishell.c \
 		  $(SRCS_SH_DIR)/own_cmds.c \
 		  $(SRCS_SH_DIR)/srcs.c \
+		  $(SRCS_SH_DIR)/voidy.c \
+		  $(SRCS_SH_DIR)/next_voidy.c
 
 SRCS_PR = $(SRCS_PR_DIR)/extras.c \
 		  $(SRCS_PR_DIR)/parsin.c \

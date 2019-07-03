@@ -6,7 +6,7 @@
 /*   By: aariss <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/13 11:52:21 by aariss            #+#    #+#             */
-/*   Updated: 2019/06/20 10:59:12 by aariss           ###   ########.fr       */
+/*   Updated: 2019/06/22 12:08:20 by aariss           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -152,10 +152,7 @@ char	*parsin(char *line, t_env *env)
 				i = i + t;
 			}
 			else if (line[i]  == ';')
-			{
 				toto = ft_joinchar(toto, -3);
-				i++;
-			}
 			else if (line[i] == '$' && ft_strlen(line + i + 1) > 1)
 				toto = dollar_handle_simple(toto, line, &i, env);
 			else if (line[i] == '~')
