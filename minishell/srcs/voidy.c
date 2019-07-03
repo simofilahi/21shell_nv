@@ -6,7 +6,7 @@
 /*   By: macuser <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/29 16:22:39 by macuser           #+#    #+#             */
-/*   Updated: 2019/07/03 14:46:08 by aariss           ###   ########.fr       */
+/*   Updated: 2019/07/03 15:17:05 by aariss           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,12 +115,9 @@ void	voidy(char **cmd)
 	tokens = init_cases();
 	while (i < count)
 	{
+		ft_putendl("toto");
 		kratos = get_piped(cmd, i);
-		int	j = 0;
-		while (kratos[j])
-		{
-			j++;
-		}
+		ft_putendl("tutu");
 		if (lst->next == NULL)
 		{
 			lst->next = godly_void(kratos, tokens);
