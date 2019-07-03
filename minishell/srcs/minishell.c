@@ -40,27 +40,6 @@ void	sys_cmd(char **command, char *path_found, t_env **head_ref)
 	execute(command, path_found, head_ref);
 }
 
-char	*get_binary_path(char **cmd, t_env **head_ref)
-{
-	char 	**tab;
-	char	*tmp;
-	int		i;
-
-
-	i = 0;
-	tab = get_path(head_ref);
-	tmp = ft_strjoin("/", *cmd);
-	while (tab[i])
-	{	
-		*cmd = ft_strjoin(tab[i], tmp);
-		if (access(*cmd, F_OK) == 0)
-			break ;
-		free(tab[i]);
-		i++;
-	}
-	return (*cmd);
-}
-
 void	child_pid(char **command, t_env **head_ref)
 {
 	pid_t	child_pid;
@@ -87,7 +66,7 @@ void	child_pid(char **command, t_env **head_ref)
 
 int		specialtoken(char **argv)
 {
-	t_defined *lst;
+	t_defined	 *lst;
 	int			 i;
 	int			counter;
 
@@ -105,283 +84,64 @@ int		specialtoken(char **argv)
 	return (0);
 }
 
-int		count_words(char **args, int index)
-{
-	t_defined *lst;
-	int		   counter;
-	int		   i;
-	int		   j;
-
-	lst = init_cases();
-	counter = 0;
-	i = 0;
-	j= 0;
-	while (args[i])
-	{
-		if (!is_one_of_them(args[i], lst))
-			counter++;
-		else 
-		{
-			if (index == j)
-				return (counter);
-			counter = 0;
-			j++;
-		}
-		i++;
-	}
-	return (counter);
-}
-
-char	**get_arg(char **argv, int index)
-{
-	int	 len;
-	int  i;
-	int  j;
-	int  f;
-	t_defined *lst;
-	char **arg;
-
-	len = count_words(argv, index);
-	lst = init_cases();
-	if (!(arg = (char **)malloc(sizeof(char *) * (len + 1))))
-		return (NULL);
-	i = 0;
-	j = 0;
-	f = 0;
-	while (argv[i])
-	{
-		if (!is_one_of_them(argv[i], lst))
-		{	
-			if (index == f)
-			{
-				arg[j] = ft_strdup(argv[i]);
-				j++;
-			}
-		}
-		else 
-		{
-			if (index == f)
-				return (arg);
-			f++;
-		}
-		i++;
-	}
-	return (arg);
-}
-
-void	_child_pid(t_holder *h, int count)
-{
-	char	**env;
-	char	**arg;
-	char		**av1;
-
-	int	   fds[2];
-	int	   status;
-	pid_t  child;
-	int i;
-	env = get_env(&h->head_ref);
-	pipe(fds);
-	i = 0;
-	while (i <= count)
-	{
-		child = fork();
-		if (child == 0)
-		{
-			if (i == 0)
-			{
-				av1 = get_arg(h->lst->cmd, i);
-				av1[0]  = get_binary_path(&av1[0], &h->head_ref);
-				dup2(fds[0], 0);
-				close(fds[0]);
-				close(fds[1]);
-				execve(av1[0], av1, env);
-				waitpid(child, &status, 0);
-			}
-			else
-			{
-				arg = get_arg(h->lst->cmd, i);
-				arg[0]  = get_binary_path(&arg[0], &h->head_ref);
-				close(fds[0]);
-				dup2(fds[1], 1);
-				execve(arg[0], arg, env);
-				close(fds[1]);
-			}
-		}
-		else
-		{
-			waitpid(child, &status, 0);				
-		}
-		i++;
-	}
-
-	//waitpid(child, &status, 0);	
-	/*int i;
-	
-	i = -1;
-	while (arg[++i])
-		printf("%s\n", arg[i]);
-
-	arg = get_arg(h->lst->cmd, 1);
-	i = -1;
-	while (arg[++i])
-		printf("%s\n", arg[i]);*/
-}
-
 void	_minishell(t_holder *h)
 {
 	int		j;
 	int		count;
 
 	j = 0;
-	if ((j = own_commands(h->lst->cmd[0])))
+	count = 0;
+	if (!(count = specialtoken(h->lst->cmd)) &&\
+		 (j = own_commands(h->lst->cmd[0])))
 		builtin_cmds(h, j);
 	else
 	{
-		if ((count = specialtoken(h->lst->cmd)))
-		{
+		if (count)
 			_child_pid(h, count);
-			//ft_putstr_fd("Hello\n", 1);
-		}
 		else
 			child_pid(h->lst->cmd, &h->head_ref);
 	}
-	ft_free2d(h->lst->cmd);
 }
 
-void	keephistory(char *line, int fd, int index)
+void	keephistory(t_holder *h, char *line, int fd, int *index)
 {
-	char	*ret;
-	char	*historyline;
-	char	*tmp;
+	char		*ret;
+	char		*historyline;
+	char		*tmp;
+	static char *lline;
 
-	ret = ft_itoa(index);
+	if (*index == 1)
+		lline = ft_strdup(line);
+	else
+	{
+		if (ft_strcmp(line, lline) == 0)
+		{
+			(*index)--;
+			return ;
+		}
+		free(lline);
+		lline = ft_strdup(line);
+	}
+	h->ptr = lline;
+	ret = ft_itoa(*index);
 	tmp = ft_strjoin(ret, ":");
 	historyline = ft_strjoin(tmp, line);
 	write(fd, historyline, ft_strlen(historyline));
+	ft_strdel(&ret);
+	ft_strdel(&tmp);
 }
 
-int 	_metacharacters(char ch, int flag)
-{
-	if (flag)
-	{
-		if (ch == SQUOTE ||\
-			ch == DQUOTE)
-			return (1);
-	}
-	else
-	{
-		if (ch == BACKSLACH ||\
-			ch == PIPE)
-			return (1);
-	}
-	return (0);
-}
 
-int		beforepipe(char *line, int index)
+int just_spaces(char *line)
 {
-		int j;
-
-		if (index == 0)
+	while(*line)
+	{
+		if (ft_isspace(*line))
+			line++;
+		else
 			return (0);
-		else
-		{
-			j = 0;
-			while (j < index)
-				if (!ft_isspace(line[j++]))
-					return (1);
-		}
-		return (0);
-}
-
-/*
-** recall readline in cases where qoutes or backslach or pipe found;
-*/
-
-void	_qoutes_handler(t_var *v, char *line, int *flag)
-{
-	if (_metacharacters(line[v->index], 1) && (v->a || v->b))
-	{
-		if ((line[v->index] == SQUOTE && v->a) ||\
-			(line[v->index] == DQUOTE && line[v->index - 1] != BACKSLACH && v->b))
-		{
-			v->a = 0;
-			v->b = 0;
-			*flag = 0;
-		}
 	}
-	else if (_metacharacters(line[v->index], 0) && (v->c || v->d))
-	{
-		if ((v->c && line[v->index - 1] == BACKSLACH && line[v->index] == PIPE) ||\
-			(v->d && line[v->index - 1] == PIPE && line[v->index] == BACKSLACH))
-				*flag = 0;
-	}
-	else if (!_metacharacters(line[v->index], 0) && ft_isprint(line[v->index]))
-	{
-		if ((v->c && (!v->a && !v->b)) || (v->d && (!v->a && !v->b)))
-			*flag = 0;
-	}
-}
-
-int		qoutes_handler(char *line, int *flag)
-{
-	t_var *v;
-	
-	v = ft_memalloc(sizeof(t_var));
-	while (line[v->index])
-	{
-		if (_metacharacters(line[v->index], 1) && (!v->a && !v->b))
-		{
-			if (line[v->index] == SQUOTE && ((!_metacharacters(line[v->index - 1], 0)) || v->d))
-				v->a = 1;
-			else if (line[v->index] == DQUOTE && ((!_metacharacters(line[v->index - 1], 0)) || v->d))
-				v->b = 1;
-			if (v->a || v->b)
-				*flag = 1;
-		}
-		else if (_metacharacters(line[v->index], 0) && (!v->c && !v->d) && (!v->a && !v->b))
-		{
-			if (line[v->index] == BACKSLACH && !_metacharacters(line[v->index + 1], 1))
-				v->c = 1;
-			else if (line[v->index] == PIPE && beforepipe(line, v->index))
-				v->d = 1;
-			if (v->c || v->d)
-				*flag = 1;
-		}
-		else
-			_qoutes_handler(v, line, flag);
-		v->index++;
-	}
-	free(v);
 	return (1);
-}
-
-char	*recall_readline(char *line, char *homepath)
-{
-	int 	flag;
-	char	*tmp;
-	char	*s;
-
-	flag = 0;
-	while (qoutes_handler(line, &flag))
-	{
-		if (flag)
-		{
-			tmp = ft_strdup(line);
-			if (!(s = ft_readline("...", homepath, -2)))
-			{
-				ft_putchar_fd('\n', 1);
-				return (line);
-			}
-			ft_strdel(&line);
-			ft_putchar_fd('\n', 1);
-			line = ft_strjoin(tmp, s);
-			ft_strdel(&tmp);
-			ft_strdel(&s);
-		}
-		else
-			break;
-	}
-	return (line);
 }
 
 char	*call_readline(t_holder *h, int index, int *flag)
@@ -396,15 +156,19 @@ char	*call_readline(t_holder *h, int index, int *flag)
 			*flag = 1;
 			return (NULL);
 		}
-		else if (line[0] == '\n')
+		else if (line[0] == '\n' || just_spaces(line))
+		{
+			  ft_strdel(&line);
 			  return (NULL);
-		return (recall_readline(line, h->homepath));
+		}
+		return (recall_readline(h, line, h->homepath));
 }
 
 void	minishell(t_holder *h, int fd, int index)
 {
 	char		*line;
 	int			flag;
+	t__mc		*curr;
 
 	flag = 0;
 	while ("21sh")
@@ -413,13 +177,24 @@ void	minishell(t_holder *h, int fd, int index)
 				;
 		if (!flag)
 		{
-			keephistory(line, fd, index);
-			h->lst = mc_maker(line, h->head_ref);
-			ft_strdel(&line);
-			while (h->lst)
+			if (line[0] == PIPE)
 			{
-				_minishell(h);
-				h->lst = h->lst->next;
+				ft_putstr_fd("21sh: parse error near ", 2);
+				ft_putchar_fd(line[0], 2);
+				ft_putchar_fd('\n', 2);
+			}
+			else
+			{
+				keephistory(h, line, fd, &index);
+				h->lst = mc_maker(line, h->head_ref);
+				ft_strdel(&line);
+				curr = h->lst;
+				while (h->lst)
+				{
+					_minishell(h);
+					h->lst = h->lst->next;
+				}
+				_free_list(curr);
 			}
 		}
 		else
@@ -449,9 +224,9 @@ int		main(int ac, char **av, char **envp)
 
 	(void)ac;
 	(void)av;
-	h = ft_memalloc(sizeof(t_holder));
 	g_signal_num = 0;
 	signal(SIGINT, signal_handler);
+	h = ft_memalloc(sizeof(t_holder));
 	h->head_ref = copy_of_env(envp);
 	if (!(fd = create_hfile(h)))
 	{
@@ -459,10 +234,6 @@ int		main(int ac, char **av, char **envp)
 		return (0);
 	}
 	minishell(h, fd, 1);
-	ft_strdel(&h->homepath);
-	free_list(&h->head_ref);
-	//free_list2(h->lst);
-	free(h);
-	ft_putendl_fd("\033[01;33mBye!\033[0m", 2);
+	free_structure(h);
 	return (0);
 }

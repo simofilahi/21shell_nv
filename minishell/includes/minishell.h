@@ -77,8 +77,18 @@ struct		s_holder
 	t_env	*head_ref;
 	t__mc	*lst;
 	char	*homepath;
+	char	*heredoc;
+	char	*ptr;
 };
 
+typedef	struct	s_childs t_childs;
+
+struct		s_childs
+{
+	pid_t child;
+	int	  index;
+	struct	s_childs *next;
+};
 /*
  **********	$ Functions ********
  */
@@ -86,11 +96,12 @@ char    *dollar_get_simple(char *name, t_env *env, char **ptr);
 char    *dollar_get_quoted(char *name, t_env *env, char **ptr);
 char	*dollar_handle_simple(char *toto, char *line, int *i, t_env *env);
 char	*dollar_handle_quoted(char *toto, char *line, int *i, int quote, t_env *env);
-
+void	_free_list(t__mc	*lst);
 /*
  **********	Others ********
  */
 void		minishell(t_holder *h, int fd, int index);
+void		_child_pid(t_holder *h, int count);
 t__mc		*mc_maker(char *line, t_env *env);
 char		*parsin(char *line, t_env *env);
 t_defined	*init_cases(void);
@@ -122,5 +133,7 @@ void		signal_handler(int sign);
 void		free_list(t_env **head_ref);
 char		*ft_readline(char prompt[3], char *path, int ll_index);
 int			setenv_cmd(char *arg, char *sarg, t_env **head_ref, int flag);
+char		*recall_readline(t_holder *h, char *line, char *homepath);
+void		free_structure(t_holder *h);
 
 #endif

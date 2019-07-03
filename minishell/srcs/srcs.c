@@ -17,15 +17,28 @@ void	free_list(t_env **head_ref)
 	t_env	*current;
 
 	current = *head_ref;
-	while ((*head_ref)->next)
+	while ((*head_ref))
 	{
 		current = *head_ref;
 		*head_ref = (*head_ref)->next;
-		free(current->var);
+		ft_strdel(&current->var);
+		ft_strdel(&current->value);
 		free(current);
 	}
-	free((*head_ref)->var);
-	free((*head_ref));
+}
+
+void	_free_list(t__mc	*lst)
+{
+	t__mc	*current;
+
+	current = lst;
+	while (lst)
+	{
+		current = lst;
+		lst = lst->next;
+		ft_free2d(current->cmd);
+		free(current);
+	}
 }
 
 void	_env_gerror()

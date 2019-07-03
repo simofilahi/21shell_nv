@@ -35,7 +35,6 @@ void	insert_element_1(char *string, char *ptr, int key, char ch)
 	int i;
 	int j;
 
-	ptr = ft_strdup(string);
 	i = -1;
 	while (++i < key && ptr[i])
 		string[i] = ptr[i];
@@ -44,23 +43,22 @@ void	insert_element_1(char *string, char *ptr, int key, char ch)
 	while (ptr[j])
 		string[i++] = ptr[j++];
 	string[i] = '\0';
-	free(ptr);
 }
 
 char	*insert_element(char *string, char ch, int key, int *lline)
 {
 	int		len;
 	char	*ptr;
-
+	
 	len = ft_strlen(string);
-	if (len - 2 == *lline)
+	ptr = ft_strdup(string);
+	if (len >= *lline)
 	{
-		ptr = string;
-		*lline += 20;
+		*lline += (len > *lline) ? len + 20 : 20; 
+		ft_strdel(&string);
 		if (!(string = ft_strnew(*lline)))
 			return (NULL);
 		ft_strcpy(string, ptr);
-		free(ptr);
 	}
 	if (key == len)
 	{
@@ -69,6 +67,7 @@ char	*insert_element(char *string, char ch, int key, int *lline)
 	}
 	else if (!(key < 0) && key < len)
 		insert_element_1(string, ptr, key, ch);
+	ft_strdel(&ptr);
 	return (string);
 }
 
