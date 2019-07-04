@@ -32,7 +32,6 @@
 #define HASH '#'
 #define PIPE '|'
 
-int				g_signal_num;
 
 typedef struct	s_env t_env;
 struct		s_env

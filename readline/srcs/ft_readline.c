@@ -77,17 +77,18 @@ void	get_input_1(t_package *p, int sum)
 ** read data from stdin & check any key pressed
 */
 
-void	get_input(char *s, t_package *p)
+t_package	*get_input(char *s, t_package *p)
 {
 	int		sum;
 	char	*tmp;
-
 
 	ft_putstr_fd("\033[1;34m", 1);
 	ft_putstr_fd(s, 1);
 	ft_putstr_fd("\033[0m", 1);
 	while ((read(0, p->buffer, BUFFER_SIZE)) > 0)
 	{
+		if (g_signal_num == 2)
+			p = handler_ctrl_c(p);
 		sum = *((int *)p->buffer);
 		if (sum == 10)
 			break ;
@@ -107,6 +108,7 @@ void	get_input(char *s, t_package *p)
 		p->line = ft_strjoin(p->line, "\n");
 		ft_strdel(&tmp);
 	}
+	return (p);
 }
 
 char	*ft_readline(char prompt[3], char *path, int ll_index)
@@ -115,15 +117,15 @@ char	*ft_readline(char prompt[3], char *path, int ll_index)
 	char		*line;
 
 	line = NULL;
-	init_structure_members(path, ll_index);
-	p = cloud(NULL);
+	p = init_structure_members(path, ll_index);
 	if (termcap_config())
-		get_input(&prompt[0], p);
+		p = get_input(&prompt[0], p);
 	normal_mode();
 	if (ft_strlen(p->line) > 0)
 		line = ft_strdup(p->line);
 	ft_strdel(&p->line);
 	ft_strdel(&p->holdcopy);
+	ft_strdel(&p->path);
 	free(p);
 	return (line);
 }

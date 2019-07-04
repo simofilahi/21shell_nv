@@ -56,7 +56,7 @@ int		checking(char *line, int index, int key)
 	return (FALSE);
 }
 
-void	init_structure_members(char *path, int ll_index)
+t_package	*init_structure_members(char *path, int ll_index)
 {
 	t_package		*p;
 
@@ -64,11 +64,11 @@ void	init_structure_members(char *path, int ll_index)
 	p->len = 20;
 	p->line = ft_strnew(p->len);
 	p->holdcopy = ft_strnew(1);
-	p->path = path;
+	p->path = ft_strdup(path);
 	p->ll_index = ll_index;
 	p->oldconf = termios_config();
 	get_pos(&p->posy, &p->posx);
-	if (p->posx > 1)
+	if (p->posx > 1 && g_signal_num == 0)
 	{
 		tputs(SRV, 1, my_putchar);
 		ft_putchar_fd('%', 1);
@@ -81,7 +81,7 @@ void	init_structure_members(char *path, int ll_index)
 	p->last_y = p->init_y;
 	ft_bzero(p->buffer, BUFFER_SIZE);
 	ioctl(0, TIOCGWINSZ, &p->w);
-	cloud(p);
+	return (cloud(p));
 }
 
 void	print_line(char *line, int index)

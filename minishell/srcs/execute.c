@@ -53,6 +53,9 @@ char	**get_path(t_env **head_ref)
 void	signal_handler(int sign)
 {
 	ft_putchar('\n');
-	if (sign == SIGINT && g_signal_num != 1)
+	if (sign == SIGINT && g_signal_num > 0)
+	{
 		ft_putstr_fd("\033[1;34m$> \033[0m", 1);
+		g_signal_num = 2;
+	}
 }

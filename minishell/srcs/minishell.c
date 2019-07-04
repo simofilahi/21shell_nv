@@ -58,10 +58,10 @@ void	child_pid(char **command, t_env **head_ref)
 	}
 	else
 	{
-		g_signal_num = 1;
+		g_signal_num = 0;
 		wait(NULL);
 	}
-	g_signal_num = 0;
+	g_signal_num = 1;
 }
 
 int		specialtoken(char **argv)
@@ -224,7 +224,7 @@ int		main(int ac, char **av, char **envp)
 
 	(void)ac;
 	(void)av;
-	g_signal_num = 0;
+	g_signal_num = 1;
 	signal(SIGINT, signal_handler);
 	h = ft_memalloc(sizeof(t_holder));
 	h->head_ref = copy_of_env(envp);

@@ -32,6 +32,8 @@
 
 //
 
+int				g_signal_num;
+
 typedef struct		s_package
 {
 	char			*line;
@@ -115,8 +117,8 @@ int					increment_row(t_package *p, int flag);
 ** print to stdout
 */
 void				print_line(char *line, int index);
-int					print(t_package*p, int index, int col);
-void				print_readablechar();
+int					print(t_package *p, int index, int col);
+void				print_readablechar(t_package *p);
 /*
 ** read from stdin
 */
@@ -127,11 +129,13 @@ char				*ft_readline(char prompt[3], char *path, int ll_index);
 **			- initialization memeber of structure
 **			- func cloud to store @ of structure
 **			- count lines if newline is found
+**          - made a new structure hold new info if ctrl_c catched
 */
-void				init_structure_members(char *path, int ll_index);
+t_package			*init_structure_members(char *path, int ll_index);
 t_package			*cloud(t_package *p);
 int					get_n_line(int fd, char **line, int n);
 int					new_line_is_found(char *line);
 int					checking(char *line, int index, int key);
 int					count_lines(char *line, int w_col);
+t_package			*handler_ctrl_c();
 #endif
