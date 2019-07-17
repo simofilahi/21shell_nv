@@ -1,0 +1,3 @@
+clang: error: no such file or directory: 'main.c'
+clang: error: no such file or directory: 'libftprintf.a'
+clang: error: no input files

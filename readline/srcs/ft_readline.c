@@ -6,17 +6,17 @@
 /*   By: mfilahi <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/25 21:41:28 by mfilahi           #+#    #+#             */
-/*   Updated: 2019/05/04 15:47:50 by mfilahi          ###   ########.fr       */
+/*   Updated: 2019/07/17 15:07:50 by mfilahi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "line_edition.h"
 
 /*
-** check any key pressed
+** check any key pressed;
 */
 
-void	get_input_2(t_package *p, int sum)
+void		get_input_2(t_package *p, int sum)
 {
 	if (sum == COPYKEY)
 		copy_line_key(&p->holdcopy, p->line);
@@ -44,17 +44,17 @@ void	get_input_2(t_package *p, int sum)
 }
 
 /*
-** check any key pressed
+** check any key pressed;
 */
 
-void	get_input_1(t_package *p, int sum)
+void		get_input_1(t_package *p, int sum)
 {
 	if (sum >= 32 && sum <= 126)
 		print_readablechar(p);
 	else if (sum == RIGHTKEY && checking(p->line, p->index, 1))
 		right_key(p);
 	else if (sum == LEFTKEY && checking(p->line, p->index, 2))
-			left_key(p);
+		left_key(p);
 	else if (sum == BACKSPACE && checking(p->line, p->index, 2))
 		backspace_key(p);
 	else if (sum == HOMEKEY && p->index > 0)
@@ -74,13 +74,12 @@ void	get_input_1(t_package *p, int sum)
 }
 
 /*
-** read data from stdin & check any key pressed
+** read data from stdin & check any key pressed;
 */
 
 t_package	*get_input(char *s, t_package *p)
 {
-	int		sum;
-	char	*tmp;
+	int	sum;
 
 	ft_putstr_fd("\033[1;34m", 1);
 	ft_putstr_fd(s, 1);
@@ -97,21 +96,20 @@ t_package	*get_input(char *s, t_package *p)
 			if (!(ctrl_d(p)))
 				break ;
 		}
+		else if (sum == CTRL_L)
+			p = ctrl_l(s, p);
 		else
 			get_input_1(p, sum);
 		ft_bzero(p->buffer, BUFFER_SIZE);
 	}
-	end_key(p);
-	if (sum == 10)
-	{
-		tmp = p->line;
-		p->line = ft_strjoin(p->line, "\n");
-		ft_strdel(&tmp);
-	}
-	return (p);
+	return (joinnewline(p, sum));
 }
 
-char	*ft_readline(char prompt[3], char *path, int ll_index)
+/*
+** main function;
+*/
+
+char		*ft_readline(char prompt[3], char *path, int ll_index)
 {
 	t_package	*p;
 	char		*line;
@@ -125,7 +123,7 @@ char	*ft_readline(char prompt[3], char *path, int ll_index)
 		line = ft_strdup(p->line);
 	ft_strdel(&p->line);
 	ft_strdel(&p->holdcopy);
-	ft_strdel(&p->path);
+	(p->path != NULL) ? ft_strdel(&p->path) : 0;
 	free(p);
 	return (line);
 }

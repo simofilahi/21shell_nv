@@ -6,15 +6,19 @@
 /*   By: mfilahi <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/03 15:32:12 by mfilahi           #+#    #+#             */
-/*   Updated: 2019/05/04 12:32:30 by mfilahi          ###   ########.fr       */
+/*   Updated: 2019/07/17 16:39:43 by mfilahi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "line_edition.h"
 
+/*
+** - store static structure;
+*/
+
 t_package		*cloud(t_package *p)
 {
-	static	t_package	*tmp;
+	static t_package	*tmp;
 
 	if (p == NULL)
 		return (tmp);
@@ -23,24 +27,36 @@ t_package		*cloud(t_package *p)
 	return (tmp);
 }
 
+/*
+** - use in termcap;
+*/
+
 int				my_putchar(int c)
 {
 	write(1, &c, 1);
 	return (0);
 }
 
+/*
+** - set old configuration termios;
+*/
+
 void			normal_mode(void)
 {
-	t_package *p;
+	t_package	*p;
 
 	p = cloud(NULL);
 	tcsetattr(0, TCSANOW, &p->oldconf);
 }
 
+/*
+** - set new configuration termios by enbling non-canonical;
+*/
+
 struct termios	termios_config(void)
 {
-	struct termios newconf;
-	struct termios oldconf;
+	struct termios	newconf;
+	struct termios	oldconf;
 
 	if (tcgetattr(0, &oldconf) < 0)
 		ft_putendl_fd("error can't get the current configuration", \
@@ -54,7 +70,11 @@ struct termios	termios_config(void)
 	return (oldconf);
 }
 
-int			termcap_config(void)
+/*
+** - store internally capabilities of termcap;
+*/
+
+int				termcap_config(void)
 {
 	char	*termtype;
 	int		success;

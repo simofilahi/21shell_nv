@@ -6,28 +6,25 @@
 /*   By: mfilahi <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/02 20:26:35 by mfilahi           #+#    #+#             */
-/*   Updated: 2019/06/19 11:02:30 by aariss           ###   ########.fr       */
+/*   Updated: 2019/07/17 15:14:27 by mfilahi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "line_edition.h"
 
-// 
-#include <stdio.h>
+/*
+** - print line after get line from history file;
+*/
 
-void print_history_line(t_package *p)
+void	print_history_line(t_package *p)
 {
-	/*p->posy = p->init_y;
-	p->posx = 3;
-	p->w.ws_row  = p->init_row;*/
-
 	while (p->line[p->index])
 	{
 		(p->posx == p->w.ws_col - 1 || p->line[p->index] == '\n') ?\
-				  p->posx = 0 : p->posx++;
+			p->posx = 0 : p->posx++;
 		if (p->posx == 0)
 			p->posy++;
-		if (p->posy + 1  > p->w.ws_row)
+		if (p->posy + 1 > p->w.ws_row)
 			p->w.ws_row++;
 		ft_putchar_fd(p->line[p->index++], 1);
 	}
@@ -35,7 +32,7 @@ void print_history_line(t_package *p)
 		tputs(MCDOL, 1, my_putchar);
 }
 
-void ft_history_upkey(t_package *p)
+void	ft_history_upkey(t_package *p)
 {
 	int fd;
 
@@ -59,7 +56,7 @@ void ft_history_upkey(t_package *p)
 	}
 }
 
-void ft_history_downkey(t_package *p)
+void	ft_history_downkey(t_package *p)
 {
 	int fd;
 

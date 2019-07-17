@@ -6,7 +6,7 @@
 /*   By: mfilahi <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/08 21:03:31 by mfilahi           #+#    #+#             */
-/*   Updated: 2019/06/14 15:53:41 by aariss           ###   ########.fr       */
+/*   Updated: 2019/07/17 14:56:07 by mfilahi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,8 @@
 
 // 
 #include <stdio.h>
+//
+FILE *fd2;
 
 # define TRUE 1
 # define FALSE 0
@@ -53,7 +55,7 @@ typedef struct		s_package
 }					t_package;
 
 /*
-** Get history line
+** Get history lines
 */
 int					gline(const int fd, char **line_target, int delimiter);
 /*
@@ -138,4 +140,6 @@ int					new_line_is_found(char *line);
 int					checking(char *line, int index, int key);
 int					count_lines(char *line, int w_col);
 t_package			*handler_ctrl_c();
+t_package			*ctrl_l(char *s, t_package *p);
+t_package			*joinnewline(t_package *p, int sum);
 #endif

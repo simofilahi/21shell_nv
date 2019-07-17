@@ -6,11 +6,15 @@
 /*   By: mfilahi <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/01 16:12:54 by mfilahi           #+#    #+#             */
-/*   Updated: 2019/05/04 12:21:45 by mfilahi          ###   ########.fr       */
+/*   Updated: 2019/07/17 12:18:21 by mfilahi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "line_edition.h"
+
+/*
+** - this func work when new line is found and with down functions;
+*/
 
 int		get_index(int randomindex, int tmpy, int tmpx)
 {
@@ -39,7 +43,11 @@ int		get_index(int randomindex, int tmpy, int tmpx)
 	return (index);
 }
 
-void	ft_alt_upkey(t_package	*p)
+/*
+** - move cursor up one line;
+*/
+
+void	ft_alt_upkey(t_package *p)
 {
 	int			previndex;
 	int			x;
@@ -64,6 +72,10 @@ void	ft_alt_upkey(t_package	*p)
 	}
 }
 
+/*
+** - this func follwed to ft_alt_downkey;
+*/
+
 int		ft_alt_downkey_2(t_package *p, int randomindex, int *sub)
 {
 	int	x;
@@ -85,7 +97,7 @@ int		ft_alt_downkey_2(t_package *p, int randomindex, int *sub)
 }
 
 /*
-** 
+** - move cursor down one line;
 */
 
 void	ft_alt_downkey(t_package *p)
@@ -114,10 +126,10 @@ void	ft_alt_downkey(t_package *p)
 }
 
 /*
-** move cursor to begin of line;
+** - move cursor to begin of line;
 */
 
-void	home_key()
+void	home_key(void)
 {
 	t_package	*p;
 	int			y;

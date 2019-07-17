@@ -6,11 +6,16 @@
 /*   By: mfilahi <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/08 20:53:59 by mfilahi           #+#    #+#             */
-/*   Updated: 2019/05/04 12:21:42 by mfilahi          ###   ########.fr       */
+/*   Updated: 2019/07/17 12:36:30 by mfilahi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "line_edition.h"
+
+/*
+** - take a copy of line;
+** - shorthand : alt+c;
+*/
 
 void	copy_line_key(char **buffer_ref, char *line)
 {
@@ -22,6 +27,11 @@ void	copy_line_key(char **buffer_ref, char *line)
 	free(tmp);
 }
 
+/*
+** - copy partie before cursor from line;
+** - shorthand : alt+>;
+*/
+
 void	copy_before_cursor_key(char **buffer_ref, char *line, int index)
 {
 	char	*tmp;
@@ -32,6 +42,11 @@ void	copy_before_cursor_key(char **buffer_ref, char *line, int index)
 	free(tmp);
 }
 
+/*
+** - copy partie after cursor from line;
+** - shorthand : alt+<;
+*/
+
 void	copy_after_cursor_key(char **buffer_ref, char *line, int index)
 {
 	char	*tmp;
@@ -41,6 +56,11 @@ void	copy_after_cursor_key(char **buffer_ref, char *line, int index)
 		return ;
 	free(tmp);
 }
+
+/*
+** - cut line;
+** - shorthand : alt+x;
+*/
 
 void	cut_line_key(char **buffer_ref, char **line)
 {
@@ -56,6 +76,11 @@ void	cut_line_key(char **buffer_ref, char **line)
 	*line = NULL;
 	*line = ft_strnew(1);
 }
+
+/*
+** - cut partie before cursor from line;
+** - shorthand : alt+shift+<;
+*/
 
 void	cut_before_cursor_key(char **buffer_ref, char **line, int index)
 {

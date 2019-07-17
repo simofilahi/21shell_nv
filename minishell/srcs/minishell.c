@@ -11,6 +11,8 @@
 /* ************************************************************************** */
 
 #include "minishell.h"
+//
+
 
 void	sys_cmd(char **command, char *path_found, t_env **head_ref)
 {
@@ -96,9 +98,9 @@ void	_minishell(t_holder *h)
 		builtin_cmds(h, j);
 	else
 	{
-		if (count)
-			_child_pid(h, count);
-		else
+		//if (count)
+		//	_child_pid(h, count);
+		//else
 			child_pid(h->lst->cmd, &h->head_ref);
 	}
 }
@@ -143,6 +145,10 @@ int just_spaces(char *line)
 	}
 	return (1);
 }
+
+/*
+** - get line from readline func;
+*/
 
 char	*call_readline(t_holder *h, int index, int *flag)
 {
@@ -224,6 +230,9 @@ int		main(int ac, char **av, char **envp)
 
 	(void)ac;
 	(void)av;
+		
+
+//	fd2 = fopen("/dev/ttys001", "a+");
 	g_signal_num = 1;
 	signal(SIGINT, signal_handler);
 	h = ft_memalloc(sizeof(t_holder));

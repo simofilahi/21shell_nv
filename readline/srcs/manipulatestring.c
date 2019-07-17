@@ -6,11 +6,15 @@
 /*   By: mfilahi <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/02 15:00:34 by mfilahi           #+#    #+#             */
-/*   Updated: 2019/05/04 12:22:29 by mfilahi          ###   ########.fr       */
+/*   Updated: 2019/07/17 16:31:12 by mfilahi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "line_edition.h"
+
+/*
+** delete char from line;
+*/
 
 void	delete_element(char *string, int key)
 {
@@ -30,6 +34,10 @@ void	delete_element(char *string, int key)
 	}
 }
 
+/*
+** - followed to insert_element;
+*/
+
 void	insert_element_1(char *string, char *ptr, int key, char ch)
 {
 	int i;
@@ -45,16 +53,20 @@ void	insert_element_1(char *string, char *ptr, int key, char ch)
 	string[i] = '\0';
 }
 
+/*
+** - insert char into line;
+*/
+
 char	*insert_element(char *string, char ch, int key, int *lline)
 {
 	int		len;
 	char	*ptr;
-	
+
 	len = ft_strlen(string);
 	ptr = ft_strdup(string);
 	if (len >= *lline)
 	{
-		*lline += (len > *lline) ? len + 20 : 20; 
+		*lline += (len > *lline) ? len + 20 : 20;
 		ft_strdel(&string);
 		if (!(string = ft_strnew(*lline)))
 			return (NULL);
@@ -70,6 +82,10 @@ char	*insert_element(char *string, char ch, int key, int *lline)
 	ft_strdel(&ptr);
 	return (string);
 }
+
+/*
+** - delete range of chars from line;
+*/
 
 char	*delrange_of_elem(char *string, int startindex, int endindex)
 {
@@ -90,6 +106,10 @@ char	*delrange_of_elem(char *string, int startindex, int endindex)
 	tmp[i] = '\0';
 	return (tmp);
 }
+
+/*
+** - insert range of chars into line;
+*/
 
 char	*addrange_of_elem(char *s1, char *s2, int key)
 {

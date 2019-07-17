@@ -34,5 +34,6 @@
 # define CUTKEY_AC 0x98cb
 # define PASTEKEY 0x9a88e2
 # define CTRL_D	 0x0004
+# define CTRL_L 0xc
 
 #endif

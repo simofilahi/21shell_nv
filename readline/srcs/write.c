@@ -6,7 +6,7 @@
 /*   By: mfilahi <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/21 13:15:10 by mfilahi           #+#    #+#             */
-/*   Updated: 2019/05/04 12:32:57 by mfilahi          ###   ########.fr       */
+/*   Updated: 2019/07/17 15:44:12 by mfilahi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,8 @@
 /*
 ** - increment row (that mean when terminal scrolling in last line);
 ** - recover position of cursor after saving in print_readablechar;
-** - if posx equal to (p->w.ws_col ==> (last column in line)) move cursor down one line and increment posy (that meaning row);
+** - if posx equal to (p->w.ws_col ==> (last column in line)) move \
+**   cursor down one line and increment posy (that meaning row);
 */
 
 void	change_pos(t_package *p, int check)
@@ -44,8 +45,8 @@ void	change_pos(t_package *p, int check)
 		move_cursor(RIGHTKEY);
 }
 
-/* 
-** print character by character and check if new line is found;
+/*
+** -print character by character and check if new line is found;
 */
 
 int		print(t_package *p, int index, int col)
@@ -80,7 +81,7 @@ int		print(t_package *p, int index, int col)
 ** - save position of cursor;
 ** - clear screen;
 ** - make cursor invisible;
-** - print line by call print function; 
+** - print line by call print function;
 ** - change position of cursor after print line;
 ** - make cursor visible;
 ** - calcul last_line index;

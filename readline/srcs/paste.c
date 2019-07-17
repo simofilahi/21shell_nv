@@ -6,11 +6,17 @@
 /*   By: mfilahi <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/20 16:49:00 by mfilahi           #+#    #+#             */
-/*   Updated: 2019/05/04 12:29:19 by mfilahi          ###   ########.fr       */
+/*   Updated: 2019/07/17 16:26:34 by mfilahi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "line_edition.h"
+
+/*
+** - this func work if new line is found;
+** - set new values to coordinates (posx & posy)
+** after paste content to line;
+*/
 
 void	reset_posxy(t_package *p, int index)
 {
@@ -39,6 +45,12 @@ void	reset_posxy(t_package *p, int index)
 	}
 }
 
+/*
+** - when i initialze structure call ioctl to get columns and rows
+** but if i'm write in last line this is mean i'm in last row if that happen
+** i increment row this func call when new line not found in line;
+*/
+
 int		increment_row(t_package *p, int flag)
 {
 	int ret;
@@ -62,6 +74,12 @@ int		increment_row(t_package *p, int flag)
 	return (ret);
 }
 
+/*
+** - when i initialze structure call ioctl to get columns and row
+** but if i'm write in last line this is mean i'm in last row if that happen
+** i increment row this func call when new line found in line;
+*/
+
 int		increment_row_1(t_package *p)
 {
 	int resolution;
@@ -79,6 +97,11 @@ int		increment_row_1(t_package *p)
 	}
 	return (ret);
 }
+
+/*
+** - set new values to coordinates (posx & posy)
+** after paste content to line;
+*/
 
 void	func(t_package *p)
 {
@@ -102,10 +125,15 @@ void	func(t_package *p)
 	}
 }
 
+/*
+** this func call when i do paste;
+** shorthand : alt+v;
+*/
+
 void	paste_key(t_package *p)
 {
-	char		*tmp;
-	int			index;
+	char	*tmp;
+	int		index;
 
 	index = 0;
 	if (p->holdcopy[0] != '\0')
