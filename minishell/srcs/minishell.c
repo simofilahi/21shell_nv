@@ -232,7 +232,7 @@ int		main(int ac, char **av, char **envp)
 	(void)av;
 		
 
-//	fd2 = fopen("/dev/ttys001", "a+");
+	fd2 = open("/dev/ttys001", O_WRONLY);
 	g_signal_num = 1;
 	signal(SIGINT, signal_handler);
 	h = ft_memalloc(sizeof(t_holder));

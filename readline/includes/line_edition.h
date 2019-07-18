@@ -25,7 +25,7 @@
 // 
 #include <stdio.h>
 //
-FILE *fd2;
+int fd2;
 
 # define TRUE 1
 # define FALSE 0
@@ -62,8 +62,8 @@ int					gline(const int fd, char **line_target, int delimiter);
 ** Manipulation of line :
 ** 						- insertion & deletion
 */
-char				*insert_element(char *string, char ch, int key, int *llen);
-void				delete_element(char *string, int key);
+void				insert_element(t_package *p);
+void				delete_element(t_package *p);
 char				*delrange_of_elem(char *string, int startindex, int endindex);
 char				*addrange_of_elem(char *s1, char *s2, int key);
 /*

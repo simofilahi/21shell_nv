@@ -115,8 +115,7 @@ fclean: clean
 val : re
 	valgrind --leak-check=full \
 	--track-origins=yes \
-	./21sh
-	#--log-file=valgrind-out.txt \
+	--log-file=valgrind-out.txt \
 	 ./21sh
 
 help :

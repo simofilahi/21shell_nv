@@ -6,7 +6,7 @@
 /*   By: mfilahi <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/21 13:15:10 by mfilahi           #+#    #+#             */
-/*   Updated: 2019/07/17 15:44:12 by mfilahi          ###   ########.fr       */
+/*   Updated: 2019/07/18 19:48:30 by mfilahi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,7 @@ void	print_readablechar(t_package *p)
 	int			last_line;
 	int			check;
 
-	p->line = insert_element(p->line, p->buffer[0], p->index, &p->len);
+	insert_element(p);
 	p->posx++;
 	tputs(SC, 1, my_putchar);
 	clear_screen();

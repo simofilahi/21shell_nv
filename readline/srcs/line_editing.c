@@ -29,7 +29,7 @@ int			ctrl_d(void)
 	{
 		if (ft_strlen(p->line) == 0)
 			return (0);
-		delete_element(p->line, p->index);
+		delete_element(p);
 		tputs(SC, 1, my_putchar);
 		clear_screen();
 		print_line(p->line, p->index);
@@ -77,7 +77,7 @@ t_package	*init_structure_members(char *path, int ll_index)
 	t_package		*p;
 
 	p = ft_memalloc(sizeof(struct s_package));
-	p->len = 20;
+	p->len = 50;
 	p->line = ft_strnew(p->len);
 	p->holdcopy = ft_strnew(1);
 	p->path = (path != NULL) ? ft_strdup(path) : NULL;

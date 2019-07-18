@@ -23,7 +23,7 @@ void	backspace_key(t_package *p)
 	int			i;
 
 	left_key(p);
-	delete_element(p->line, p->index);
+	delete_element(p);
 	tputs(SC, 1, my_putchar);
 	clear_screen();
 	print_line(p->line, p->index);
