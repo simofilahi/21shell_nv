@@ -6,7 +6,7 @@
 /*   By: aariss <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/11 15:14:25 by aariss            #+#    #+#             */
-/*   Updated: 2019/07/03 11:29:33 by aariss           ###   ########.fr       */
+/*   Updated: 2019/07/04 10:20:46 by aariss           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,7 +114,7 @@ t_defined	*init_cases(void)
 {
 	char **defined;
 
-	if (!(defined = (char**)malloc(sizeof(char*) * 19)))
+	if (!(defined = (char**)malloc(sizeof(char*) * 18)))
 		return (0);
 	defined[0] = ft_strdup(">");
 	defined[1] = ft_strdup("<");
@@ -133,6 +133,6 @@ t_defined	*init_cases(void)
 	defined[14] = ft_strdup("2<&1");
 	defined[15] = ft_strdup("1>&2");
 	defined[16] = ft_strdup("2>&1");
-	defined[18] = NULL;
+	defined[17] = NULL;
 	return (fill_lst(defined));
 }

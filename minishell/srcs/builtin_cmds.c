@@ -6,7 +6,7 @@
 /*   By: mfilahi <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/04 18:50:38 by mfilahi           #+#    #+#             */
-/*   Updated: 2019/05/14 17:30:26 by mfilahi          ###   ########.fr       */
+/*   Updated: 2019/07/07 12:37:41 by aariss           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,15 +101,17 @@ int  setenv_cmd(char *arg, char *sarg, t_env **head_ref, int flag)
 	return (1);
 }
 
-void free_structure(t_holder *h)
+void	free_structure(t_holder *h)
 {
-		ft_strdel(&h->homepath);
-		free_list(&h->head_ref);
-		//_free_list(h->lst);
-		free(h);
+	ft_strdel(&h->homepath);
+	ft_strdel(&h->ptr);
+	free_list(&h->head_ref);
+	_free_list(h->mclst);
+	free(h);
+	ft_putendl_fd("\033[01;33mBye!\033[0m", 2);
 }
 
-void _builtin_cmds(t_holder *h, int j, int i, int flag)
+void	_builtin_cmds(t_holder *h, int j, int i, int flag)
 {
 	while (h->lst->cmd[i])
 	{
@@ -137,7 +139,7 @@ void _builtin_cmds(t_holder *h, int j, int i, int flag)
 	}
 }
 
-void builtin_cmds(t_holder *h, int j)
+void	builtin_cmds(t_holder *h, int j)
 {
 	int flag;
 	
@@ -149,7 +151,6 @@ void builtin_cmds(t_holder *h, int j)
 	else if (j == 7)
 	{
 		free_structure(h);
-		ft_putendl_fd("\033[01;33mBye!\033[0m", 2);
 		exit(0);
 	}
 	else

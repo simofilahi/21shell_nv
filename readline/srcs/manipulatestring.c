@@ -6,7 +6,7 @@
 /*   By: mfilahi <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/02 15:00:34 by mfilahi           #+#    #+#             */
-/*   Updated: 2019/06/26 10:41:35 by aariss           ###   ########.fr       */
+/*   Updated: 2019/07/03 15:29:39 by aariss           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,6 @@ void	insert_element_1(char *string, char *ptr, int key, char ch)
 	int i;
 	int j;
 
-	ptr = ft_strdup(string);
 	i = -1;
 	while (++i < key && ptr[i])
 		string[i] = ptr[i];
@@ -50,12 +49,13 @@ char	*insert_element(char *string, char ch, int key, int *lline)
 {
 	int		len;
 	char	*ptr;
-
+	
 	len = ft_strlen(string);
 	ptr = ft_strdup(string);
 	if (len >= *lline)
 	{
 		*lline += (len > *lline) ? len + 20 : 20;
+		*lline += (len > *lline) ? len + 20 : 20; 
 		ft_strdel(&string);
 		if (!(string = ft_strnew(*lline)))
 			return (NULL);

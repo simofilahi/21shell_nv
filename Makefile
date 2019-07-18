@@ -6,7 +6,7 @@
 #    By: mfilahi <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/05/03 16:07:14 by mfilahi           #+#    #+#              #
-#    Updated: 2019/07/03 09:49:30 by aariss           ###   ########.fr        #
+#    Updated: 2019/07/09 17:50:57 by aariss           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -44,7 +44,10 @@ SRCS_SH = $(SRCS_SH_DIR)/execute.c \
 		  $(SRCS_SH_DIR)/own_cmds.c \
 		  $(SRCS_SH_DIR)/srcs.c \
 		  $(SRCS_SH_DIR)/voidy.c \
-		  $(SRCS_SH_DIR)/next_voidy.c
+		  $(SRCS_SH_DIR)/next_voidy.c \
+		  $(SRCS_SH_DIR)/sec_count.c \
+		  $(SRCS_SH_DIR)/darlin.c \
+		  $(SRCS_SH_DIR)/recall_readline.c \
 
 SRCS_PR = $(SRCS_PR_DIR)/extras.c \
 		  $(SRCS_PR_DIR)/parsin.c \
@@ -59,11 +62,11 @@ OBJECT_PR = $(patsubst %, $(OBJS_DIR)/%, $(notdir $(SRCS_PR:.c=.o)))
 CC = gcc
 CFLAGS = -Wall -Werror -Wextra
 
-BoldRed = \033[1;31m
-BoldGreen = \033[1;32m
-BoldBlue = \033[1;34m
-BoldYellow = \033[01;33m
-ED = \033[0m
+BoldRed = 
+BoldGreen =
+BoldBlue = 
+BoldYellow = 
+ED = 
 
 all: $(NAME)
 
@@ -71,7 +74,7 @@ $(NAME): $(OBJS_DIR) $(OBJECT_RL) $(OBJECT_SH) $(OBJECT_PR)
 	@make -C libft/
 	@echo "$(BoldBlue)Linking...$(ED)"
 	@$(CC) $(OBJECT_RL) $(OBJECT_SH) $(OBJECT_PR) $(LIBS_DIR) -o $(NAME)
-	@echo "$(BoldGreen)                                                  ";
+	@echo "\033[1;34m                                                    ";
 	@echo '      ___           ___           ___           ___       ___ ';
 	@echo '     /\  \         /\__\         /\  \         /\__\     /\__\';
 	@echo '    /::\  \       /:/  /        /::\  \       /:/  /    /:/  /';

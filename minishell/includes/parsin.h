@@ -6,7 +6,7 @@
 /*   By: aariss <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/11 15:07:07 by aariss            #+#    #+#             */
-/*   Updated: 2019/06/19 14:40:17 by aariss           ###   ########.fr       */
+/*   Updated: 2019/07/08 15:54:44 by aariss           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,8 @@
 
 int		ft_istoken(int c);
 int		ft_isquote(int c);
+int		got_token_after_digit(char *line);
+int		alright_token(char *name);
 
 /*
  ******** Count Functions ********

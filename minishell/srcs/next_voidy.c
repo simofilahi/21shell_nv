@@ -6,7 +6,7 @@
 /*   By: aariss <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/03 09:47:33 by aariss            #+#    #+#             */
-/*   Updated: 2019/07/03 14:44:38 by aariss           ###   ########.fr       */
+/*   Updated: 2019/07/13 12:15:36 by aariss           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,10 +83,14 @@ int		retrieve_the_digit(char *name, int	delimiter)
 {
 	if (delimiter == 0)
 		return (ft_atoi(name));
-	return (ft_atoi(name + ft_strlen(name) - 1));
+	while (ft_isdigit(*name))
+		name++;
+	while (ft_istoken(*name))
+		name++;
+	return (ft_atoi(name));
 }
 
-int		count_arg(char **kratos, t_defined *lst)
+int		count_arg(char **kratos)
 {
 	int	i;
 	int	count;
@@ -95,7 +99,7 @@ int		count_arg(char **kratos, t_defined *lst)
 	count = 0;
 	while (kratos[i])
 	{
-		if (!is_one_of_them(kratos[i], lst))
+		if (!ultimate_check(kratos[i]))
 			count++;
 		i++;
 	}

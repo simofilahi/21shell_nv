@@ -6,7 +6,7 @@
 /*   By: macuser <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/29 16:22:39 by macuser           #+#    #+#             */
-/*   Updated: 2019/07/03 15:17:05 by aariss           ###   ########.fr       */
+/*   Updated: 2019/07/05 10:10:30 by aariss           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,15 +87,19 @@ void	print_lstra(t_god *lst)
 		}
 		if (lst->demi_god != NULL)
 		{
-			ft_putstr(lst->demi_god->file);
-			ft_putchar('.');
-			ft_putnbr(lst->demi_god->sfd);
-			ft_putchar('.');
-			ft_putnbr(lst->demi_god->dfd);
-			ft_putchar('.');
-			ft_putnbr(lst->demi_god->read_meth);
+			while (lst->demi_god)
+			{
+				ft_putstr(lst->demi_god->file);
+				ft_putchar('.');
+				ft_putnbr(lst->demi_god->sfd);
+				ft_putchar('.');
+				ft_putnbr(lst->demi_god->dfd);
+				ft_putchar('.');
+				ft_putnbr(lst->demi_god->read_meth);
+				lst->demi_god = lst->demi_god->next;
+				ft_putchar('\n');
+			}
 		}
-		ft_putchar('\n');
 		lst = lst->next;
 	}
 }
@@ -111,13 +115,10 @@ void	voidy(char **cmd)
 
 	i = 0;
 	count = pipecount(cmd, 0);
-//	ft_putnbr(count);
 	tokens = init_cases();
 	while (i < count)
 	{
-		ft_putendl("toto");
 		kratos = get_piped(cmd, i);
-		ft_putendl("tutu");
 		if (lst->next == NULL)
 		{
 			lst->next = godly_void(kratos, tokens);
