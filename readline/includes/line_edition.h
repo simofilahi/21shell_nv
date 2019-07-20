@@ -6,7 +6,7 @@
 /*   By: mfilahi <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/08 21:03:31 by mfilahi           #+#    #+#             */
-/*   Updated: 2019/06/14 15:53:41 by aariss           ###   ########.fr       */
+/*   Updated: 2019/07/17 14:56:07 by mfilahi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,8 @@
 
 // 
 #include <stdio.h>
+//
+int fd2;
 
 # define TRUE 1
 # define FALSE 0
@@ -31,6 +33,8 @@
 # define BUFFER_SIZE 100000
 
 //
+
+int				g_signal_num;
 
 typedef struct		s_package
 {
@@ -51,15 +55,15 @@ typedef struct		s_package
 }					t_package;
 
 /*
-** Get history line
+** Get history lines
 */
 int					gline(const int fd, char **line_target, int delimiter);
 /*
 ** Manipulation of line :
 ** 						- insertion & deletion
 */
-char				*insert_element(char *string, char ch, int key, int *llen);
-void				delete_element(char *string, int key);
+void				insert_element(t_package *p);
+void				delete_element(t_package *p);
 char				*delrange_of_elem(char *string, int startindex, int endindex);
 char				*addrange_of_elem(char *s1, char *s2, int key);
 /*
@@ -115,8 +119,8 @@ int					increment_row(t_package *p, int flag);
 ** print to stdout
 */
 void				print_line(char *line, int index);
-int					print(t_package*p, int index, int col);
-void				print_readablechar();
+int					print(t_package *p, int index, int col);
+void				print_readablechar(t_package *p);
 /*
 ** read from stdin
 */
@@ -127,11 +131,15 @@ char				*ft_readline(char prompt[3], char *path, int ll_index);
 **			- initialization memeber of structure
 **			- func cloud to store @ of structure
 **			- count lines if newline is found
+**          - made a new structure hold new info if ctrl_c catched
 */
-void				init_structure_members(char *path, int ll_index);
+t_package			*init_structure_members(char *path, int ll_index);
 t_package			*cloud(t_package *p);
 int					get_n_line(int fd, char **line, int n);
 int					new_line_is_found(char *line);
 int					checking(char *line, int index, int key);
 int					count_lines(char *line, int w_col);
+t_package			*handler_ctrl_c();
+t_package			*ctrl_l(char *s, t_package *p);
+t_package			*joinnewline(t_package *p, int sum);
 #endif

@@ -6,7 +6,7 @@
 /*   By: mfilahi <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/04 19:56:52 by mfilahi           #+#    #+#             */
-/*   Updated: 2019/05/14 17:23:12 by mfilahi          ###   ########.fr       */
+/*   Updated: 2019/07/20 15:00:54 by aariss           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,14 @@ char	**get_path(t_env **head_ref)
 
 void	signal_handler(int sign)
 {
-	ft_putchar('\n');
-	if (sign == SIGINT && g_signal_num != 1)
+	t_package *p;
+
+	p = cloud(NULL);
+	if (sign == SIGINT && g_signal_num > 0)
+	{
+		end_key(p);
+		ft_putchar('\n');		
 		ft_putstr_fd("\033[1;34m$> \033[0m", 1);
+		g_signal_num = 2;
+	}
 }

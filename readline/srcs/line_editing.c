@@ -6,24 +6,30 @@
 /*   By: mfilahi <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/11 14:00:58 by mfilahi           #+#    #+#             */
-/*   Updated: 2019/05/04 12:21:32 by mfilahi          ###   ########.fr       */
+/*   Updated: 2019/07/17 15:27:26 by mfilahi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "line_edition.h"
 
-int		ctrl_d(void)
+/*
+** - if line not empty call delete_element to delete
+**   char when cursor positioned;
+** - if line empy return NULL to shell for exit;
+*/
+
+int			ctrl_d(void)
 {
 	t_package *p;
 
 	p = cloud(NULL);
 	if (!(p->index == (int)ft_strlen(p->line) &&\
-		 ft_strlen(p->line) > 0) ||\
-		 p->line[p->index - 1] == '\n')
+		ft_strlen(p->line) > 0) ||\
+		p->line[p->index - 1] == '\n')
 	{
 		if (ft_strlen(p->line) == 0)
 			return (0);
-		delete_element(p->line, p->index);
+		delete_element(p);
 		tputs(SC, 1, my_putchar);
 		clear_screen();
 		print_line(p->line, p->index);
@@ -32,7 +38,11 @@ int		ctrl_d(void)
 	return (1);
 }
 
-int		checking(char *line, int index, int key)
+/*
+** - this one followed to inputs funcs;
+*/
+
+int			checking(char *line, int index, int key)
 {
 	if (key == 1)
 	{
@@ -56,19 +66,25 @@ int		checking(char *line, int index, int key)
 	return (FALSE);
 }
 
-void	init_structure_members(char *path, int ll_index)
+/*
+** - this the first step do when i call readline fil structure
+** that contain the coordinates x.y of cursor
+** and other things like apply new configuratin termios;
+*/
+
+t_package	*init_structure_members(char *path, int ll_index)
 {
 	t_package		*p;
 
 	p = ft_memalloc(sizeof(struct s_package));
-	p->len = 20;
+	p->len = 50;
 	p->line = ft_strnew(p->len);
 	p->holdcopy = ft_strnew(1);
-	p->path = path;
+	p->path = (path != NULL) ? ft_strdup(path) : NULL;
 	p->ll_index = ll_index;
 	p->oldconf = termios_config();
 	get_pos(&p->posy, &p->posx);
-	if (p->posx > 1)
+	if (p->posx > 1 && g_signal_num == 0)
 	{
 		tputs(SRV, 1, my_putchar);
 		ft_putchar_fd('%', 1);
@@ -81,22 +97,27 @@ void	init_structure_members(char *path, int ll_index)
 	p->last_y = p->init_y;
 	ft_bzero(p->buffer, BUFFER_SIZE);
 	ioctl(0, TIOCGWINSZ, &p->w);
-	cloud(p);
+	return (cloud(p));
 }
 
-void	print_line(char *line, int index)
+void		print_line(char *line, int index)
 {
 	while (line[index])
 		ft_putchar_fd(line[index++], 1);
 }
 
-void paste_of_mouse(t_package *p)
-{
-	int i;
-	char *string;
+/*
+** - this func copy the content that holded by buffer
+** to another string and send char by char to print;
+*/
 
-	string = ft_strdup(p->buffer);
+void		paste_of_mouse(t_package *p)
+{
+	int		i;
+	char	*string;
+
 	i = -1;
+	string = ft_strdup(p->buffer);
 	while (string[++i])
 	{
 		ft_bzero(p->buffer, BUFFER_SIZE);
@@ -108,4 +129,3 @@ void paste_of_mouse(t_package *p)
 	}
 	free(string);
 }
-

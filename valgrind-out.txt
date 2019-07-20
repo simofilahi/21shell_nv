@@ -1,1464 +1,1062 @@
-==26409== Memcheck, a memory error detector
-==26409== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
-==26409== Using Valgrind-3.14.0-353a3587bb-20181007X and LibVEX; rerun with -h for copyright info
-==26409== Command: ./21sh
-==26409== Parent PID: 26213
-==26409== 
---26409-- 
---26409-- Valgrind options:
---26409--    --leak-check=full
---26409--    --show-leak-kinds=all
---26409--    --track-origins=yes
---26409--    --verbose
---26409--    --log-file=valgrind-out.txt
---26409-- Output from sysctl({CTL_KERN,KERN_VERSION}):
---26409--   Darwin Kernel Version 16.7.0: Thu Jun 21 20:07:39 PDT 2018; root:xnu-3789.73.14~1/RELEASE_X86_64
---26409-- Arch and hwcaps: AMD64, LittleEndian, amd64-cx16-lzcnt-rdtscp-sse3-avx-avx2-bmi
---26409-- Page sizes: currently 4096, max supported 4096
---26409-- Valgrind library directory: /Users/mfilahi/.brew/Cellar/valgrind/3.14.0/lib/valgrind
---26409-- ./21sh (rx at 0x100000000, rw at 0x100007000)
---26409--    reading syms   from primary file (106 8)
---26409--    dSYM= ./21sh.dSYM/Contents/Resources/DWARF/21sh
---26409--    dSYM does not have correct UUID (out of date?)
---26409-- run: /usr/bin/dsymutil "./21sh"
---26409--    dsyms= ./21sh.dSYM/Contents/Resources/DWARF/21sh
---26409-- /usr/lib/dyld (rx at 0x10000a000, rw at 0x100048000)
---26409--    reading syms   from primary file (6 1223)
---26409-- Scheduler: using generic scheduler lock implementation.
---26409-- Reading suppressions file: /Users/mfilahi/.brew/Cellar/valgrind/3.14.0/lib/valgrind/default.supp
-==26409== embedded gdbserver: reading from /var/folders/zz/zyxvpxvq6csfxvn_n00004d4000139/T//vgdb-pipe-from-vgdb-to-26409-by-mfilahi-on-???
-==26409== embedded gdbserver: writing to   /var/folders/zz/zyxvpxvq6csfxvn_n00004d4000139/T//vgdb-pipe-to-vgdb-from-26409-by-mfilahi-on-???
-==26409== embedded gdbserver: shared mem   /var/folders/zz/zyxvpxvq6csfxvn_n00004d4000139/T//vgdb-pipe-shared-mem-vgdb-26409-by-mfilahi-on-???
-==26409== 
-==26409== TO CONTROL THIS PROCESS USING vgdb (which you probably
-==26409== don't want to do, unless you know exactly what you're doing,
-==26409== or are doing some strange experiment):
-==26409==   /Users/mfilahi/.brew/Cellar/valgrind/3.14.0/lib/valgrind/../../bin/vgdb --pid=26409 ...command...
-==26409== 
-==26409== TO DEBUG THIS PROCESS USING GDB: start GDB like this
-==26409==   /path/to/gdb ./21sh
-==26409== and then give GDB the following command
-==26409==   target remote | /Users/mfilahi/.brew/Cellar/valgrind/3.14.0/lib/valgrind/../../bin/vgdb --pid=26409
-==26409== --pid is optional if only one valgrind process is running
-==26409== 
---26409-- REDIR: 0x100030620 (dyld:strcmp) redirected to 0x258057681 (???)
---26409-- REDIR: 0x10002a130 (dyld:arc4random) redirected to 0x25805771f (???)
---26409-- REDIR: 0x100029fe0 (dyld:strlen) redirected to 0x258057650 (???)
---26409-- REDIR: 0x100029f40 (dyld:strcpy) redirected to 0x25805769d (???)
---26409-- REDIR: 0x10002d7dd (dyld:strcat) redirected to 0x258057661 (???)
---26409-- REDIR: 0x10002d81b (dyld:strlcat) redirected to 0x2580576ba (???)
---26409-- /Users/mfilahi/.brew/Cellar/valgrind/3.14.0/lib/valgrind/vgpreload_core-amd64-darwin.so (rx at 0x100095000, rw at 0x10009b000)
---26409--    reading syms   from primary file (3 88)
---26409--    dSYM= /Users/mfilahi/.brew/Cellar/valgrind/3.14.0/lib/valgrind/vgpreload_core-amd64-darwin.so.dSYM/Contents/Resources/DWARF/vgpreload_core-amd64-darwin.so
---26409-- /Users/mfilahi/.brew/Cellar/valgrind/3.14.0/lib/valgrind/vgpreload_memcheck-amd64-darwin.so (rx at 0x10009f000, rw at 0x1000a8000)
---26409--    reading syms   from primary file (72 96)
---26409--    dSYM= /Users/mfilahi/.brew/Cellar/valgrind/3.14.0/lib/valgrind/vgpreload_memcheck-amd64-darwin.so.dSYM/Contents/Resources/DWARF/vgpreload_memcheck-amd64-darwin.so
---26409-- /usr/lib/libncurses.5.4.dylib (rx at 0x1000ae000, rw at 0x1000e0000)
---26409--    reading syms   from primary file (618 1)
---26409-- /usr/lib/libSystem.B.dylib (rx at 0x1000f0000, rw at 0x1000f2000)
---26409--    reading syms   from primary file (31 5)
---26409-- /usr/lib/system/libcache.dylib (rx at 0x1000f7000, rw at 0x1000fc000)
---26409--    reading syms   from primary file (32 29)
---26409-- /usr/lib/system/libcommonCrypto.dylib (rx at 0x100101000, rw at 0x10010c000)
---26409--    reading syms   from primary file (214 167)
---26409-- /usr/lib/system/libcompiler_rt.dylib (rx at 0x100119000, rw at 0x100121000)
---26409--    reading syms   from primary file (510 8)
---26409-- /usr/lib/system/libcopyfile.dylib (rx at 0x10012e000, rw at 0x100137000)
---26409--    reading syms   from primary file (13 35)
---26409-- /usr/lib/system/libcorecrypto.dylib (rx at 0x10013d000, rw at 0x1001c1000)
---26409--    reading syms   from primary file (479 678)
---26409-- /usr/lib/system/libdispatch.dylib (rx at 0x1001dc000, rw at 0x10020e000)
---26409--    reading syms   from primary file (258 910)
---26409-- /usr/lib/system/libdyld.dylib (rx at 0x100247000, rw at 0x10024d000)
---26409--    reading syms   from primary file (98 130)
---26409-- /usr/lib/system/libkeymgr.dylib (rx at 0x100255000, rw at 0x100256000)
---26409--    reading syms   from primary file (12 3)
---26409-- /usr/lib/system/liblaunch.dylib (rx at 0x10025a000, rw at 0x10025b000)
---26409--    reading syms   from primary file (113 3)
---26409-- /usr/lib/system/libmacho.dylib (rx at 0x100262000, rw at 0x100268000)
---26409--    reading syms   from primary file (102 1)
---26409-- /usr/lib/system/libquarantine.dylib (rx at 0x10026e000, rw at 0x100271000)
---26409--    reading syms   from primary file (67 32)
---26409-- /usr/lib/system/libremovefile.dylib (rx at 0x100277000, rw at 0x100279000)
---26409--    reading syms   from primary file (15 4)
---26409-- /usr/lib/system/libsystem_asl.dylib (rx at 0x10027e000, rw at 0x100297000)
---26409--    reading syms   from primary file (222 224)
---26409-- /usr/lib/system/libsystem_blocks.dylib (rx at 0x1002a4000, rw at 0x1002a5000)
---26409--    reading syms   from primary file (21 6)
---26409-- /usr/lib/system/libsystem_c.dylib (rx at 0x1002a9000, rw at 0x100337000)
---26409--    reading syms   from primary file (1331 777)
---26409-- /usr/lib/system/libsystem_configuration.dylib (rx at 0x10035e000, rw at 0x100362000)
---26409--    reading syms   from primary file (38 75)
---26409-- /usr/lib/system/libsystem_coreservices.dylib (rx at 0x100369000, rw at 0x10036d000)
---26409--    reading syms   from primary file (14 36)
---26409-- /usr/lib/system/libsystem_coretls.dylib (rx at 0x100372000, rw at 0x10038b000)
---26409--    reading syms   from primary file (130 250)
---26409-- /usr/lib/system/libsystem_dnssd.dylib (rx at 0x100396000, rw at 0x10039d000)
---26409--    reading syms   from primary file (49 24)
---26409-- /usr/lib/system/libsystem_info.dylib (rx at 0x1003a2000, rw at 0x1003cc000)
---26409--    reading syms   from primary file (523 519)
---26409-- /usr/lib/system/libsystem_kernel.dylib (rx at 0x1003e1000, rw at 0x100404000)
---26409--    reading syms   from primary file (1179 98)
---26409-- /usr/lib/system/libsystem_m.dylib (rx at 0x10041b000, rw at 0x100463000)
---26409--    reading syms   from primary file (605 1)
---26409-- /usr/lib/system/libsystem_malloc.dylib (rx at 0x10046f000, rw at 0x10048e000)
---26409--    reading syms   from primary file (117 253)
---26409-- /usr/lib/system/libsystem_network.dylib (rx at 0x10049a000, rw at 0x1004f4000)
---26409--    reading syms   from primary file (730 584)
---26409-- /usr/lib/system/libsystem_networkextension.dylib (rx at 0x100516000, rw at 0x100520000)
---26409--    reading syms   from primary file (89 229)
---26409-- /usr/lib/system/libsystem_notify.dylib (rx at 0x10052b000, rw at 0x100535000)
---26409--    reading syms   from primary file (113 54)
---26409-- /usr/lib/system/libsystem_platform.dylib (rx at 0x10053c000, rw at 0x100545000)
---26409--    reading syms   from primary file (158 105)
---26409-- /usr/lib/system/libsystem_pthread.dylib (rx at 0x10054d000, rw at 0x100558000)
---26409--    reading syms   from primary file (174 79)
---26409-- /usr/lib/system/libsystem_sandbox.dylib (rx at 0x100564000, rw at 0x100568000)
---26409--    reading syms   from primary file (85 9)
---26409-- /usr/lib/system/libsystem_secinit.dylib (rx at 0x10056e000, rw at 0x100570000)
---26409--    reading syms   from primary file (1 7)
---26409-- /usr/lib/system/libsystem_symptoms.dylib (rx at 0x100575000, rw at 0x10057d000)
---26409--    reading syms   from primary file (8 66)
---26409-- /usr/lib/system/libsystem_trace.dylib (rx at 0x100583000, rw at 0x100597000)
---26409--    reading syms   from primary file (101 236)
---26409-- /usr/lib/system/libunwind.dylib (rx at 0x1005a5000, rw at 0x1005ab000)
---26409--    reading syms   from primary file (102 52)
---26409-- /usr/lib/system/libxpc.dylib (rx at 0x1005b2000, rw at 0x1005dc000)
---26409--    reading syms   from primary file (515 825)
---26409-- /usr/lib/libobjc.A.dylib (rx at 0x1005fb000, rw at 0x1009ce000)
---26409--    reading syms   from primary file (368 886)
---26409-- /usr/lib/libc++abi.dylib (rx at 0x100aab000, rw at 0x100ad5000)
---26409--    reading syms   from primary file (339 188)
---26409-- /usr/lib/libc++.1.dylib (rx at 0x100ae4000, rw at 0x100b3b000)
---26409--    reading syms   from primary file (1979 1610)
---26409-- REDIR: 0x10053d680 (libsystem_platform.dylib:_platform_memchr$VARIANT$Haswell) redirected to 0x1000a2154 (_platform_memchr$VARIANT$Haswell)
---26409-- REDIR: 0x10053d760 (libsystem_platform.dylib:_platform_memcmp) redirected to 0x1000a2849 (_platform_memcmp)
---26409-- REDIR: 0x10053dcc0 (libsystem_platform.dylib:_platform_strncmp) redirected to 0x1000a2055 (_platform_strncmp)
---26409-- REDIR: 0x1002aab40 (libsystem_c.dylib:strlen) redirected to 0x1000a1ce6 (strlen)
---26409-- REDIR: 0x10053e280 (libsystem_platform.dylib:_platform_strcmp) redirected to 0x1000a20d1 (_platform_strcmp)
---26409-- REDIR: 0x100473d61 (libsystem_malloc.dylib:calloc) redirected to 0x1000a0bcf (calloc)
---26409-- REDIR: 0x1004733dc (libsystem_malloc.dylib:malloc_default_zone) redirected to 0x1000a1911 (malloc_default_zone)
---26409-- REDIR: 0x100471217 (libsystem_malloc.dylib:malloc_zone_malloc) redirected to 0x1000a081b (malloc_zone_malloc)
---26409-- REDIR: 0x1004733e7 (libsystem_malloc.dylib:malloc_zone_calloc) redirected to 0x1000a0dbd (malloc_zone_calloc)
---26409-- REDIR: 0x1004701e8 (libsystem_malloc.dylib:malloc) redirected to 0x1000a05b0 (malloc)
---26409-- REDIR: 0x1004734af (libsystem_malloc.dylib:malloc_zone_from_ptr) redirected to 0x1000a1952 (malloc_zone_from_ptr)
---26409-- REDIR: 0x100472dd5 (libsystem_malloc.dylib:free) redirected to 0x1000a0991 (free)
---26409-- REDIR: 0x10053dea0 (libsystem_platform.dylib:_platform_strchr$VARIANT$Haswell) redirected to 0x1000a1bb6 (_platform_strchr$VARIANT$Haswell)
---26409-- REDIR: 0x100473f10 (libsystem_malloc.dylib:realloc) redirected to 0x1000a0f51 (realloc)
---26409-- REDIR: 0x100305d6a (libsystem_c.dylib:strrchr) redirected to 0x1000a1b50 (strrchr)
---26409-- REDIR: 0x1002aaba0 (libsystem_c.dylib:strncpy) redirected to 0x1000a1e63 (strncpy)
-==26409== Invalid write of size 8
-==26409==    at 0x10000677B: ft_strsplit (in ./21sh)
-==26409==    by 0x1000055F5: minishell (in ./21sh)
-==26409==    by 0x1000056F7: main (in ./21sh)
-==26409==  Address 0x100bbfbe8 is 8 bytes inside a block of size 9 alloc'd
-==26409==    at 0x1000A0626: malloc (in /Users/mfilahi/.brew/Cellar/valgrind/3.14.0/lib/valgrind/vgpreload_memcheck-amd64-darwin.so)
-==26409==    by 0x10000660A: ft_strsplit (in ./21sh)
-==26409==    by 0x1000055F5: minishell (in ./21sh)
-==26409==    by 0x1000056F7: main (in ./21sh)
-==26409== 
-==26409== Invalid write of size 8
-==26409==    at 0x10000677B: ft_strsplit (in ./21sh)
-==26409==    by 0x100005631: minishell (in ./21sh)
-==26409==    by 0x1000056F7: main (in ./21sh)
-==26409==  Address 0x100bbfc88 is 8 bytes inside a block of size 9 alloc'd
-==26409==    at 0x1000A0626: malloc (in /Users/mfilahi/.brew/Cellar/valgrind/3.14.0/lib/valgrind/vgpreload_memcheck-amd64-darwin.so)
-==26409==    by 0x10000660A: ft_strsplit (in ./21sh)
-==26409==    by 0x100005631: minishell (in ./21sh)
-==26409==    by 0x1000056F7: main (in ./21sh)
-==26409== 
-==26440== Invalid read of size 1
-==26440==    at 0x100006A25: ft_strsub (in ./21sh)
-==26440==    by 0x1000044D9: get_path (in ./21sh)
-==26440==    by 0x10000536D: sys_cmd (in ./21sh)
-==26440==    by 0x10000549B: child_pid (in ./21sh)
-==26440==    by 0x10000554D: minishell_1 (in ./21sh)
-==26440==    by 0x100005642: minishell (in ./21sh)
-==26440==    by 0x1000056F7: main (in ./21sh)
-==26440==  Address 0x100ba3039 is 0 bytes after a block of size 153 alloc'd
-==26440==    at 0x1000A0626: malloc (in /Users/mfilahi/.brew/Cellar/valgrind/3.14.0/lib/valgrind/vgpreload_memcheck-amd64-darwin.so)
-==26440==    by 0x10000628C: ft_strdup (in ./21sh)
-==26440==    by 0x100004BBE: createlist (in ./21sh)
-==26440==    by 0x1000052F6: copy_of_env (in ./21sh)
-==26440==    by 0x1000056EA: main (in ./21sh)
-==26440== 
-==26440== Invalid write of size 8
-==26440==    at 0x10000677B: ft_strsplit (in ./21sh)
-==26440==    by 0x1000044EB: get_path (in ./21sh)
-==26440==    by 0x10000536D: sys_cmd (in ./21sh)
-==26440==    by 0x10000549B: child_pid (in ./21sh)
-==26440==    by 0x10000554D: minishell_1 (in ./21sh)
-==26440==    by 0x100005642: minishell (in ./21sh)
-==26440==    by 0x1000056F7: main (in ./21sh)
-==26440==  Address 0x100bc2b00 is 64 bytes inside a block of size 65 alloc'd
-==26440==    at 0x1000A0626: malloc (in /Users/mfilahi/.brew/Cellar/valgrind/3.14.0/lib/valgrind/vgpreload_memcheck-amd64-darwin.so)
-==26440==    by 0x10000660A: ft_strsplit (in ./21sh)
-==26440==    by 0x1000044EB: get_path (in ./21sh)
-==26440==    by 0x10000536D: sys_cmd (in ./21sh)
-==26440==    by 0x10000549B: child_pid (in ./21sh)
-==26440==    by 0x10000554D: minishell_1 (in ./21sh)
-==26440==    by 0x100005642: minishell (in ./21sh)
-==26440==    by 0x1000056F7: main (in ./21sh)
-==26440== 
-==26440== Invalid write of size 8
-==26440==    at 0x100004CC7: get_env (in ./21sh)
-==26440==    by 0x10000435C: execute (in ./21sh)
-==26440==    by 0x10000541E: sys_cmd (in ./21sh)
-==26440==    by 0x10000549B: child_pid (in ./21sh)
-==26440==    by 0x10000554D: minishell_1 (in ./21sh)
-==26440==    by 0x100005642: minishell (in ./21sh)
-==26440==    by 0x1000056F7: main (in ./21sh)
-==26440==  Address 0x100bc3088 is 280 bytes inside a block of size 281 alloc'd
-==26440==    at 0x1000A0626: malloc (in /Users/mfilahi/.brew/Cellar/valgrind/3.14.0/lib/valgrind/vgpreload_memcheck-amd64-darwin.so)
-==26440==    by 0x100004C5F: get_env (in ./21sh)
-==26440==    by 0x10000435C: execute (in ./21sh)
-==26440==    by 0x10000541E: sys_cmd (in ./21sh)
-==26440==    by 0x10000549B: child_pid (in ./21sh)
-==26440==    by 0x10000554D: minishell_1 (in ./21sh)
-==26440==    by 0x100005642: minishell (in ./21sh)
-==26440==    by 0x1000056F7: main (in ./21sh)
-==26440== 
-==26440== Syscall param execve(argv) points to unaddressable byte(s)
-==26440==    at 0x1003FB77E: execve (in /usr/lib/system/libsystem_kernel.dylib)
-==26440==    by 0x100004374: execute (in ./21sh)
-==26440==    by 0x10000541E: sys_cmd (in ./21sh)
-==26440==    by 0x10000549B: child_pid (in ./21sh)
-==26440==    by 0x10000554D: minishell_1 (in ./21sh)
-==26440==    by 0x100005642: minishell (in ./21sh)
-==26440==    by 0x1000056F7: main (in ./21sh)
-==26440==  Address 0x100bbfc89 is 0 bytes after a block of size 9 alloc'd
-==26440==    at 0x1000A0626: malloc (in /Users/mfilahi/.brew/Cellar/valgrind/3.14.0/lib/valgrind/vgpreload_memcheck-amd64-darwin.so)
-==26440==    by 0x10000660A: ft_strsplit (in ./21sh)
-==26440==    by 0x100005631: minishell (in ./21sh)
-==26440==    by 0x1000056F7: main (in ./21sh)
-==26440== 
-==26440== Syscall param execve(envp) points to unaddressable byte(s)
-==26440==    at 0x1003FB77E: execve (in /usr/lib/system/libsystem_kernel.dylib)
-==26440==    by 0x100004374: execute (in ./21sh)
-==26440==    by 0x10000541E: sys_cmd (in ./21sh)
-==26440==    by 0x10000549B: child_pid (in ./21sh)
-==26440==    by 0x10000554D: minishell_1 (in ./21sh)
-==26440==    by 0x100005642: minishell (in ./21sh)
-==26440==    by 0x1000056F7: main (in ./21sh)
-==26440==  Address 0x100bc3089 is 0 bytes after a block of size 281 alloc'd
-==26440==    at 0x1000A0626: malloc (in /Users/mfilahi/.brew/Cellar/valgrind/3.14.0/lib/valgrind/vgpreload_memcheck-amd64-darwin.so)
-==26440==    by 0x100004C5F: get_env (in ./21sh)
-==26440==    by 0x10000435C: execute (in ./21sh)
-==26440==    by 0x10000541E: sys_cmd (in ./21sh)
-==26440==    by 0x10000549B: child_pid (in ./21sh)
-==26440==    by 0x10000554D: minishell_1 (in ./21sh)
-==26440==    by 0x100005642: minishell (in ./21sh)
-==26440==    by 0x1000056F7: main (in ./21sh)
-==26440== 
-==26409== Conditional jump or move depends on uninitialised value(s)
-==26409==    at 0x10000556F: minishell_1 (in ./21sh)
-==26409==    by 0x100005642: minishell (in ./21sh)
-==26409==    by 0x1000056F7: main (in ./21sh)
-==26409== 
-==26409== Conditional jump or move depends on uninitialised value(s)
-==26409==    at 0x100005616: minishell (in ./21sh)
-==26409==    by 0x1000056F7: main (in ./21sh)
-==26409== 
-==26409== Conditional jump or move depends on uninitialised value(s)
-==26409==    at 0x100005664: minishell (in ./21sh)
-==26409==    by 0x1000056F7: main (in ./21sh)
-==26409== 
-==26409== Invalid write of size 1
-==26409==    at 0x1000034E7: insert_element (in ./21sh)
-==26409==    by 0x100004211: print_readablechar (in ./21sh)
-==26409==    by 0x100002206: get_input (in ./21sh)
-==26409==    by 0x100002360: ft_readline (in ./21sh)
-==26409==    by 0x1000055CB: minishell (in ./21sh)
-==26409==    by 0x1000056F7: main (in ./21sh)
-==26409==  Address 0x100bd84a5 is 0 bytes after a block of size 21 alloc'd
-==26409==    at 0x1000A0626: malloc (in /Users/mfilahi/.brew/Cellar/valgrind/3.14.0/lib/valgrind/vgpreload_memcheck-amd64-darwin.so)
-==26409==    by 0x10000657C: ft_strnew (in ./21sh)
-==26409==    by 0x100002FF8: init_structure_members (in ./21sh)
-==26409==    by 0x100002345: ft_readline (in ./21sh)
-==26409==    by 0x1000055CB: minishell (in ./21sh)
-==26409==    by 0x1000056F7: main (in ./21sh)
-==26409== 
-==26409== Invalid read of size 1
-==26409==    at 0x10000409C: print (in ./21sh)
-==26409==    by 0x1000042A6: print_readablechar (in ./21sh)
-==26409==    by 0x100002206: get_input (in ./21sh)
-==26409==    by 0x100002360: ft_readline (in ./21sh)
-==26409==    by 0x1000055CB: minishell (in ./21sh)
-==26409==    by 0x1000056F7: main (in ./21sh)
-==26409==  Address 0x100bd84a5 is 0 bytes after a block of size 21 alloc'd
-==26409==    at 0x1000A0626: malloc (in /Users/mfilahi/.brew/Cellar/valgrind/3.14.0/lib/valgrind/vgpreload_memcheck-amd64-darwin.so)
-==26409==    by 0x10000657C: ft_strnew (in ./21sh)
-==26409==    by 0x100002FF8: init_structure_members (in ./21sh)
-==26409==    by 0x100002345: ft_readline (in ./21sh)
-==26409==    by 0x1000055CB: minishell (in ./21sh)
-==26409==    by 0x1000056F7: main (in ./21sh)
-==26409== 
-==26409== Invalid read of size 1
-==26409==    at 0x1000029CF: new_line_is_found (in ./21sh)
-==26409==    by 0x100003F58: change_pos (in ./21sh)
-==26409==    by 0x1000042B5: print_readablechar (in ./21sh)
-==26409==    by 0x100002206: get_input (in ./21sh)
-==26409==    by 0x100002360: ft_readline (in ./21sh)
-==26409==    by 0x1000055CB: minishell (in ./21sh)
-==26409==    by 0x1000056F7: main (in ./21sh)
-==26409==  Address 0x100bd84a5 is 0 bytes after a block of size 21 alloc'd
-==26409==    at 0x1000A0626: malloc (in /Users/mfilahi/.brew/Cellar/valgrind/3.14.0/lib/valgrind/vgpreload_memcheck-amd64-darwin.so)
-==26409==    by 0x10000657C: ft_strnew (in ./21sh)
-==26409==    by 0x100002FF8: init_structure_members (in ./21sh)
-==26409==    by 0x100002345: ft_readline (in ./21sh)
-==26409==    by 0x1000055CB: minishell (in ./21sh)
-==26409==    by 0x1000056F7: main (in ./21sh)
-==26409== 
-==26409== Invalid read of size 1
-==26409==    at 0x10000645C: ft_strlen (in ./21sh)
-==26409==    by 0x1000038FA: increment_row (in ./21sh)
-==26409==    by 0x100003F80: change_pos (in ./21sh)
-==26409==    by 0x1000042B5: print_readablechar (in ./21sh)
-==26409==    by 0x100002206: get_input (in ./21sh)
-==26409==    by 0x100002360: ft_readline (in ./21sh)
-==26409==    by 0x1000055CB: minishell (in ./21sh)
-==26409==    by 0x1000056F7: main (in ./21sh)
-==26409==  Address 0x100bd84a5 is 0 bytes after a block of size 21 alloc'd
-==26409==    at 0x1000A0626: malloc (in /Users/mfilahi/.brew/Cellar/valgrind/3.14.0/lib/valgrind/vgpreload_memcheck-amd64-darwin.so)
-==26409==    by 0x10000657C: ft_strnew (in ./21sh)
-==26409==    by 0x100002FF8: init_structure_members (in ./21sh)
-==26409==    by 0x100002345: ft_readline (in ./21sh)
-==26409==    by 0x1000055CB: minishell (in ./21sh)
-==26409==    by 0x1000056F7: main (in ./21sh)
-==26409== 
-==26409== Invalid read of size 1
-==26409==    at 0x10000645C: ft_strlen (in ./21sh)
-==26409==    by 0x1000042FB: print_readablechar (in ./21sh)
-==26409==    by 0x100002206: get_input (in ./21sh)
-==26409==    by 0x100002360: ft_readline (in ./21sh)
-==26409==    by 0x1000055CB: minishell (in ./21sh)
-==26409==    by 0x1000056F7: main (in ./21sh)
-==26409==  Address 0x100bd84a5 is 0 bytes after a block of size 21 alloc'd
-==26409==    at 0x1000A0626: malloc (in /Users/mfilahi/.brew/Cellar/valgrind/3.14.0/lib/valgrind/vgpreload_memcheck-amd64-darwin.so)
-==26409==    by 0x10000657C: ft_strnew (in ./21sh)
-==26409==    by 0x100002FF8: init_structure_members (in ./21sh)
-==26409==    by 0x100002345: ft_readline (in ./21sh)
-==26409==    by 0x1000055CB: minishell (in ./21sh)
-==26409==    by 0x1000056F7: main (in ./21sh)
-==26409== 
-==26409== Invalid read of size 1
-==26409==    at 0x10000645C: ft_strlen (in ./21sh)
-==26409==    by 0x100003451: insert_element (in ./21sh)
-==26409==    by 0x100004211: print_readablechar (in ./21sh)
-==26409==    by 0x100002206: get_input (in ./21sh)
-==26409==    by 0x100002360: ft_readline (in ./21sh)
-==26409==    by 0x1000055CB: minishell (in ./21sh)
-==26409==    by 0x1000056F7: main (in ./21sh)
-==26409==  Address 0x100bd84a5 is 0 bytes after a block of size 21 alloc'd
-==26409==    at 0x1000A0626: malloc (in /Users/mfilahi/.brew/Cellar/valgrind/3.14.0/lib/valgrind/vgpreload_memcheck-amd64-darwin.so)
-==26409==    by 0x10000657C: ft_strnew (in ./21sh)
-==26409==    by 0x100002FF8: init_structure_members (in ./21sh)
-==26409==    by 0x100002345: ft_readline (in ./21sh)
-==26409==    by 0x1000055CB: minishell (in ./21sh)
-==26409==    by 0x1000056F7: main (in ./21sh)
-==26409== 
-==26409== Invalid write of size 1
-==26409==    at 0x1000034D4: insert_element (in ./21sh)
-==26409==    by 0x100004211: print_readablechar (in ./21sh)
-==26409==    by 0x100002206: get_input (in ./21sh)
-==26409==    by 0x100002360: ft_readline (in ./21sh)
-==26409==    by 0x1000055CB: minishell (in ./21sh)
-==26409==    by 0x1000056F7: main (in ./21sh)
-==26409==  Address 0x100bd84a5 is 0 bytes after a block of size 21 alloc'd
-==26409==    at 0x1000A0626: malloc (in /Users/mfilahi/.brew/Cellar/valgrind/3.14.0/lib/valgrind/vgpreload_memcheck-amd64-darwin.so)
-==26409==    by 0x10000657C: ft_strnew (in ./21sh)
-==26409==    by 0x100002FF8: init_structure_members (in ./21sh)
-==26409==    by 0x100002345: ft_readline (in ./21sh)
-==26409==    by 0x1000055CB: minishell (in ./21sh)
-==26409==    by 0x1000056F7: main (in ./21sh)
-==26409== 
-==26409== Invalid read of size 1
-==26409==    at 0x1000040B6: print (in ./21sh)
-==26409==    by 0x1000042A6: print_readablechar (in ./21sh)
-==26409==    by 0x100002206: get_input (in ./21sh)
-==26409==    by 0x100002360: ft_readline (in ./21sh)
-==26409==    by 0x1000055CB: minishell (in ./21sh)
-==26409==    by 0x1000056F7: main (in ./21sh)
-==26409==  Address 0x100bd84a5 is 0 bytes after a block of size 21 alloc'd
-==26409==    at 0x1000A0626: malloc (in /Users/mfilahi/.brew/Cellar/valgrind/3.14.0/lib/valgrind/vgpreload_memcheck-amd64-darwin.so)
-==26409==    by 0x10000657C: ft_strnew (in ./21sh)
-==26409==    by 0x100002FF8: init_structure_members (in ./21sh)
-==26409==    by 0x100002345: ft_readline (in ./21sh)
-==26409==    by 0x1000055CB: minishell (in ./21sh)
-==26409==    by 0x1000056F7: main (in ./21sh)
-==26409== 
-==26409== Invalid read of size 1
-==26409==    at 0x1000040CA: print (in ./21sh)
-==26409==    by 0x1000042A6: print_readablechar (in ./21sh)
-==26409==    by 0x100002206: get_input (in ./21sh)
-==26409==    by 0x100002360: ft_readline (in ./21sh)
-==26409==    by 0x1000055CB: minishell (in ./21sh)
-==26409==    by 0x1000056F7: main (in ./21sh)
-==26409==  Address 0x100bd84a5 is 0 bytes after a block of size 21 alloc'd
-==26409==    at 0x1000A0626: malloc (in /Users/mfilahi/.brew/Cellar/valgrind/3.14.0/lib/valgrind/vgpreload_memcheck-amd64-darwin.so)
-==26409==    by 0x10000657C: ft_strnew (in ./21sh)
-==26409==    by 0x100002FF8: init_structure_members (in ./21sh)
-==26409==    by 0x100002345: ft_readline (in ./21sh)
-==26409==    by 0x1000055CB: minishell (in ./21sh)
-==26409==    by 0x1000056F7: main (in ./21sh)
-==26409== 
-==26409== Invalid read of size 1
-==26409==    at 0x1000029E1: new_line_is_found (in ./21sh)
-==26409==    by 0x100003F58: change_pos (in ./21sh)
-==26409==    by 0x1000042B5: print_readablechar (in ./21sh)
-==26409==    by 0x100002206: get_input (in ./21sh)
-==26409==    by 0x100002360: ft_readline (in ./21sh)
-==26409==    by 0x1000055CB: minishell (in ./21sh)
-==26409==    by 0x1000056F7: main (in ./21sh)
-==26409==  Address 0x100bd84a5 is 0 bytes after a block of size 21 alloc'd
-==26409==    at 0x1000A0626: malloc (in /Users/mfilahi/.brew/Cellar/valgrind/3.14.0/lib/valgrind/vgpreload_memcheck-amd64-darwin.so)
-==26409==    by 0x10000657C: ft_strnew (in ./21sh)
-==26409==    by 0x100002FF8: init_structure_members (in ./21sh)
-==26409==    by 0x100002345: ft_readline (in ./21sh)
-==26409==    by 0x1000055CB: minishell (in ./21sh)
-==26409==    by 0x1000056F7: main (in ./21sh)
-==26409== 
-==26409== Invalid read of size 1
-==26409==    at 0x100004002: change_pos (in ./21sh)
-==26409==    by 0x1000042B5: print_readablechar (in ./21sh)
-==26409==    by 0x100002206: get_input (in ./21sh)
-==26409==    by 0x100002360: ft_readline (in ./21sh)
-==26409==    by 0x1000055CB: minishell (in ./21sh)
-==26409==    by 0x1000056F7: main (in ./21sh)
-==26409==  Address 0x100bd84a5 is 0 bytes after a block of size 21 alloc'd
-==26409==    at 0x1000A0626: malloc (in /Users/mfilahi/.brew/Cellar/valgrind/3.14.0/lib/valgrind/vgpreload_memcheck-amd64-darwin.so)
-==26409==    by 0x10000657C: ft_strnew (in ./21sh)
-==26409==    by 0x100002FF8: init_structure_members (in ./21sh)
-==26409==    by 0x100002345: ft_readline (in ./21sh)
-==26409==    by 0x1000055CB: minishell (in ./21sh)
-==26409==    by 0x1000056F7: main (in ./21sh)
-==26409== 
-==26409== Invalid read of size 1
-==26409==    at 0x10000622B: ft_strcpy (in ./21sh)
-==26409==    by 0x1000034AF: insert_element (in ./21sh)
-==26409==    by 0x100004211: print_readablechar (in ./21sh)
-==26409==    by 0x100002206: get_input (in ./21sh)
-==26409==    by 0x100002360: ft_readline (in ./21sh)
-==26409==    by 0x1000055CB: minishell (in ./21sh)
-==26409==    by 0x1000056F7: main (in ./21sh)
-==26409==  Address 0x100bd84a5 is 0 bytes after a block of size 21 alloc'd
-==26409==    at 0x1000A0626: malloc (in /Users/mfilahi/.brew/Cellar/valgrind/3.14.0/lib/valgrind/vgpreload_memcheck-amd64-darwin.so)
-==26409==    by 0x10000657C: ft_strnew (in ./21sh)
-==26409==    by 0x100002FF8: init_structure_members (in ./21sh)
-==26409==    by 0x100002345: ft_readline (in ./21sh)
-==26409==    by 0x1000055CB: minishell (in ./21sh)
-==26409==    by 0x1000056F7: main (in ./21sh)
-==26409== 
-==26409== Conditional jump or move depends on uninitialised value(s)
-==26409==    at 0x100005781: ft_chdir (in ./21sh)
-==26409==    by 0x100004983: builtin_cmds (in ./21sh)
-==26409==    by 0x10000553B: minishell_1 (in ./21sh)
-==26409==    by 0x100005642: minishell (in ./21sh)
-==26409==    by 0x1000056F7: main (in ./21sh)
-==26409== 
-==26409== Conditional jump or move depends on uninitialised value(s)
-==26409==    at 0x100005BAA: echo_cmd (in ./21sh)
-==26409==    by 0x100004964: builtin_cmds (in ./21sh)
-==26409==    by 0x10000553B: minishell_1 (in ./21sh)
-==26409==    by 0x100005642: minishell (in ./21sh)
-==26409==    by 0x1000056F7: main (in ./21sh)
-==26409== 
-==26409== Conditional jump or move depends on uninitialised value(s)
-==26409==    at 0x100005A4F: echo_cmd (in ./21sh)
-==26409==    by 0x100004964: builtin_cmds (in ./21sh)
-==26409==    by 0x10000553B: minishell_1 (in ./21sh)
-==26409==    by 0x100005642: minishell (in ./21sh)
-==26409==    by 0x1000056F7: main (in ./21sh)
-==26409== 
-==26445== Invalid read of size 1
-==26445==    at 0x100006A25: ft_strsub (in ./21sh)
-==26445==    by 0x1000044D9: get_path (in ./21sh)
-==26445==    by 0x10000536D: sys_cmd (in ./21sh)
-==26445==    by 0x10000549B: child_pid (in ./21sh)
-==26445==    by 0x10000554D: minishell_1 (in ./21sh)
-==26445==    by 0x100005642: minishell (in ./21sh)
-==26445==    by 0x1000056F7: main (in ./21sh)
-==26445==  Address 0x100ba3039 is 0 bytes after a block of size 153 alloc'd
-==26445==    at 0x1000A0626: malloc (in /Users/mfilahi/.brew/Cellar/valgrind/3.14.0/lib/valgrind/vgpreload_memcheck-amd64-darwin.so)
-==26445==    by 0x10000628C: ft_strdup (in ./21sh)
-==26445==    by 0x100004BBE: createlist (in ./21sh)
-==26445==    by 0x1000052F6: copy_of_env (in ./21sh)
-==26445==    by 0x1000056EA: main (in ./21sh)
-==26445== 
-==26445== Invalid write of size 8
-==26445==    at 0x10000677B: ft_strsplit (in ./21sh)
-==26445==    by 0x1000044EB: get_path (in ./21sh)
-==26445==    by 0x10000536D: sys_cmd (in ./21sh)
-==26445==    by 0x10000549B: child_pid (in ./21sh)
-==26445==    by 0x10000554D: minishell_1 (in ./21sh)
-==26445==    by 0x100005642: minishell (in ./21sh)
-==26445==    by 0x1000056F7: main (in ./21sh)
-==26445==  Address 0x100bf46f0 is 64 bytes inside a block of size 65 alloc'd
-==26445==    at 0x1000A0626: malloc (in /Users/mfilahi/.brew/Cellar/valgrind/3.14.0/lib/valgrind/vgpreload_memcheck-amd64-darwin.so)
-==26445==    by 0x10000660A: ft_strsplit (in ./21sh)
-==26445==    by 0x1000044EB: get_path (in ./21sh)
-==26445==    by 0x10000536D: sys_cmd (in ./21sh)
-==26445==    by 0x10000549B: child_pid (in ./21sh)
-==26445==    by 0x10000554D: minishell_1 (in ./21sh)
-==26445==    by 0x100005642: minishell (in ./21sh)
-==26445==    by 0x1000056F7: main (in ./21sh)
-==26445== 
-==26445== Invalid write of size 8
-==26445==    at 0x100004CC7: get_env (in ./21sh)
-==26445==    by 0x10000435C: execute (in ./21sh)
-==26445==    by 0x10000541E: sys_cmd (in ./21sh)
-==26445==    by 0x10000549B: child_pid (in ./21sh)
-==26445==    by 0x10000554D: minishell_1 (in ./21sh)
-==26445==    by 0x100005642: minishell (in ./21sh)
-==26445==    by 0x1000056F7: main (in ./21sh)
-==26445==  Address 0x100bf4d18 is 280 bytes inside a block of size 281 alloc'd
-==26445==    at 0x1000A0626: malloc (in /Users/mfilahi/.brew/Cellar/valgrind/3.14.0/lib/valgrind/vgpreload_memcheck-amd64-darwin.so)
-==26445==    by 0x100004C5F: get_env (in ./21sh)
-==26445==    by 0x10000435C: execute (in ./21sh)
-==26445==    by 0x10000541E: sys_cmd (in ./21sh)
-==26445==    by 0x10000549B: child_pid (in ./21sh)
-==26445==    by 0x10000554D: minishell_1 (in ./21sh)
-==26445==    by 0x100005642: minishell (in ./21sh)
-==26445==    by 0x1000056F7: main (in ./21sh)
-==26445== 
-==26445== Syscall param execve(argv) points to unaddressable byte(s)
-==26445==    at 0x1003FB77E: execve (in /usr/lib/system/libsystem_kernel.dylib)
-==26445==    by 0x100004374: execute (in ./21sh)
-==26445==    by 0x10000541E: sys_cmd (in ./21sh)
-==26445==    by 0x10000549B: child_pid (in ./21sh)
-==26445==    by 0x10000554D: minishell_1 (in ./21sh)
-==26445==    by 0x100005642: minishell (in ./21sh)
-==26445==    by 0x1000056F7: main (in ./21sh)
-==26445==  Address 0x100bf1879 is 0 bytes after a block of size 9 alloc'd
-==26445==    at 0x1000A0626: malloc (in /Users/mfilahi/.brew/Cellar/valgrind/3.14.0/lib/valgrind/vgpreload_memcheck-amd64-darwin.so)
-==26445==    by 0x10000660A: ft_strsplit (in ./21sh)
-==26445==    by 0x100005631: minishell (in ./21sh)
-==26445==    by 0x1000056F7: main (in ./21sh)
-==26445== 
-==26445== Syscall param execve(envp) points to unaddressable byte(s)
-==26445==    at 0x1003FB77E: execve (in /usr/lib/system/libsystem_kernel.dylib)
-==26445==    by 0x100004374: execute (in ./21sh)
-==26445==    by 0x10000541E: sys_cmd (in ./21sh)
-==26445==    by 0x10000549B: child_pid (in ./21sh)
-==26445==    by 0x10000554D: minishell_1 (in ./21sh)
-==26445==    by 0x100005642: minishell (in ./21sh)
-==26445==    by 0x1000056F7: main (in ./21sh)
-==26445==  Address 0x100bf4d19 is 0 bytes after a block of size 281 alloc'd
-==26445==    at 0x1000A0626: malloc (in /Users/mfilahi/.brew/Cellar/valgrind/3.14.0/lib/valgrind/vgpreload_memcheck-amd64-darwin.so)
-==26445==    by 0x100004C5F: get_env (in ./21sh)
-==26445==    by 0x10000435C: execute (in ./21sh)
-==26445==    by 0x10000541E: sys_cmd (in ./21sh)
-==26445==    by 0x10000549B: child_pid (in ./21sh)
-==26445==    by 0x10000554D: minishell_1 (in ./21sh)
-==26445==    by 0x100005642: minishell (in ./21sh)
-==26445==    by 0x1000056F7: main (in ./21sh)
-==26445== 
-==26449== Invalid read of size 1
-==26449==    at 0x100006A25: ft_strsub (in ./21sh)
-==26449==    by 0x1000044D9: get_path (in ./21sh)
-==26449==    by 0x10000536D: sys_cmd (in ./21sh)
-==26449==    by 0x10000549B: child_pid (in ./21sh)
-==26449==    by 0x10000554D: minishell_1 (in ./21sh)
-==26449==    by 0x100005642: minishell (in ./21sh)
-==26449==    by 0x1000056F7: main (in ./21sh)
-==26449==  Address 0x100ba3039 is 0 bytes after a block of size 153 alloc'd
-==26449==    at 0x1000A0626: malloc (in /Users/mfilahi/.brew/Cellar/valgrind/3.14.0/lib/valgrind/vgpreload_memcheck-amd64-darwin.so)
-==26449==    by 0x10000628C: ft_strdup (in ./21sh)
-==26449==    by 0x100004BBE: createlist (in ./21sh)
-==26449==    by 0x1000052F6: copy_of_env (in ./21sh)
-==26449==    by 0x1000056EA: main (in ./21sh)
-==26449== 
-==26449== Invalid write of size 8
-==26449==    at 0x10000677B: ft_strsplit (in ./21sh)
-==26449==    by 0x1000044EB: get_path (in ./21sh)
-==26449==    by 0x10000536D: sys_cmd (in ./21sh)
-==26449==    by 0x10000549B: child_pid (in ./21sh)
-==26449==    by 0x10000554D: minishell_1 (in ./21sh)
-==26449==    by 0x100005642: minishell (in ./21sh)
-==26449==    by 0x1000056F7: main (in ./21sh)
-==26449==  Address 0x100c263d0 is 64 bytes inside a block of size 65 alloc'd
-==26449==    at 0x1000A0626: malloc (in /Users/mfilahi/.brew/Cellar/valgrind/3.14.0/lib/valgrind/vgpreload_memcheck-amd64-darwin.so)
-==26449==    by 0x10000660A: ft_strsplit (in ./21sh)
-==26449==    by 0x1000044EB: get_path (in ./21sh)
-==26449==    by 0x10000536D: sys_cmd (in ./21sh)
-==26449==    by 0x10000549B: child_pid (in ./21sh)
-==26449==    by 0x10000554D: minishell_1 (in ./21sh)
-==26449==    by 0x100005642: minishell (in ./21sh)
-==26449==    by 0x1000056F7: main (in ./21sh)
-==26449== 
-==26449== Invalid write of size 8
-==26449==    at 0x100004CC7: get_env (in ./21sh)
-==26449==    by 0x10000435C: execute (in ./21sh)
-==26449==    by 0x10000541E: sys_cmd (in ./21sh)
-==26449==    by 0x10000549B: child_pid (in ./21sh)
-==26449==    by 0x10000554D: minishell_1 (in ./21sh)
-==26449==    by 0x100005642: minishell (in ./21sh)
-==26449==    by 0x1000056F7: main (in ./21sh)
-==26449==  Address 0x100c269f8 is 280 bytes inside a block of size 281 alloc'd
-==26449==    at 0x1000A0626: malloc (in /Users/mfilahi/.brew/Cellar/valgrind/3.14.0/lib/valgrind/vgpreload_memcheck-amd64-darwin.so)
-==26449==    by 0x100004C5F: get_env (in ./21sh)
-==26449==    by 0x10000435C: execute (in ./21sh)
-==26449==    by 0x10000541E: sys_cmd (in ./21sh)
-==26449==    by 0x10000549B: child_pid (in ./21sh)
-==26449==    by 0x10000554D: minishell_1 (in ./21sh)
-==26449==    by 0x100005642: minishell (in ./21sh)
-==26449==    by 0x1000056F7: main (in ./21sh)
-==26449== 
-==26449== Syscall param execve(argv) points to unaddressable byte(s)
-==26449==    at 0x1003FB77E: execve (in /usr/lib/system/libsystem_kernel.dylib)
-==26449==    by 0x100004374: execute (in ./21sh)
-==26449==    by 0x10000541E: sys_cmd (in ./21sh)
-==26449==    by 0x10000549B: child_pid (in ./21sh)
-==26449==    by 0x10000554D: minishell_1 (in ./21sh)
-==26449==    by 0x100005642: minishell (in ./21sh)
-==26449==    by 0x1000056F7: main (in ./21sh)
-==26449==  Address 0x100c23559 is 0 bytes after a block of size 9 alloc'd
-==26449==    at 0x1000A0626: malloc (in /Users/mfilahi/.brew/Cellar/valgrind/3.14.0/lib/valgrind/vgpreload_memcheck-amd64-darwin.so)
-==26449==    by 0x10000660A: ft_strsplit (in ./21sh)
-==26449==    by 0x100005631: minishell (in ./21sh)
-==26449==    by 0x1000056F7: main (in ./21sh)
-==26449== 
-==26449== Syscall param execve(envp) points to unaddressable byte(s)
-==26449==    at 0x1003FB77E: execve (in /usr/lib/system/libsystem_kernel.dylib)
-==26449==    by 0x100004374: execute (in ./21sh)
-==26449==    by 0x10000541E: sys_cmd (in ./21sh)
-==26449==    by 0x10000549B: child_pid (in ./21sh)
-==26449==    by 0x10000554D: minishell_1 (in ./21sh)
-==26449==    by 0x100005642: minishell (in ./21sh)
-==26449==    by 0x1000056F7: main (in ./21sh)
-==26449==  Address 0x100c269f9 is 0 bytes after a block of size 281 alloc'd
-==26449==    at 0x1000A0626: malloc (in /Users/mfilahi/.brew/Cellar/valgrind/3.14.0/lib/valgrind/vgpreload_memcheck-amd64-darwin.so)
-==26449==    by 0x100004C5F: get_env (in ./21sh)
-==26449==    by 0x10000435C: execute (in ./21sh)
-==26449==    by 0x10000541E: sys_cmd (in ./21sh)
-==26449==    by 0x10000549B: child_pid (in ./21sh)
-==26449==    by 0x10000554D: minishell_1 (in ./21sh)
-==26449==    by 0x100005642: minishell (in ./21sh)
-==26449==    by 0x1000056F7: main (in ./21sh)
-==26449== 
-==26482== Invalid read of size 1
-==26482==    at 0x100006A25: ft_strsub (in ./21sh)
-==26482==    by 0x1000044D9: get_path (in ./21sh)
-==26482==    by 0x10000536D: sys_cmd (in ./21sh)
-==26482==    by 0x10000549B: child_pid (in ./21sh)
-==26482==    by 0x10000554D: minishell_1 (in ./21sh)
-==26482==    by 0x100005642: minishell (in ./21sh)
-==26482==    by 0x1000056F7: main (in ./21sh)
-==26482==  Address 0x100ba3039 is 0 bytes after a block of size 153 alloc'd
-==26482==    at 0x1000A0626: malloc (in /Users/mfilahi/.brew/Cellar/valgrind/3.14.0/lib/valgrind/vgpreload_memcheck-amd64-darwin.so)
-==26482==    by 0x10000628C: ft_strdup (in ./21sh)
-==26482==    by 0x100004BBE: createlist (in ./21sh)
-==26482==    by 0x1000052F6: copy_of_env (in ./21sh)
-==26482==    by 0x1000056EA: main (in ./21sh)
-==26482== 
-==26482== Invalid write of size 8
-==26482==    at 0x10000677B: ft_strsplit (in ./21sh)
-==26482==    by 0x1000044EB: get_path (in ./21sh)
-==26482==    by 0x10000536D: sys_cmd (in ./21sh)
-==26482==    by 0x10000549B: child_pid (in ./21sh)
-==26482==    by 0x10000554D: minishell_1 (in ./21sh)
-==26482==    by 0x100005642: minishell (in ./21sh)
-==26482==    by 0x1000056F7: main (in ./21sh)
-==26482==  Address 0x100c58080 is 64 bytes inside a block of size 65 alloc'd
-==26482==    at 0x1000A0626: malloc (in /Users/mfilahi/.brew/Cellar/valgrind/3.14.0/lib/valgrind/vgpreload_memcheck-amd64-darwin.so)
-==26482==    by 0x10000660A: ft_strsplit (in ./21sh)
-==26482==    by 0x1000044EB: get_path (in ./21sh)
-==26482==    by 0x10000536D: sys_cmd (in ./21sh)
-==26482==    by 0x10000549B: child_pid (in ./21sh)
-==26482==    by 0x10000554D: minishell_1 (in ./21sh)
-==26482==    by 0x100005642: minishell (in ./21sh)
-==26482==    by 0x1000056F7: main (in ./21sh)
-==26482== 
-==26482== Invalid write of size 8
-==26482==    at 0x100004CC7: get_env (in ./21sh)
-==26482==    by 0x10000435C: execute (in ./21sh)
-==26482==    by 0x10000541E: sys_cmd (in ./21sh)
-==26482==    by 0x10000549B: child_pid (in ./21sh)
-==26482==    by 0x10000554D: minishell_1 (in ./21sh)
-==26482==    by 0x100005642: minishell (in ./21sh)
-==26482==    by 0x1000056F7: main (in ./21sh)
-==26482==  Address 0x100c586a8 is 280 bytes inside a block of size 281 alloc'd
-==26482==    at 0x1000A0626: malloc (in /Users/mfilahi/.brew/Cellar/valgrind/3.14.0/lib/valgrind/vgpreload_memcheck-amd64-darwin.so)
-==26482==    by 0x100004C5F: get_env (in ./21sh)
-==26482==    by 0x10000435C: execute (in ./21sh)
-==26482==    by 0x10000541E: sys_cmd (in ./21sh)
-==26482==    by 0x10000549B: child_pid (in ./21sh)
-==26482==    by 0x10000554D: minishell_1 (in ./21sh)
-==26482==    by 0x100005642: minishell (in ./21sh)
-==26482==    by 0x1000056F7: main (in ./21sh)
-==26482== 
-==26482== Syscall param execve(argv) points to unaddressable byte(s)
-==26482==    at 0x1003FB77E: execve (in /usr/lib/system/libsystem_kernel.dylib)
-==26482==    by 0x100004374: execute (in ./21sh)
-==26482==    by 0x10000541E: sys_cmd (in ./21sh)
-==26482==    by 0x10000549B: child_pid (in ./21sh)
-==26482==    by 0x10000554D: minishell_1 (in ./21sh)
-==26482==    by 0x100005642: minishell (in ./21sh)
-==26482==    by 0x1000056F7: main (in ./21sh)
-==26482==  Address 0x100c55209 is 0 bytes after a block of size 9 alloc'd
-==26482==    at 0x1000A0626: malloc (in /Users/mfilahi/.brew/Cellar/valgrind/3.14.0/lib/valgrind/vgpreload_memcheck-amd64-darwin.so)
-==26482==    by 0x10000660A: ft_strsplit (in ./21sh)
-==26482==    by 0x100005631: minishell (in ./21sh)
-==26482==    by 0x1000056F7: main (in ./21sh)
-==26482== 
-==26482== Syscall param execve(envp) points to unaddressable byte(s)
-==26482==    at 0x1003FB77E: execve (in /usr/lib/system/libsystem_kernel.dylib)
-==26482==    by 0x100004374: execute (in ./21sh)
-==26482==    by 0x10000541E: sys_cmd (in ./21sh)
-==26482==    by 0x10000549B: child_pid (in ./21sh)
-==26482==    by 0x10000554D: minishell_1 (in ./21sh)
-==26482==    by 0x100005642: minishell (in ./21sh)
-==26482==    by 0x1000056F7: main (in ./21sh)
-==26482==  Address 0x100c586a9 is 0 bytes after a block of size 281 alloc'd
-==26482==    at 0x1000A0626: malloc (in /Users/mfilahi/.brew/Cellar/valgrind/3.14.0/lib/valgrind/vgpreload_memcheck-amd64-darwin.so)
-==26482==    by 0x100004C5F: get_env (in ./21sh)
-==26482==    by 0x10000435C: execute (in ./21sh)
-==26482==    by 0x10000541E: sys_cmd (in ./21sh)
-==26482==    by 0x10000549B: child_pid (in ./21sh)
-==26482==    by 0x10000554D: minishell_1 (in ./21sh)
-==26482==    by 0x100005642: minishell (in ./21sh)
-==26482==    by 0x1000056F7: main (in ./21sh)
-==26482== 
-==26489== Invalid read of size 1
-==26489==    at 0x100006A25: ft_strsub (in ./21sh)
-==26489==    by 0x1000044D9: get_path (in ./21sh)
-==26489==    by 0x10000536D: sys_cmd (in ./21sh)
-==26489==    by 0x10000549B: child_pid (in ./21sh)
-==26489==    by 0x10000554D: minishell_1 (in ./21sh)
-==26489==    by 0x100005642: minishell (in ./21sh)
-==26489==    by 0x1000056F7: main (in ./21sh)
-==26489==  Address 0x100ba3039 is 0 bytes after a block of size 153 alloc'd
-==26489==    at 0x1000A0626: malloc (in /Users/mfilahi/.brew/Cellar/valgrind/3.14.0/lib/valgrind/vgpreload_memcheck-amd64-darwin.so)
-==26489==    by 0x10000628C: ft_strdup (in ./21sh)
-==26489==    by 0x100004BBE: createlist (in ./21sh)
-==26489==    by 0x1000052F6: copy_of_env (in ./21sh)
-==26489==    by 0x1000056EA: main (in ./21sh)
-==26489== 
-==26489== Invalid write of size 8
-==26489==    at 0x10000677B: ft_strsplit (in ./21sh)
-==26489==    by 0x1000044EB: get_path (in ./21sh)
-==26489==    by 0x10000536D: sys_cmd (in ./21sh)
-==26489==    by 0x10000549B: child_pid (in ./21sh)
-==26489==    by 0x10000554D: minishell_1 (in ./21sh)
-==26489==    by 0x100005642: minishell (in ./21sh)
-==26489==    by 0x1000056F7: main (in ./21sh)
-==26489==  Address 0x100c89780 is 64 bytes inside a block of size 65 alloc'd
-==26489==    at 0x1000A0626: malloc (in /Users/mfilahi/.brew/Cellar/valgrind/3.14.0/lib/valgrind/vgpreload_memcheck-amd64-darwin.so)
-==26489==    by 0x10000660A: ft_strsplit (in ./21sh)
-==26489==    by 0x1000044EB: get_path (in ./21sh)
-==26489==    by 0x10000536D: sys_cmd (in ./21sh)
-==26489==    by 0x10000549B: child_pid (in ./21sh)
-==26489==    by 0x10000554D: minishell_1 (in ./21sh)
-==26489==    by 0x100005642: minishell (in ./21sh)
-==26489==    by 0x1000056F7: main (in ./21sh)
-==26489== 
-==26489== Invalid write of size 8
-==26489==    at 0x100004CC7: get_env (in ./21sh)
-==26489==    by 0x10000435C: execute (in ./21sh)
-==26489==    by 0x10000541E: sys_cmd (in ./21sh)
-==26489==    by 0x10000549B: child_pid (in ./21sh)
-==26489==    by 0x10000554D: minishell_1 (in ./21sh)
-==26489==    by 0x100005642: minishell (in ./21sh)
-==26489==    by 0x1000056F7: main (in ./21sh)
-==26489==  Address 0x100c89da8 is 280 bytes inside a block of size 281 alloc'd
-==26489==    at 0x1000A0626: malloc (in /Users/mfilahi/.brew/Cellar/valgrind/3.14.0/lib/valgrind/vgpreload_memcheck-amd64-darwin.so)
-==26489==    by 0x100004C5F: get_env (in ./21sh)
-==26489==    by 0x10000435C: execute (in ./21sh)
-==26489==    by 0x10000541E: sys_cmd (in ./21sh)
-==26489==    by 0x10000549B: child_pid (in ./21sh)
-==26489==    by 0x10000554D: minishell_1 (in ./21sh)
-==26489==    by 0x100005642: minishell (in ./21sh)
-==26489==    by 0x1000056F7: main (in ./21sh)
-==26489== 
-==26489== Syscall param execve(argv) points to unaddressable byte(s)
-==26489==    at 0x1003FB77E: execve (in /usr/lib/system/libsystem_kernel.dylib)
-==26489==    by 0x100004374: execute (in ./21sh)
-==26489==    by 0x10000541E: sys_cmd (in ./21sh)
-==26489==    by 0x10000549B: child_pid (in ./21sh)
-==26489==    by 0x10000554D: minishell_1 (in ./21sh)
-==26489==    by 0x100005642: minishell (in ./21sh)
-==26489==    by 0x1000056F7: main (in ./21sh)
-==26489==  Address 0x100c86909 is 0 bytes after a block of size 9 alloc'd
-==26489==    at 0x1000A0626: malloc (in /Users/mfilahi/.brew/Cellar/valgrind/3.14.0/lib/valgrind/vgpreload_memcheck-amd64-darwin.so)
-==26489==    by 0x10000660A: ft_strsplit (in ./21sh)
-==26489==    by 0x100005631: minishell (in ./21sh)
-==26489==    by 0x1000056F7: main (in ./21sh)
-==26489== 
-==26489== Syscall param execve(envp) points to unaddressable byte(s)
-==26489==    at 0x1003FB77E: execve (in /usr/lib/system/libsystem_kernel.dylib)
-==26489==    by 0x100004374: execute (in ./21sh)
-==26489==    by 0x10000541E: sys_cmd (in ./21sh)
-==26489==    by 0x10000549B: child_pid (in ./21sh)
-==26489==    by 0x10000554D: minishell_1 (in ./21sh)
-==26489==    by 0x100005642: minishell (in ./21sh)
-==26489==    by 0x1000056F7: main (in ./21sh)
-==26489==  Address 0x100c89da9 is 0 bytes after a block of size 281 alloc'd
-==26489==    at 0x1000A0626: malloc (in /Users/mfilahi/.brew/Cellar/valgrind/3.14.0/lib/valgrind/vgpreload_memcheck-amd64-darwin.so)
-==26489==    by 0x100004C5F: get_env (in ./21sh)
-==26489==    by 0x10000435C: execute (in ./21sh)
-==26489==    by 0x10000541E: sys_cmd (in ./21sh)
-==26489==    by 0x10000549B: child_pid (in ./21sh)
-==26489==    by 0x10000554D: minishell_1 (in ./21sh)
-==26489==    by 0x100005642: minishell (in ./21sh)
-==26489==    by 0x1000056F7: main (in ./21sh)
-==26489== 
-==26409== Invalid write of size 8
-==26409==    at 0x10000677B: ft_strsplit (in ./21sh)
-==26409==    by 0x100005C1F: _echo_cmd (in ./21sh)
-==26409==    by 0x100005B6D: echo_cmd (in ./21sh)
-==26409==    by 0x100004964: builtin_cmds (in ./21sh)
-==26409==    by 0x10000553B: minishell_1 (in ./21sh)
-==26409==    by 0x100005642: minishell (in ./21sh)
-==26409==    by 0x1000056F7: main (in ./21sh)
-==26409==  Address 0x100c9f4a8 is 8 bytes inside a block of size 9 alloc'd
-==26409==    at 0x1000A0626: malloc (in /Users/mfilahi/.brew/Cellar/valgrind/3.14.0/lib/valgrind/vgpreload_memcheck-amd64-darwin.so)
-==26409==    by 0x10000660A: ft_strsplit (in ./21sh)
-==26409==    by 0x100005C1F: _echo_cmd (in ./21sh)
-==26409==    by 0x100005B6D: echo_cmd (in ./21sh)
-==26409==    by 0x100004964: builtin_cmds (in ./21sh)
-==26409==    by 0x10000553B: minishell_1 (in ./21sh)
-==26409==    by 0x100005642: minishell (in ./21sh)
-==26409==    by 0x1000056F7: main (in ./21sh)
-==26409== 
-==26409== Conditional jump or move depends on uninitialised value(s)
-==26409==    at 0x100005C2C: _echo_cmd (in ./21sh)
-==26409==    by 0x100005B6D: echo_cmd (in ./21sh)
-==26409==    by 0x100004964: builtin_cmds (in ./21sh)
-==26409==    by 0x10000553B: minishell_1 (in ./21sh)
-==26409==    by 0x100005642: minishell (in ./21sh)
-==26409==    by 0x1000056F7: main (in ./21sh)
-==26409== 
-==26409== Conditional jump or move depends on uninitialised value(s)
-==26409==    at 0x100005D08: _echo_cmd (in ./21sh)
-==26409==    by 0x100005B6D: echo_cmd (in ./21sh)
-==26409==    by 0x100004964: builtin_cmds (in ./21sh)
-==26409==    by 0x10000553B: minishell_1 (in ./21sh)
-==26409==    by 0x100005642: minishell (in ./21sh)
-==26409==    by 0x1000056F7: main (in ./21sh)
-==26409== 
-==26409== 
-==26409== HEAP SUMMARY:
-==26409==     in use at exit: 25,143 bytes in 180 blocks
-==26409==   total heap usage: 469 allocs, 289 frees, 1,240,384 bytes allocated
-==26409== 
-==26409== Searching for pointers to 180 not-freed blocks
-==26409== Checked 68,660,664 bytes
-==26409== 
-==26409== 5 bytes in 1 blocks are still reachable in loss record 1 of 58
-==26409==    at 0x1000A0626: malloc (in /Users/mfilahi/.brew/Cellar/valgrind/3.14.0/lib/valgrind/vgpreload_memcheck-amd64-darwin.so)
-==26409==    by 0x10000628C: ft_strdup (in ./21sh)
-==26409==    by 0x100002371: ft_readline (in ./21sh)
-==26409==    by 0x1000055CB: minishell (in ./21sh)
-==26409==    by 0x1000056F7: main (in ./21sh)
-==26409== 
-==26409== 5 bytes in 1 blocks are still reachable in loss record 2 of 58
-==26409==    at 0x1000A0626: malloc (in /Users/mfilahi/.brew/Cellar/valgrind/3.14.0/lib/valgrind/vgpreload_memcheck-amd64-darwin.so)
-==26409==    by 0x10000657C: ft_strnew (in ./21sh)
-==26409==    by 0x1000066CE: ft_strsplit (in ./21sh)
-==26409==    by 0x1000055F5: minishell (in ./21sh)
-==26409==    by 0x1000056F7: main (in ./21sh)
-==26409== 
-==26409== 8 bytes in 1 blocks are still reachable in loss record 3 of 58
-==26409==    at 0x1000A0626: malloc (in /Users/mfilahi/.brew/Cellar/valgrind/3.14.0/lib/valgrind/vgpreload_memcheck-amd64-darwin.so)
-==26409==    by 0x100305938: strdup (in /usr/lib/system/libsystem_c.dylib)
-==26409==    by 0x1000CCC17: _nc_trim_sgr0 (in /usr/lib/libncurses.5.4.dylib)
-==26409==    by 0x1000C47D3: tgetent (in /usr/lib/libncurses.5.4.dylib)
-==26409==    by 0x100003EDB: termcap_config (in ./21sh)
-==26409==    by 0x100002357: ft_readline (in ./21sh)
-==26409==    by 0x1000055CB: minishell (in ./21sh)
-==26409==    by 0x1000056F7: main (in ./21sh)
-==26409== 
-==26409== 9 bytes in 1 blocks are still reachable in loss record 4 of 58
-==26409==    at 0x1000A0626: malloc (in /Users/mfilahi/.brew/Cellar/valgrind/3.14.0/lib/valgrind/vgpreload_memcheck-amd64-darwin.so)
-==26409==    by 0x10000660A: ft_strsplit (in ./21sh)
-==26409==    by 0x1000055F5: minishell (in ./21sh)
-==26409==    by 0x1000056F7: main (in ./21sh)
-==26409== 
-==26409== 11 bytes in 2 blocks are indirectly lost in loss record 5 of 58
-==26409==    at 0x1000A0626: malloc (in /Users/mfilahi/.brew/Cellar/valgrind/3.14.0/lib/valgrind/vgpreload_memcheck-amd64-darwin.so)
-==26409==    by 0x10000657C: ft_strnew (in ./21sh)
-==26409==    by 0x1000066CE: ft_strsplit (in ./21sh)
-==26409==    by 0x100005C1F: _echo_cmd (in ./21sh)
-==26409==    by 0x100005B6D: echo_cmd (in ./21sh)
-==26409==    by 0x100004964: builtin_cmds (in ./21sh)
-==26409==    by 0x10000553B: minishell_1 (in ./21sh)
-==26409==    by 0x100005642: minishell (in ./21sh)
-==26409==    by 0x1000056F7: main (in ./21sh)
-==26409== 
-==26409== 14 bytes in 1 blocks are still reachable in loss record 7 of 58
-==26409==    at 0x1000A0FD4: realloc (in /Users/mfilahi/.brew/Cellar/valgrind/3.14.0/lib/valgrind/vgpreload_memcheck-amd64-darwin.so)
-==26409==    by 0x1000B5016: _nc_doalloc (in /usr/lib/libncurses.5.4.dylib)
-==26409==    by 0x1000C6D34: tparm (in /usr/lib/libncurses.5.4.dylib)
-==26409==    by 0x1000CCFE4: _nc_trim_sgr0 (in /usr/lib/libncurses.5.4.dylib)
-==26409==    by 0x1000CCC0A: _nc_trim_sgr0 (in /usr/lib/libncurses.5.4.dylib)
-==26409==    by 0x1000C47D3: tgetent (in /usr/lib/libncurses.5.4.dylib)
-==26409==    by 0x100003EDB: termcap_config (in ./21sh)
-==26409==    by 0x100002357: ft_readline (in ./21sh)
-==26409==    by 0x1000055CB: minishell (in ./21sh)
-==26409==    by 0x1000056F7: main (in ./21sh)
-==26409== 
-==26409== 15 bytes in 1 blocks are still reachable in loss record 8 of 58
-==26409==    at 0x1000A0626: malloc (in /Users/mfilahi/.brew/Cellar/valgrind/3.14.0/lib/valgrind/vgpreload_memcheck-amd64-darwin.so)
-==26409==    by 0x100305938: strdup (in /usr/lib/system/libsystem_c.dylib)
-==26409==    by 0x1000C33BF: _nc_setupterm (in /usr/lib/libncurses.5.4.dylib)
-==26409==    by 0x1000C45A8: tgetent (in /usr/lib/libncurses.5.4.dylib)
-==26409==    by 0x100003EDB: termcap_config (in ./21sh)
-==26409==    by 0x100002357: ft_readline (in ./21sh)
-==26409==    by 0x1000055CB: minishell (in ./21sh)
-==26409==    by 0x1000056F7: main (in ./21sh)
-==26409== 
-==26409== 24 bytes in 1 blocks are still reachable in loss record 10 of 58
-==26409==    at 0x1000A089E: malloc_zone_malloc (in /Users/mfilahi/.brew/Cellar/valgrind/3.14.0/lib/valgrind/vgpreload_memcheck-amd64-darwin.so)
-==26409==    by 0x1005FE8A6: NXCreateMapTableFromZone (in /usr/lib/libobjc.A.dylib)
-==26409==    by 0x1005FE878: NXCreateMapTableFromZone (in /usr/lib/libobjc.A.dylib)
-==26409==    by 0x1005FD350: __sel_registerName(char const*, int, int) (in /usr/lib/libobjc.A.dylib)
-==26409==    by 0x1005FD062: sel_init (in /usr/lib/libobjc.A.dylib)
-==26409==    by 0x1005FC9CA: map_images_nolock (in /usr/lib/libobjc.A.dylib)
-==26409==    by 0x10060FFE8: objc_object::sidetable_retainCount() (in /usr/lib/libobjc.A.dylib)
-==26409==    by 0x10000F03B: dyld::notifyBatchPartial(dyld_image_states, bool, char const* (*)(dyld_image_states, unsigned int, dyld_image_info const*), bool, bool) (in /usr/lib/dyld)
-==26409==    by 0x10000F255: dyld::registerObjCNotifiers(void (*)(unsigned int, char const* const*, mach_header const* const*), void (*)(char const*, mach_header const*), void (*)(char const*, mach_header const*)) (in /usr/lib/dyld)
-==26409==    by 0x10024A00A: _dyld_objc_notify_register (in /usr/lib/system/libdyld.dylib)
-==26409==    by 0x1005FC074: _objc_init (in /usr/lib/libobjc.A.dylib)
-==26409==    by 0x1001DD68D: _os_object_init (in /usr/lib/system/libdispatch.dylib)
-==26409== 
-==26409== 27 bytes in 1 blocks are still reachable in loss record 14 of 58
-==26409==    at 0x1000A0626: malloc (in /Users/mfilahi/.brew/Cellar/valgrind/3.14.0/lib/valgrind/vgpreload_memcheck-amd64-darwin.so)
-==26409==    by 0x1000B5F8B: _nc_home_terminfo (in /usr/lib/libncurses.5.4.dylib)
-==26409==    by 0x1000B4CF7: _nc_next_db (in /usr/lib/libncurses.5.4.dylib)
-==26409==    by 0x1000CBCE2: _nc_read_entry (in /usr/lib/libncurses.5.4.dylib)
-==26409==    by 0x1000C327C: _nc_setupterm (in /usr/lib/libncurses.5.4.dylib)
-==26409==    by 0x1000C45A8: tgetent (in /usr/lib/libncurses.5.4.dylib)
-==26409==    by 0x100003EDB: termcap_config (in ./21sh)
-==26409==    by 0x100002357: ft_readline (in ./21sh)
-==26409==    by 0x1000055CB: minishell (in ./21sh)
-==26409==    by 0x1000056F7: main (in ./21sh)
-==26409== 
-==26409== 29 (18 direct, 11 indirect) bytes in 2 blocks are definitely lost in loss record 15 of 58
-==26409==    at 0x1000A0626: malloc (in /Users/mfilahi/.brew/Cellar/valgrind/3.14.0/lib/valgrind/vgpreload_memcheck-amd64-darwin.so)
-==26409==    by 0x10000660A: ft_strsplit (in ./21sh)
-==26409==    by 0x100005C1F: _echo_cmd (in ./21sh)
-==26409==    by 0x100005B6D: echo_cmd (in ./21sh)
-==26409==    by 0x100004964: builtin_cmds (in ./21sh)
-==26409==    by 0x10000553B: minishell_1 (in ./21sh)
-==26409==    by 0x100005642: minishell (in ./21sh)
-==26409==    by 0x1000056F7: main (in ./21sh)
-==26409== 
-==26409== 32 bytes in 1 blocks are still reachable in loss record 16 of 58
-==26409==    at 0x1000A089E: malloc_zone_malloc (in /Users/mfilahi/.brew/Cellar/valgrind/3.14.0/lib/valgrind/vgpreload_memcheck-amd64-darwin.so)
-==26409==    by 0x1005FE9FE: NXCreateHashTableFromZone (in /usr/lib/libobjc.A.dylib)
-==26409==    by 0x1005FE9CE: NXCreateHashTable (in /usr/lib/libobjc.A.dylib)
-==26409==    by 0x1005FE8CE: NXCreateMapTableFromZone (in /usr/lib/libobjc.A.dylib)
-==26409==    by 0x1005FE878: NXCreateMapTableFromZone (in /usr/lib/libobjc.A.dylib)
-==26409==    by 0x1005FD350: __sel_registerName(char const*, int, int) (in /usr/lib/libobjc.A.dylib)
-==26409==    by 0x1005FD062: sel_init (in /usr/lib/libobjc.A.dylib)
-==26409==    by 0x1005FC9CA: map_images_nolock (in /usr/lib/libobjc.A.dylib)
-==26409==    by 0x10060FFE8: objc_object::sidetable_retainCount() (in /usr/lib/libobjc.A.dylib)
-==26409==    by 0x10000F03B: dyld::notifyBatchPartial(dyld_image_states, bool, char const* (*)(dyld_image_states, unsigned int, dyld_image_info const*), bool, bool) (in /usr/lib/dyld)
-==26409==    by 0x10000F255: dyld::registerObjCNotifiers(void (*)(unsigned int, char const* const*, mach_header const* const*), void (*)(char const*, mach_header const*), void (*)(char const*, mach_header const*)) (in /usr/lib/dyld)
-==26409==    by 0x10024A00A: _dyld_objc_notify_register (in /usr/lib/system/libdyld.dylib)
-==26409== 
-==26409== 32 bytes in 1 blocks are still reachable in loss record 17 of 58
-==26409==    at 0x1000A089E: malloc_zone_malloc (in /Users/mfilahi/.brew/Cellar/valgrind/3.14.0/lib/valgrind/vgpreload_memcheck-amd64-darwin.so)
-==26409==    by 0x1005FEA1F: NXCreateHashTableFromZone (in /usr/lib/libobjc.A.dylib)
-==26409==    by 0x1005FE9CE: NXCreateHashTable (in /usr/lib/libobjc.A.dylib)
-==26409==    by 0x1005FE8CE: NXCreateMapTableFromZone (in /usr/lib/libobjc.A.dylib)
-==26409==    by 0x1005FE878: NXCreateMapTableFromZone (in /usr/lib/libobjc.A.dylib)
-==26409==    by 0x1005FD350: __sel_registerName(char const*, int, int) (in /usr/lib/libobjc.A.dylib)
-==26409==    by 0x1005FD062: sel_init (in /usr/lib/libobjc.A.dylib)
-==26409==    by 0x1005FC9CA: map_images_nolock (in /usr/lib/libobjc.A.dylib)
-==26409==    by 0x10060FFE8: objc_object::sidetable_retainCount() (in /usr/lib/libobjc.A.dylib)
-==26409==    by 0x10000F03B: dyld::notifyBatchPartial(dyld_image_states, bool, char const* (*)(dyld_image_states, unsigned int, dyld_image_info const*), bool, bool) (in /usr/lib/dyld)
-==26409==    by 0x10000F255: dyld::registerObjCNotifiers(void (*)(unsigned int, char const* const*, mach_header const* const*), void (*)(char const*, mach_header const*), void (*)(char const*, mach_header const*)) (in /usr/lib/dyld)
-==26409==    by 0x10024A00A: _dyld_objc_notify_register (in /usr/lib/system/libdyld.dylib)
-==26409== 
-==26409== 32 bytes in 1 blocks are still reachable in loss record 18 of 58
-==26409==    at 0x1000A0626: malloc (in /Users/mfilahi/.brew/Cellar/valgrind/3.14.0/lib/valgrind/vgpreload_memcheck-amd64-darwin.so)
-==26409==    by 0x1005FEAE3: NXCreateHashTableFromZone (in /usr/lib/libobjc.A.dylib)
-==26409==    by 0x1005FE9CE: NXCreateHashTable (in /usr/lib/libobjc.A.dylib)
-==26409==    by 0x1005FE8CE: NXCreateMapTableFromZone (in /usr/lib/libobjc.A.dylib)
-==26409==    by 0x1005FE878: NXCreateMapTableFromZone (in /usr/lib/libobjc.A.dylib)
-==26409==    by 0x1005FD350: __sel_registerName(char const*, int, int) (in /usr/lib/libobjc.A.dylib)
-==26409==    by 0x1005FD062: sel_init (in /usr/lib/libobjc.A.dylib)
-==26409==    by 0x1005FC9CA: map_images_nolock (in /usr/lib/libobjc.A.dylib)
-==26409==    by 0x10060FFE8: objc_object::sidetable_retainCount() (in /usr/lib/libobjc.A.dylib)
-==26409==    by 0x10000F03B: dyld::notifyBatchPartial(dyld_image_states, bool, char const* (*)(dyld_image_states, unsigned int, dyld_image_info const*), bool, bool) (in /usr/lib/dyld)
-==26409==    by 0x10000F255: dyld::registerObjCNotifiers(void (*)(unsigned int, char const* const*, mach_header const* const*), void (*)(char const*, mach_header const*), void (*)(char const*, mach_header const*)) (in /usr/lib/dyld)
-==26409==    by 0x10024A00A: _dyld_objc_notify_register (in /usr/lib/system/libdyld.dylib)
-==26409== 
-==26409== 32 bytes in 1 blocks are still reachable in loss record 19 of 58
-==26409==    at 0x1000A0626: malloc (in /Users/mfilahi/.brew/Cellar/valgrind/3.14.0/lib/valgrind/vgpreload_memcheck-amd64-darwin.so)
-==26409==    by 0x1005FE934: NXCreateMapTableFromZone (in /usr/lib/libobjc.A.dylib)
-==26409==    by 0x1005FE878: NXCreateMapTableFromZone (in /usr/lib/libobjc.A.dylib)
-==26409==    by 0x1005FD350: __sel_registerName(char const*, int, int) (in /usr/lib/libobjc.A.dylib)
-==26409==    by 0x1005FD062: sel_init (in /usr/lib/libobjc.A.dylib)
-==26409==    by 0x1005FC9CA: map_images_nolock (in /usr/lib/libobjc.A.dylib)
-==26409==    by 0x10060FFE8: objc_object::sidetable_retainCount() (in /usr/lib/libobjc.A.dylib)
-==26409==    by 0x10000F03B: dyld::notifyBatchPartial(dyld_image_states, bool, char const* (*)(dyld_image_states, unsigned int, dyld_image_info const*), bool, bool) (in /usr/lib/dyld)
-==26409==    by 0x10000F255: dyld::registerObjCNotifiers(void (*)(unsigned int, char const* const*, mach_header const* const*), void (*)(char const*, mach_header const*), void (*)(char const*, mach_header const*)) (in /usr/lib/dyld)
-==26409==    by 0x10024A00A: _dyld_objc_notify_register (in /usr/lib/system/libdyld.dylib)
-==26409==    by 0x1005FC074: _objc_init (in /usr/lib/libobjc.A.dylib)
-==26409==    by 0x1001DD68D: _os_object_init (in /usr/lib/system/libdispatch.dylib)
-==26409== 
-==26409== 46 bytes in 1 blocks are still reachable in loss record 23 of 58
-==26409==    at 0x1000A0FD4: realloc (in /Users/mfilahi/.brew/Cellar/valgrind/3.14.0/lib/valgrind/vgpreload_memcheck-amd64-darwin.so)
-==26409==    by 0x1000B5016: _nc_doalloc (in /usr/lib/libncurses.5.4.dylib)
-==26409==    by 0x1000CB637: _nc_read_termtype (in /usr/lib/libncurses.5.4.dylib)
-==26409==    by 0x1000CBC14: _nc_read_file_entry (in /usr/lib/libncurses.5.4.dylib)
-==26409==    by 0x1000CBD5A: _nc_read_entry (in /usr/lib/libncurses.5.4.dylib)
-==26409==    by 0x1000C327C: _nc_setupterm (in /usr/lib/libncurses.5.4.dylib)
-==26409==    by 0x1000C45A8: tgetent (in /usr/lib/libncurses.5.4.dylib)
-==26409==    by 0x100003EDB: termcap_config (in ./21sh)
-==26409==    by 0x100002357: ft_readline (in ./21sh)
-==26409==    by 0x1000055CB: minishell (in ./21sh)
-==26409==    by 0x1000056F7: main (in ./21sh)
-==26409== 
-==26409== 48 bytes in 1 blocks are still reachable in loss record 24 of 58
-==26409==    at 0x1000A0E4D: malloc_zone_calloc (in /Users/mfilahi/.brew/Cellar/valgrind/3.14.0/lib/valgrind/vgpreload_memcheck-amd64-darwin.so)
-==26409==    by 0x1005FEEC6: _NXHashRehashToCapacity (in /usr/lib/libobjc.A.dylib)
-==26409==    by 0x1005FEE50: NXHashInsert (in /usr/lib/libobjc.A.dylib)
-==26409==    by 0x1005FEB0D: NXCreateHashTableFromZone (in /usr/lib/libobjc.A.dylib)
-==26409==    by 0x1005FE9CE: NXCreateHashTable (in /usr/lib/libobjc.A.dylib)
-==26409==    by 0x1005FE8CE: NXCreateMapTableFromZone (in /usr/lib/libobjc.A.dylib)
-==26409==    by 0x1005FE878: NXCreateMapTableFromZone (in /usr/lib/libobjc.A.dylib)
-==26409==    by 0x1005FD350: __sel_registerName(char const*, int, int) (in /usr/lib/libobjc.A.dylib)
-==26409==    by 0x1005FD062: sel_init (in /usr/lib/libobjc.A.dylib)
-==26409==    by 0x1005FC9CA: map_images_nolock (in /usr/lib/libobjc.A.dylib)
-==26409==    by 0x10060FFE8: objc_object::sidetable_retainCount() (in /usr/lib/libobjc.A.dylib)
-==26409==    by 0x10000F03B: dyld::notifyBatchPartial(dyld_image_states, bool, char const* (*)(dyld_image_states, unsigned int, dyld_image_info const*), bool, bool) (in /usr/lib/dyld)
-==26409== 
-==26409== 72 bytes in 3 blocks are possibly lost in loss record 35 of 58
-==26409==    at 0x1000A0C8A: calloc (in /Users/mfilahi/.brew/Cellar/valgrind/3.14.0/lib/valgrind/vgpreload_memcheck-amd64-darwin.so)
-==26409==    by 0x1005FC846: map_images_nolock (in /usr/lib/libobjc.A.dylib)
-==26409==    by 0x10060FFE8: objc_object::sidetable_retainCount() (in /usr/lib/libobjc.A.dylib)
-==26409==    by 0x10000F03B: dyld::notifyBatchPartial(dyld_image_states, bool, char const* (*)(dyld_image_states, unsigned int, dyld_image_info const*), bool, bool) (in /usr/lib/dyld)
-==26409==    by 0x10000F255: dyld::registerObjCNotifiers(void (*)(unsigned int, char const* const*, mach_header const* const*), void (*)(char const*, mach_header const*), void (*)(char const*, mach_header const*)) (in /usr/lib/dyld)
-==26409==    by 0x10024A00A: _dyld_objc_notify_register (in /usr/lib/system/libdyld.dylib)
-==26409==    by 0x1005FC074: _objc_init (in /usr/lib/libobjc.A.dylib)
-==26409==    by 0x1001DD68D: _os_object_init (in /usr/lib/system/libdispatch.dylib)
-==26409==    by 0x1001DD63A: libdispatch_init (in /usr/lib/system/libdispatch.dylib)
-==26409==    by 0x1000F19D5: libSystem_initializer (in /usr/lib/libSystem.B.dylib)
-==26409==    by 0x10001FA1A: ImageLoaderMachO::doModInitFunctions(ImageLoader::LinkContext const&) (in /usr/lib/dyld)
-==26409==    by 0x10001FC1D: ImageLoaderMachO::doInitialization(ImageLoader::LinkContext const&) (in /usr/lib/dyld)
-==26409== 
-==26409== 78 bytes in 1 blocks are still reachable in loss record 36 of 58
-==26409==    at 0x1000A0FD4: realloc (in /Users/mfilahi/.brew/Cellar/valgrind/3.14.0/lib/valgrind/vgpreload_memcheck-amd64-darwin.so)
-==26409==    by 0x1000B5016: _nc_doalloc (in /usr/lib/libncurses.5.4.dylib)
-==26409==    by 0x1000CB64C: _nc_read_termtype (in /usr/lib/libncurses.5.4.dylib)
-==26409==    by 0x1000CBC14: _nc_read_file_entry (in /usr/lib/libncurses.5.4.dylib)
-==26409==    by 0x1000CBD5A: _nc_read_entry (in /usr/lib/libncurses.5.4.dylib)
-==26409==    by 0x1000C327C: _nc_setupterm (in /usr/lib/libncurses.5.4.dylib)
-==26409==    by 0x1000C45A8: tgetent (in /usr/lib/libncurses.5.4.dylib)
-==26409==    by 0x100003EDB: termcap_config (in ./21sh)
-==26409==    by 0x100002357: ft_readline (in ./21sh)
-==26409==    by 0x1000055CB: minishell (in ./21sh)
-==26409==    by 0x1000056F7: main (in ./21sh)
-==26409== 
-==26409== 83 bytes in 1 blocks are still reachable in loss record 37 of 58
-==26409==    at 0x1000A0626: malloc (in /Users/mfilahi/.brew/Cellar/valgrind/3.14.0/lib/valgrind/vgpreload_memcheck-amd64-darwin.so)
-==26409==    by 0x1000C5491: _nc_tparm_analyze (in /usr/lib/libncurses.5.4.dylib)
-==26409==    by 0x1000C58F1: tparm (in /usr/lib/libncurses.5.4.dylib)
-==26409==    by 0x1000CCFE4: _nc_trim_sgr0 (in /usr/lib/libncurses.5.4.dylib)
-==26409==    by 0x1000CCC0A: _nc_trim_sgr0 (in /usr/lib/libncurses.5.4.dylib)
-==26409==    by 0x1000C47D3: tgetent (in /usr/lib/libncurses.5.4.dylib)
-==26409==    by 0x100003EDB: termcap_config (in ./21sh)
-==26409==    by 0x100002357: ft_readline (in ./21sh)
-==26409==    by 0x1000055CB: minishell (in ./21sh)
-==26409==    by 0x1000056F7: main (in ./21sh)
-==26409== 
-==26409== 240 bytes in 1 blocks are still reachable in loss record 43 of 58
-==26409==    at 0x1000A0C8A: calloc (in /Users/mfilahi/.brew/Cellar/valgrind/3.14.0/lib/valgrind/vgpreload_memcheck-amd64-darwin.so)
-==26409==    by 0x1000C3257: _nc_setupterm (in /usr/lib/libncurses.5.4.dylib)
-==26409==    by 0x1000C45A8: tgetent (in /usr/lib/libncurses.5.4.dylib)
-==26409==    by 0x100003EDB: termcap_config (in ./21sh)
-==26409==    by 0x100002357: ft_readline (in ./21sh)
-==26409==    by 0x1000055CB: minishell (in ./21sh)
-==26409==    by 0x1000056F7: main (in ./21sh)
-==26409== 
-==26409== 480 bytes in 1 blocks are still reachable in loss record 49 of 58
-==26409==    at 0x1000A0C8A: calloc (in /Users/mfilahi/.brew/Cellar/valgrind/3.14.0/lib/valgrind/vgpreload_memcheck-amd64-darwin.so)
-==26409==    by 0x1000CB99F: _nc_read_termtype (in /usr/lib/libncurses.5.4.dylib)
-==26409==    by 0x1000CBC14: _nc_read_file_entry (in /usr/lib/libncurses.5.4.dylib)
-==26409==    by 0x1000CBD5A: _nc_read_entry (in /usr/lib/libncurses.5.4.dylib)
-==26409==    by 0x1000C327C: _nc_setupterm (in /usr/lib/libncurses.5.4.dylib)
-==26409==    by 0x1000C45A8: tgetent (in /usr/lib/libncurses.5.4.dylib)
-==26409==    by 0x100003EDB: termcap_config (in ./21sh)
-==26409==    by 0x100002357: ft_readline (in ./21sh)
-==26409==    by 0x1000055CB: minishell (in ./21sh)
-==26409==    by 0x1000056F7: main (in ./21sh)
-==26409== 
-==26409== 680 bytes in 1 blocks are still reachable in loss record 51 of 58
-==26409==    at 0x1000A0626: malloc (in /Users/mfilahi/.brew/Cellar/valgrind/3.14.0/lib/valgrind/vgpreload_memcheck-amd64-darwin.so)
-==26409==    by 0x1000CB82E: _nc_read_termtype (in /usr/lib/libncurses.5.4.dylib)
-==26409==    by 0x1000CBC14: _nc_read_file_entry (in /usr/lib/libncurses.5.4.dylib)
-==26409==    by 0x1000CBD5A: _nc_read_entry (in /usr/lib/libncurses.5.4.dylib)
-==26409==    by 0x1000C327C: _nc_setupterm (in /usr/lib/libncurses.5.4.dylib)
-==26409==    by 0x1000C45A8: tgetent (in /usr/lib/libncurses.5.4.dylib)
-==26409==    by 0x100003EDB: termcap_config (in ./21sh)
-==26409==    by 0x100002357: ft_readline (in ./21sh)
-==26409==    by 0x1000055CB: minishell (in ./21sh)
-==26409==    by 0x1000056F7: main (in ./21sh)
-==26409== 
-==26409== 1,487 bytes in 1 blocks are still reachable in loss record 52 of 58
-==26409==    at 0x1000A0626: malloc (in /Users/mfilahi/.brew/Cellar/valgrind/3.14.0/lib/valgrind/vgpreload_memcheck-amd64-darwin.so)
-==26409==    by 0x1000CB189: _nc_read_termtype (in /usr/lib/libncurses.5.4.dylib)
-==26409==    by 0x1000CBC14: _nc_read_file_entry (in /usr/lib/libncurses.5.4.dylib)
-==26409==    by 0x1000CBD5A: _nc_read_entry (in /usr/lib/libncurses.5.4.dylib)
-==26409==    by 0x1000C327C: _nc_setupterm (in /usr/lib/libncurses.5.4.dylib)
-==26409==    by 0x1000C45A8: tgetent (in /usr/lib/libncurses.5.4.dylib)
-==26409==    by 0x100003EDB: termcap_config (in ./21sh)
-==26409==    by 0x100002357: ft_readline (in ./21sh)
-==26409==    by 0x1000055CB: minishell (in ./21sh)
-==26409==    by 0x1000056F7: main (in ./21sh)
-==26409== 
-==26409== 3,776 bytes in 1 blocks are still reachable in loss record 57 of 58
-==26409==    at 0x1000A0FD4: realloc (in /Users/mfilahi/.brew/Cellar/valgrind/3.14.0/lib/valgrind/vgpreload_memcheck-amd64-darwin.so)
-==26409==    by 0x1000B5016: _nc_doalloc (in /usr/lib/libncurses.5.4.dylib)
-==26409==    by 0x1000CB662: _nc_read_termtype (in /usr/lib/libncurses.5.4.dylib)
-==26409==    by 0x1000CBC14: _nc_read_file_entry (in /usr/lib/libncurses.5.4.dylib)
-==26409==    by 0x1000CBD5A: _nc_read_entry (in /usr/lib/libncurses.5.4.dylib)
-==26409==    by 0x1000C327C: _nc_setupterm (in /usr/lib/libncurses.5.4.dylib)
-==26409==    by 0x1000C45A8: tgetent (in /usr/lib/libncurses.5.4.dylib)
-==26409==    by 0x100003EDB: termcap_config (in ./21sh)
-==26409==    by 0x100002357: ft_readline (in ./21sh)
-==26409==    by 0x1000055CB: minishell (in ./21sh)
-==26409==    by 0x1000056F7: main (in ./21sh)
-==26409== 
-==26409== LEAK SUMMARY:
-==26409==    definitely lost: 18 bytes in 2 blocks
-==26409==    indirectly lost: 11 bytes in 2 blocks
-==26409==      possibly lost: 72 bytes in 3 blocks
-==26409==    still reachable: 7,153 bytes in 21 blocks
-==26409==         suppressed: 17,889 bytes in 152 blocks
-==26409== 
-==26409== ERROR SUMMARY: 162 errors from 25 contexts (suppressed: 11 from 11)
-==26409== 
-==26409== 2 errors in context 1 of 25:
-==26409== Conditional jump or move depends on uninitialised value(s)
-==26409==    at 0x100005D08: _echo_cmd (in ./21sh)
-==26409==    by 0x100005B6D: echo_cmd (in ./21sh)
-==26409==    by 0x100004964: builtin_cmds (in ./21sh)
-==26409==    by 0x10000553B: minishell_1 (in ./21sh)
-==26409==    by 0x100005642: minishell (in ./21sh)
-==26409==    by 0x1000056F7: main (in ./21sh)
-==26409== 
-==26409== 
-==26409== 2 errors in context 2 of 25:
-==26409== Conditional jump or move depends on uninitialised value(s)
-==26409==    at 0x100005C2C: _echo_cmd (in ./21sh)
-==26409==    by 0x100005B6D: echo_cmd (in ./21sh)
-==26409==    by 0x100004964: builtin_cmds (in ./21sh)
-==26409==    by 0x10000553B: minishell_1 (in ./21sh)
-==26409==    by 0x100005642: minishell (in ./21sh)
-==26409==    by 0x1000056F7: main (in ./21sh)
-==26409== 
-==26409== 
-==26409== 2 errors in context 3 of 25:
-==26409== Invalid write of size 8
-==26409==    at 0x10000677B: ft_strsplit (in ./21sh)
-==26409==    by 0x100005C1F: _echo_cmd (in ./21sh)
-==26409==    by 0x100005B6D: echo_cmd (in ./21sh)
-==26409==    by 0x100004964: builtin_cmds (in ./21sh)
-==26409==    by 0x10000553B: minishell_1 (in ./21sh)
-==26409==    by 0x100005642: minishell (in ./21sh)
-==26409==    by 0x1000056F7: main (in ./21sh)
-==26409==  Address 0x100c9f4a8 is 8 bytes inside a block of size 9 alloc'd
-==26409==    at 0x1000A0626: malloc (in /Users/mfilahi/.brew/Cellar/valgrind/3.14.0/lib/valgrind/vgpreload_memcheck-amd64-darwin.so)
-==26409==    by 0x10000660A: ft_strsplit (in ./21sh)
-==26409==    by 0x100005C1F: _echo_cmd (in ./21sh)
-==26409==    by 0x100005B6D: echo_cmd (in ./21sh)
-==26409==    by 0x100004964: builtin_cmds (in ./21sh)
-==26409==    by 0x10000553B: minishell_1 (in ./21sh)
-==26409==    by 0x100005642: minishell (in ./21sh)
-==26409==    by 0x1000056F7: main (in ./21sh)
-==26409== 
-==26409== 
-==26409== 3 errors in context 4 of 25:
-==26409== Conditional jump or move depends on uninitialised value(s)
-==26409==    at 0x100005781: ft_chdir (in ./21sh)
-==26409==    by 0x100004983: builtin_cmds (in ./21sh)
-==26409==    by 0x10000553B: minishell_1 (in ./21sh)
-==26409==    by 0x100005642: minishell (in ./21sh)
-==26409==    by 0x1000056F7: main (in ./21sh)
-==26409== 
-==26409== 
-==26409== 3 errors in context 5 of 25:
-==26409== Invalid read of size 1
-==26409==    at 0x100004002: change_pos (in ./21sh)
-==26409==    by 0x1000042B5: print_readablechar (in ./21sh)
-==26409==    by 0x100002206: get_input (in ./21sh)
-==26409==    by 0x100002360: ft_readline (in ./21sh)
-==26409==    by 0x1000055CB: minishell (in ./21sh)
-==26409==    by 0x1000056F7: main (in ./21sh)
-==26409==  Address 0x100bd84a5 is 0 bytes after a block of size 21 alloc'd
-==26409==    at 0x1000A0626: malloc (in /Users/mfilahi/.brew/Cellar/valgrind/3.14.0/lib/valgrind/vgpreload_memcheck-amd64-darwin.so)
-==26409==    by 0x10000657C: ft_strnew (in ./21sh)
-==26409==    by 0x100002FF8: init_structure_members (in ./21sh)
-==26409==    by 0x100002345: ft_readline (in ./21sh)
-==26409==    by 0x1000055CB: minishell (in ./21sh)
-==26409==    by 0x1000056F7: main (in ./21sh)
-==26409== 
-==26409== 
-==26409== 3 errors in context 6 of 25:
-==26409== Invalid read of size 1
-==26409==    at 0x1000029E1: new_line_is_found (in ./21sh)
-==26409==    by 0x100003F58: change_pos (in ./21sh)
-==26409==    by 0x1000042B5: print_readablechar (in ./21sh)
-==26409==    by 0x100002206: get_input (in ./21sh)
-==26409==    by 0x100002360: ft_readline (in ./21sh)
-==26409==    by 0x1000055CB: minishell (in ./21sh)
-==26409==    by 0x1000056F7: main (in ./21sh)
-==26409==  Address 0x100bd84a5 is 0 bytes after a block of size 21 alloc'd
-==26409==    at 0x1000A0626: malloc (in /Users/mfilahi/.brew/Cellar/valgrind/3.14.0/lib/valgrind/vgpreload_memcheck-amd64-darwin.so)
-==26409==    by 0x10000657C: ft_strnew (in ./21sh)
-==26409==    by 0x100002FF8: init_structure_members (in ./21sh)
-==26409==    by 0x100002345: ft_readline (in ./21sh)
-==26409==    by 0x1000055CB: minishell (in ./21sh)
-==26409==    by 0x1000056F7: main (in ./21sh)
-==26409== 
-==26409== 
-==26409== 3 errors in context 7 of 25:
-==26409== Invalid read of size 1
-==26409==    at 0x1000040CA: print (in ./21sh)
-==26409==    by 0x1000042A6: print_readablechar (in ./21sh)
-==26409==    by 0x100002206: get_input (in ./21sh)
-==26409==    by 0x100002360: ft_readline (in ./21sh)
-==26409==    by 0x1000055CB: minishell (in ./21sh)
-==26409==    by 0x1000056F7: main (in ./21sh)
-==26409==  Address 0x100bd84a5 is 0 bytes after a block of size 21 alloc'd
-==26409==    at 0x1000A0626: malloc (in /Users/mfilahi/.brew/Cellar/valgrind/3.14.0/lib/valgrind/vgpreload_memcheck-amd64-darwin.so)
-==26409==    by 0x10000657C: ft_strnew (in ./21sh)
-==26409==    by 0x100002FF8: init_structure_members (in ./21sh)
-==26409==    by 0x100002345: ft_readline (in ./21sh)
-==26409==    by 0x1000055CB: minishell (in ./21sh)
-==26409==    by 0x1000056F7: main (in ./21sh)
-==26409== 
-==26409== 
-==26409== 3 errors in context 8 of 25:
-==26409== Invalid read of size 1
-==26409==    at 0x1000040B6: print (in ./21sh)
-==26409==    by 0x1000042A6: print_readablechar (in ./21sh)
-==26409==    by 0x100002206: get_input (in ./21sh)
-==26409==    by 0x100002360: ft_readline (in ./21sh)
-==26409==    by 0x1000055CB: minishell (in ./21sh)
-==26409==    by 0x1000056F7: main (in ./21sh)
-==26409==  Address 0x100bd84a5 is 0 bytes after a block of size 21 alloc'd
-==26409==    at 0x1000A0626: malloc (in /Users/mfilahi/.brew/Cellar/valgrind/3.14.0/lib/valgrind/vgpreload_memcheck-amd64-darwin.so)
-==26409==    by 0x10000657C: ft_strnew (in ./21sh)
-==26409==    by 0x100002FF8: init_structure_members (in ./21sh)
-==26409==    by 0x100002345: ft_readline (in ./21sh)
-==26409==    by 0x1000055CB: minishell (in ./21sh)
-==26409==    by 0x1000056F7: main (in ./21sh)
-==26409== 
-==26409== 
-==26409== 3 errors in context 9 of 25:
-==26409== Invalid write of size 1
-==26409==    at 0x1000034D4: insert_element (in ./21sh)
-==26409==    by 0x100004211: print_readablechar (in ./21sh)
-==26409==    by 0x100002206: get_input (in ./21sh)
-==26409==    by 0x100002360: ft_readline (in ./21sh)
-==26409==    by 0x1000055CB: minishell (in ./21sh)
-==26409==    by 0x1000056F7: main (in ./21sh)
-==26409==  Address 0x100bd84a5 is 0 bytes after a block of size 21 alloc'd
-==26409==    at 0x1000A0626: malloc (in /Users/mfilahi/.brew/Cellar/valgrind/3.14.0/lib/valgrind/vgpreload_memcheck-amd64-darwin.so)
-==26409==    by 0x10000657C: ft_strnew (in ./21sh)
-==26409==    by 0x100002FF8: init_structure_members (in ./21sh)
-==26409==    by 0x100002345: ft_readline (in ./21sh)
-==26409==    by 0x1000055CB: minishell (in ./21sh)
-==26409==    by 0x1000056F7: main (in ./21sh)
-==26409== 
-==26409== 
-==26409== 5 errors in context 10 of 25:
-==26409== Conditional jump or move depends on uninitialised value(s)
-==26409==    at 0x100005A4F: echo_cmd (in ./21sh)
-==26409==    by 0x100004964: builtin_cmds (in ./21sh)
-==26409==    by 0x10000553B: minishell_1 (in ./21sh)
-==26409==    by 0x100005642: minishell (in ./21sh)
-==26409==    by 0x1000056F7: main (in ./21sh)
-==26409== 
-==26409== 
-==26409== 5 errors in context 11 of 25:
-==26409== Conditional jump or move depends on uninitialised value(s)
-==26409==    at 0x100005BAA: echo_cmd (in ./21sh)
-==26409==    by 0x100004964: builtin_cmds (in ./21sh)
-==26409==    by 0x10000553B: minishell_1 (in ./21sh)
-==26409==    by 0x100005642: minishell (in ./21sh)
-==26409==    by 0x1000056F7: main (in ./21sh)
-==26409== 
-==26409== 
-==26409== 6 errors in context 12 of 25:
-==26409== Invalid read of size 1
-==26409==    at 0x10000622B: ft_strcpy (in ./21sh)
-==26409==    by 0x1000034AF: insert_element (in ./21sh)
-==26409==    by 0x100004211: print_readablechar (in ./21sh)
-==26409==    by 0x100002206: get_input (in ./21sh)
-==26409==    by 0x100002360: ft_readline (in ./21sh)
-==26409==    by 0x1000055CB: minishell (in ./21sh)
-==26409==    by 0x1000056F7: main (in ./21sh)
-==26409==  Address 0x100bd84a5 is 0 bytes after a block of size 21 alloc'd
-==26409==    at 0x1000A0626: malloc (in /Users/mfilahi/.brew/Cellar/valgrind/3.14.0/lib/valgrind/vgpreload_memcheck-amd64-darwin.so)
-==26409==    by 0x10000657C: ft_strnew (in ./21sh)
-==26409==    by 0x100002FF8: init_structure_members (in ./21sh)
-==26409==    by 0x100002345: ft_readline (in ./21sh)
-==26409==    by 0x1000055CB: minishell (in ./21sh)
-==26409==    by 0x1000056F7: main (in ./21sh)
-==26409== 
-==26409== 
-==26409== 6 errors in context 13 of 25:
-==26409== Invalid write of size 1
-==26409==    at 0x1000034E7: insert_element (in ./21sh)
-==26409==    by 0x100004211: print_readablechar (in ./21sh)
-==26409==    by 0x100002206: get_input (in ./21sh)
-==26409==    by 0x100002360: ft_readline (in ./21sh)
-==26409==    by 0x1000055CB: minishell (in ./21sh)
-==26409==    by 0x1000056F7: main (in ./21sh)
-==26409==  Address 0x100bd84a5 is 0 bytes after a block of size 21 alloc'd
-==26409==    at 0x1000A0626: malloc (in /Users/mfilahi/.brew/Cellar/valgrind/3.14.0/lib/valgrind/vgpreload_memcheck-amd64-darwin.so)
-==26409==    by 0x10000657C: ft_strnew (in ./21sh)
-==26409==    by 0x100002FF8: init_structure_members (in ./21sh)
-==26409==    by 0x100002345: ft_readline (in ./21sh)
-==26409==    by 0x1000055CB: minishell (in ./21sh)
-==26409==    by 0x1000056F7: main (in ./21sh)
-==26409== 
-==26409== 
-==26409== 9 errors in context 14 of 25:
-==26409== Invalid read of size 1
-==26409==    at 0x10000645C: ft_strlen (in ./21sh)
-==26409==    by 0x100003451: insert_element (in ./21sh)
-==26409==    by 0x100004211: print_readablechar (in ./21sh)
-==26409==    by 0x100002206: get_input (in ./21sh)
-==26409==    by 0x100002360: ft_readline (in ./21sh)
-==26409==    by 0x1000055CB: minishell (in ./21sh)
-==26409==    by 0x1000056F7: main (in ./21sh)
-==26409==  Address 0x100bd84a5 is 0 bytes after a block of size 21 alloc'd
-==26409==    at 0x1000A0626: malloc (in /Users/mfilahi/.brew/Cellar/valgrind/3.14.0/lib/valgrind/vgpreload_memcheck-amd64-darwin.so)
-==26409==    by 0x10000657C: ft_strnew (in ./21sh)
-==26409==    by 0x100002FF8: init_structure_members (in ./21sh)
-==26409==    by 0x100002345: ft_readline (in ./21sh)
-==26409==    by 0x1000055CB: minishell (in ./21sh)
-==26409==    by 0x1000056F7: main (in ./21sh)
-==26409== 
-==26409== 
-==26409== 9 errors in context 15 of 25:
-==26409== Invalid read of size 1
-==26409==    at 0x10000645C: ft_strlen (in ./21sh)
-==26409==    by 0x1000042FB: print_readablechar (in ./21sh)
-==26409==    by 0x100002206: get_input (in ./21sh)
-==26409==    by 0x100002360: ft_readline (in ./21sh)
-==26409==    by 0x1000055CB: minishell (in ./21sh)
-==26409==    by 0x1000056F7: main (in ./21sh)
-==26409==  Address 0x100bd84a5 is 0 bytes after a block of size 21 alloc'd
-==26409==    at 0x1000A0626: malloc (in /Users/mfilahi/.brew/Cellar/valgrind/3.14.0/lib/valgrind/vgpreload_memcheck-amd64-darwin.so)
-==26409==    by 0x10000657C: ft_strnew (in ./21sh)
-==26409==    by 0x100002FF8: init_structure_members (in ./21sh)
-==26409==    by 0x100002345: ft_readline (in ./21sh)
-==26409==    by 0x1000055CB: minishell (in ./21sh)
-==26409==    by 0x1000056F7: main (in ./21sh)
-==26409== 
-==26409== 
-==26409== 9 errors in context 16 of 25:
-==26409== Invalid read of size 1
-==26409==    at 0x10000645C: ft_strlen (in ./21sh)
-==26409==    by 0x1000038FA: increment_row (in ./21sh)
-==26409==    by 0x100003F80: change_pos (in ./21sh)
-==26409==    by 0x1000042B5: print_readablechar (in ./21sh)
-==26409==    by 0x100002206: get_input (in ./21sh)
-==26409==    by 0x100002360: ft_readline (in ./21sh)
-==26409==    by 0x1000055CB: minishell (in ./21sh)
-==26409==    by 0x1000056F7: main (in ./21sh)
-==26409==  Address 0x100bd84a5 is 0 bytes after a block of size 21 alloc'd
-==26409==    at 0x1000A0626: malloc (in /Users/mfilahi/.brew/Cellar/valgrind/3.14.0/lib/valgrind/vgpreload_memcheck-amd64-darwin.so)
-==26409==    by 0x10000657C: ft_strnew (in ./21sh)
-==26409==    by 0x100002FF8: init_structure_members (in ./21sh)
-==26409==    by 0x100002345: ft_readline (in ./21sh)
-==26409==    by 0x1000055CB: minishell (in ./21sh)
-==26409==    by 0x1000056F7: main (in ./21sh)
-==26409== 
-==26409== 
-==26409== 9 errors in context 17 of 25:
-==26409== Invalid read of size 1
-==26409==    at 0x1000029CF: new_line_is_found (in ./21sh)
-==26409==    by 0x100003F58: change_pos (in ./21sh)
-==26409==    by 0x1000042B5: print_readablechar (in ./21sh)
-==26409==    by 0x100002206: get_input (in ./21sh)
-==26409==    by 0x100002360: ft_readline (in ./21sh)
-==26409==    by 0x1000055CB: minishell (in ./21sh)
-==26409==    by 0x1000056F7: main (in ./21sh)
-==26409==  Address 0x100bd84a5 is 0 bytes after a block of size 21 alloc'd
-==26409==    at 0x1000A0626: malloc (in /Users/mfilahi/.brew/Cellar/valgrind/3.14.0/lib/valgrind/vgpreload_memcheck-amd64-darwin.so)
-==26409==    by 0x10000657C: ft_strnew (in ./21sh)
-==26409==    by 0x100002FF8: init_structure_members (in ./21sh)
-==26409==    by 0x100002345: ft_readline (in ./21sh)
-==26409==    by 0x1000055CB: minishell (in ./21sh)
-==26409==    by 0x1000056F7: main (in ./21sh)
-==26409== 
-==26409== 
-==26409== 9 errors in context 18 of 25:
-==26409== Invalid read of size 1
-==26409==    at 0x10000409C: print (in ./21sh)
-==26409==    by 0x1000042A6: print_readablechar (in ./21sh)
-==26409==    by 0x100002206: get_input (in ./21sh)
-==26409==    by 0x100002360: ft_readline (in ./21sh)
-==26409==    by 0x1000055CB: minishell (in ./21sh)
-==26409==    by 0x1000056F7: main (in ./21sh)
-==26409==  Address 0x100bd84a5 is 0 bytes after a block of size 21 alloc'd
-==26409==    at 0x1000A0626: malloc (in /Users/mfilahi/.brew/Cellar/valgrind/3.14.0/lib/valgrind/vgpreload_memcheck-amd64-darwin.so)
-==26409==    by 0x10000657C: ft_strnew (in ./21sh)
-==26409==    by 0x100002FF8: init_structure_members (in ./21sh)
-==26409==    by 0x100002345: ft_readline (in ./21sh)
-==26409==    by 0x1000055CB: minishell (in ./21sh)
-==26409==    by 0x1000056F7: main (in ./21sh)
-==26409== 
-==26409== 
-==26409== 11 errors in context 19 of 25:
-==26409== Conditional jump or move depends on uninitialised value(s)
-==26409==    at 0x100005664: minishell (in ./21sh)
-==26409==    by 0x1000056F7: main (in ./21sh)
-==26409== 
-==26409== 
-==26409== 11 errors in context 20 of 25:
-==26409== Conditional jump or move depends on uninitialised value(s)
-==26409==    at 0x100005616: minishell (in ./21sh)
-==26409==    by 0x1000056F7: main (in ./21sh)
-==26409== 
-==26409== 
-==26409== 12 errors in context 21 of 25:
-==26409== Invalid write of size 8
-==26409==    at 0x10000677B: ft_strsplit (in ./21sh)
-==26409==    by 0x1000055F5: minishell (in ./21sh)
-==26409==    by 0x1000056F7: main (in ./21sh)
-==26409==  Address 0x100bbfbe8 is 8 bytes inside a block of size 9 alloc'd
-==26409==    at 0x1000A0626: malloc (in /Users/mfilahi/.brew/Cellar/valgrind/3.14.0/lib/valgrind/vgpreload_memcheck-amd64-darwin.so)
-==26409==    by 0x10000660A: ft_strsplit (in ./21sh)
-==26409==    by 0x1000055F5: minishell (in ./21sh)
-==26409==    by 0x1000056F7: main (in ./21sh)
-==26409== 
-==26409== 
-==26409== 17 errors in context 22 of 25:
-==26409== Conditional jump or move depends on uninitialised value(s)
-==26409==    at 0x10000556F: minishell_1 (in ./21sh)
-==26409==    by 0x100005642: minishell (in ./21sh)
-==26409==    by 0x1000056F7: main (in ./21sh)
-==26409== 
-==26409== 
-==26409== 18 errors in context 23 of 25:
-==26409== Invalid write of size 8
-==26409==    at 0x10000677B: ft_strsplit (in ./21sh)
-==26409==    by 0x100005631: minishell (in ./21sh)
-==26409==    by 0x1000056F7: main (in ./21sh)
-==26409==  Address 0x100bbfc88 is 8 bytes inside a block of size 9 alloc'd
-==26409==    at 0x1000A0626: malloc (in /Users/mfilahi/.brew/Cellar/valgrind/3.14.0/lib/valgrind/vgpreload_memcheck-amd64-darwin.so)
-==26409==    by 0x10000660A: ft_strsplit (in ./21sh)
-==26409==    by 0x100005631: minishell (in ./21sh)
-==26409==    by 0x1000056F7: main (in ./21sh)
-==26409== 
---26409-- 
---26409-- used_suppression:      4 OSX1012:19-Leak /Users/mfilahi/.brew/Cellar/valgrind/3.14.0/lib/valgrind/default.supp:924 suppressed: 8,768 bytes in 4 blocks
---26409-- used_suppression:      8 OSX1012:17-Leak /Users/mfilahi/.brew/Cellar/valgrind/3.14.0/lib/valgrind/default.supp:906 suppressed: 3,872 bytes in 61 blocks
---26409-- used_suppression:      3 OSX1012:16-Leak /Users/mfilahi/.brew/Cellar/valgrind/3.14.0/lib/valgrind/default.supp:897 suppressed: 3,072 bytes in 48 blocks
---26409-- used_suppression:     15 OSX1012:10-Leak /Users/mfilahi/.brew/Cellar/valgrind/3.14.0/lib/valgrind/default.supp:839 suppressed: 2,057 bytes in 35 blocks
---26409-- used_suppression:      4 OSX1012:18-Leak /Users/mfilahi/.brew/Cellar/valgrind/3.14.0/lib/valgrind/default.supp:915 suppressed: 120 bytes in 4 blocks
---26409-- used_suppression:      1 OSX1012:dyld-5 /Users/mfilahi/.brew/Cellar/valgrind/3.14.0/lib/valgrind/default.supp:1283
---26409-- used_suppression:      2 OSX1012:dyld-4 /Users/mfilahi/.brew/Cellar/valgrind/3.14.0/lib/valgrind/default.supp:1275
---26409-- used_suppression:      1 OSX1012:dyld-3 /Users/mfilahi/.brew/Cellar/valgrind/3.14.0/lib/valgrind/default.supp:1267
-==26409== 
-==26409== ERROR SUMMARY: 162 errors from 25 contexts (suppressed: 11 from 11)
+==42476== Memcheck, a memory error detector
+==42476== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+==42476== Using Valgrind-3.14.0 and LibVEX; rerun with -h for copyright info
+==42476== Command: ./21sh
+==42476== Parent PID: 42248
+==42476== 
+--42476-- run: /usr/bin/dsymutil "./21sh"
+==42476== Conditional jump or move depends on uninitialised value(s)
+==42476==    at 0x10000A163: ft_strlen (in ./21sh)
+==42476==    by 0x100009101: mc_maker (in ./21sh)
+==42476==    by 0x10000675D: minishell (in ./21sh)
+==42476==    by 0x100006940: main (in ./21sh)
+==42476==  Uninitialised value was created by a heap allocation
+==42476==    at 0x1000A5626: malloc (in /Users/mfilahi/.brew/Cellar/valgrind/3.14.0/lib/valgrind/vgpreload_memcheck-amd64-darwin.so)
+==42476==    by 0x100008744: skip_quote (in ./21sh)
+==42476==    by 0x100008FA3: parsin (in ./21sh)
+==42476==    by 0x1000090EC: mc_maker (in ./21sh)
+==42476==    by 0x10000675D: minishell (in ./21sh)
+==42476==    by 0x100006940: main (in ./21sh)
+==42476== 
+==42476== Conditional jump or move depends on uninitialised value(s)
+==42476==    at 0x10000910D: mc_maker (in ./21sh)
+==42476==    by 0x10000675D: minishell (in ./21sh)
+==42476==    by 0x100006940: main (in ./21sh)
+==42476==  Uninitialised value was created by a heap allocation
+==42476==    at 0x1000A5626: malloc (in /Users/mfilahi/.brew/Cellar/valgrind/3.14.0/lib/valgrind/vgpreload_memcheck-amd64-darwin.so)
+==42476==    by 0x100008744: skip_quote (in ./21sh)
+==42476==    by 0x100008FA3: parsin (in ./21sh)
+==42476==    by 0x1000090EC: mc_maker (in ./21sh)
+==42476==    by 0x10000675D: minishell (in ./21sh)
+==42476==    by 0x100006940: main (in ./21sh)
+==42476== 
+==42476== Conditional jump or move depends on uninitialised value(s)
+==42476==    at 0x10000A566: ft_words_count (in ./21sh)
+==42476==    by 0x10000A306: ft_strsplit (in ./21sh)
+==42476==    by 0x100009139: mc_maker (in ./21sh)
+==42476==    by 0x10000675D: minishell (in ./21sh)
+==42476==    by 0x100006940: main (in ./21sh)
+==42476==  Uninitialised value was created by a heap allocation
+==42476==    at 0x1000A5626: malloc (in /Users/mfilahi/.brew/Cellar/valgrind/3.14.0/lib/valgrind/vgpreload_memcheck-amd64-darwin.so)
+==42476==    by 0x100008744: skip_quote (in ./21sh)
+==42476==    by 0x100008FA3: parsin (in ./21sh)
+==42476==    by 0x1000090EC: mc_maker (in ./21sh)
+==42476==    by 0x10000675D: minishell (in ./21sh)
+==42476==    by 0x100006940: main (in ./21sh)
+==42476== 
+==42476== Conditional jump or move depends on uninitialised value(s)
+==42476==    at 0x10000A4CC: ft_words_count (in ./21sh)
+==42476==    by 0x10000A306: ft_strsplit (in ./21sh)
+==42476==    by 0x100009139: mc_maker (in ./21sh)
+==42476==    by 0x10000675D: minishell (in ./21sh)
+==42476==    by 0x100006940: main (in ./21sh)
+==42476==  Uninitialised value was created by a heap allocation
+==42476==    at 0x1000A5626: malloc (in /Users/mfilahi/.brew/Cellar/valgrind/3.14.0/lib/valgrind/vgpreload_memcheck-amd64-darwin.so)
+==42476==    by 0x100008744: skip_quote (in ./21sh)
+==42476==    by 0x100008FA3: parsin (in ./21sh)
+==42476==    by 0x1000090EC: mc_maker (in ./21sh)
+==42476==    by 0x10000675D: minishell (in ./21sh)
+==42476==    by 0x100006940: main (in ./21sh)
+==42476== 
+==42476== Conditional jump or move depends on uninitialised value(s)
+==42476==    at 0x10000A63A: ft_word_len (in ./21sh)
+==42476==    by 0x10000A3D7: ft_strsplit (in ./21sh)
+==42476==    by 0x100009139: mc_maker (in ./21sh)
+==42476==    by 0x10000675D: minishell (in ./21sh)
+==42476==    by 0x100006940: main (in ./21sh)
+==42476==  Uninitialised value was created by a heap allocation
+==42476==    at 0x1000A5626: malloc (in /Users/mfilahi/.brew/Cellar/valgrind/3.14.0/lib/valgrind/vgpreload_memcheck-amd64-darwin.so)
+==42476==    by 0x100008744: skip_quote (in ./21sh)
+==42476==    by 0x100008FA3: parsin (in ./21sh)
+==42476==    by 0x1000090EC: mc_maker (in ./21sh)
+==42476==    by 0x10000675D: minishell (in ./21sh)
+==42476==    by 0x100006940: main (in ./21sh)
+==42476== 
+==42476== Conditional jump or move depends on uninitialised value(s)
+==42476==    at 0x10000A404: ft_strsplit (in ./21sh)
+==42476==    by 0x100009139: mc_maker (in ./21sh)
+==42476==    by 0x10000675D: minishell (in ./21sh)
+==42476==    by 0x100006940: main (in ./21sh)
+==42476==  Uninitialised value was created by a heap allocation
+==42476==    at 0x1000A5626: malloc (in /Users/mfilahi/.brew/Cellar/valgrind/3.14.0/lib/valgrind/vgpreload_memcheck-amd64-darwin.so)
+==42476==    by 0x100008744: skip_quote (in ./21sh)
+==42476==    by 0x100008FA3: parsin (in ./21sh)
+==42476==    by 0x1000090EC: mc_maker (in ./21sh)
+==42476==    by 0x10000675D: minishell (in ./21sh)
+==42476==    by 0x100006940: main (in ./21sh)
+==42476== 
+==42476== Conditional jump or move depends on uninitialised value(s)
+==42476==    at 0x10000A34F: ft_strsplit (in ./21sh)
+==42476==    by 0x100009139: mc_maker (in ./21sh)
+==42476==    by 0x10000675D: minishell (in ./21sh)
+==42476==    by 0x100006940: main (in ./21sh)
+==42476==  Uninitialised value was created by a heap allocation
+==42476==    at 0x1000A5626: malloc (in /Users/mfilahi/.brew/Cellar/valgrind/3.14.0/lib/valgrind/vgpreload_memcheck-amd64-darwin.so)
+==42476==    by 0x100008744: skip_quote (in ./21sh)
+==42476==    by 0x100008FA3: parsin (in ./21sh)
+==42476==    by 0x1000090EC: mc_maker (in ./21sh)
+==42476==    by 0x10000675D: minishell (in ./21sh)
+==42476==    by 0x100006940: main (in ./21sh)
+==42476== 
+==42587== Syscall param execve(filename) points to unaddressable byte(s)
+==42587==    at 0x10040077E: execve (in /usr/lib/system/libsystem_kernel.dylib)
+==42587==    by 0x1000051E4: execute (in ./21sh)
+==42587==    by 0x10000626E: sys_cmd (in ./21sh)
+==42587==    by 0x1000062EB: child_pid (in ./21sh)
+==42587==    by 0x100006439: _minishell (in ./21sh)
+==42587==    by 0x100006792: minishell (in ./21sh)
+==42587==    by 0x100006940: main (in ./21sh)
+==42587==  Address 0x100c9ff70 is 0 bytes inside a block of size 75 free'd
+==42587==    at 0x1000A5A03: free (in /Users/mfilahi/.brew/Cellar/valgrind/3.14.0/lib/valgrind/vgpreload_memcheck-amd64-darwin.so)
+==42587==    by 0x100006235: sys_cmd (in ./21sh)
+==42587==    by 0x1000062EB: child_pid (in ./21sh)
+==42587==    by 0x100006439: _minishell (in ./21sh)
+==42587==    by 0x100006792: minishell (in ./21sh)
+==42587==    by 0x100006940: main (in ./21sh)
+==42587==  Block was alloc'd at
+==42587==    at 0x1000A5626: malloc (in /Users/mfilahi/.brew/Cellar/valgrind/3.14.0/lib/valgrind/vgpreload_memcheck-amd64-darwin.so)
+==42587==    by 0x10000A014: ft_strjoin (in ./21sh)
+==42587==    by 0x1000061FD: sys_cmd (in ./21sh)
+==42587==    by 0x1000062EB: child_pid (in ./21sh)
+==42587==    by 0x100006439: _minishell (in ./21sh)
+==42587==    by 0x100006792: minishell (in ./21sh)
+==42587==    by 0x100006940: main (in ./21sh)
+==42587== 
+==42587== Syscall param execve(argv[i]) points to unaddressable byte(s)
+==42587==    at 0x10040077E: execve (in /usr/lib/system/libsystem_kernel.dylib)
+==42587==    by 0x1000051E4: execute (in ./21sh)
+==42587==    by 0x10000626E: sys_cmd (in ./21sh)
+==42587==    by 0x1000062EB: child_pid (in ./21sh)
+==42587==    by 0x100006439: _minishell (in ./21sh)
+==42587==    by 0x100006792: minishell (in ./21sh)
+==42587==    by 0x100006940: main (in ./21sh)
+==42587==  Address 0x100c9ff70 is 0 bytes inside a block of size 75 free'd
+==42587==    at 0x1000A5A03: free (in /Users/mfilahi/.brew/Cellar/valgrind/3.14.0/lib/valgrind/vgpreload_memcheck-amd64-darwin.so)
+==42587==    by 0x100006235: sys_cmd (in ./21sh)
+==42587==    by 0x1000062EB: child_pid (in ./21sh)
+==42587==    by 0x100006439: _minishell (in ./21sh)
+==42587==    by 0x100006792: minishell (in ./21sh)
+==42587==    by 0x100006940: main (in ./21sh)
+==42587==  Block was alloc'd at
+==42587==    at 0x1000A5626: malloc (in /Users/mfilahi/.brew/Cellar/valgrind/3.14.0/lib/valgrind/vgpreload_memcheck-amd64-darwin.so)
+==42587==    by 0x10000A014: ft_strjoin (in ./21sh)
+==42587==    by 0x1000061FD: sys_cmd (in ./21sh)
+==42587==    by 0x1000062EB: child_pid (in ./21sh)
+==42587==    by 0x100006439: _minishell (in ./21sh)
+==42587==    by 0x100006792: minishell (in ./21sh)
+==42587==    by 0x100006940: main (in ./21sh)
+==42587== 
+==42587== Syscall param access(pathname) points to unaddressable byte(s)
+==42587==    at 0x1004004AE: access (in /usr/lib/system/libsystem_kernel.dylib)
+==42587==    by 0x1000051FB: execute (in ./21sh)
+==42587==    by 0x10000626E: sys_cmd (in ./21sh)
+==42587==    by 0x1000062EB: child_pid (in ./21sh)
+==42587==    by 0x100006439: _minishell (in ./21sh)
+==42587==    by 0x100006792: minishell (in ./21sh)
+==42587==    by 0x100006940: main (in ./21sh)
+==42587==  Address 0x100c9ff70 is 0 bytes inside a block of size 75 free'd
+==42587==    at 0x1000A5A03: free (in /Users/mfilahi/.brew/Cellar/valgrind/3.14.0/lib/valgrind/vgpreload_memcheck-amd64-darwin.so)
+==42587==    by 0x100006235: sys_cmd (in ./21sh)
+==42587==    by 0x1000062EB: child_pid (in ./21sh)
+==42587==    by 0x100006439: _minishell (in ./21sh)
+==42587==    by 0x100006792: minishell (in ./21sh)
+==42587==    by 0x100006940: main (in ./21sh)
+==42587==  Block was alloc'd at
+==42587==    at 0x1000A5626: malloc (in /Users/mfilahi/.brew/Cellar/valgrind/3.14.0/lib/valgrind/vgpreload_memcheck-amd64-darwin.so)
+==42587==    by 0x10000A014: ft_strjoin (in ./21sh)
+==42587==    by 0x1000061FD: sys_cmd (in ./21sh)
+==42587==    by 0x1000062EB: child_pid (in ./21sh)
+==42587==    by 0x100006439: _minishell (in ./21sh)
+==42587==    by 0x100006792: minishell (in ./21sh)
+==42587==    by 0x100006940: main (in ./21sh)
+==42587== 
+==42587== Syscall param access(pathname) points to unaddressable byte(s)
+==42587==    at 0x1004004AE: access (in /usr/lib/system/libsystem_kernel.dylib)
+==42587==    by 0x100005234: execute (in ./21sh)
+==42587==    by 0x10000626E: sys_cmd (in ./21sh)
+==42587==    by 0x1000062EB: child_pid (in ./21sh)
+==42587==    by 0x100006439: _minishell (in ./21sh)
+==42587==    by 0x100006792: minishell (in ./21sh)
+==42587==    by 0x100006940: main (in ./21sh)
+==42587==  Address 0x100c9ff70 is 0 bytes inside a block of size 75 free'd
+==42587==    at 0x1000A5A03: free (in /Users/mfilahi/.brew/Cellar/valgrind/3.14.0/lib/valgrind/vgpreload_memcheck-amd64-darwin.so)
+==42587==    by 0x100006235: sys_cmd (in ./21sh)
+==42587==    by 0x1000062EB: child_pid (in ./21sh)
+==42587==    by 0x100006439: _minishell (in ./21sh)
+==42587==    by 0x100006792: minishell (in ./21sh)
+==42587==    by 0x100006940: main (in ./21sh)
+==42587==  Block was alloc'd at
+==42587==    at 0x1000A5626: malloc (in /Users/mfilahi/.brew/Cellar/valgrind/3.14.0/lib/valgrind/vgpreload_memcheck-amd64-darwin.so)
+==42587==    by 0x10000A014: ft_strjoin (in ./21sh)
+==42587==    by 0x1000061FD: sys_cmd (in ./21sh)
+==42587==    by 0x1000062EB: child_pid (in ./21sh)
+==42587==    by 0x100006439: _minishell (in ./21sh)
+==42587==    by 0x100006792: minishell (in ./21sh)
+==42587==    by 0x100006940: main (in ./21sh)
+==42587== 
+==42587== 
+==42587== HEAP SUMMARY:
+==42587==     in use at exit: 774,916 bytes in 2,126 blocks
+==42587==   total heap usage: 2,238 allocs, 112 frees, 897,567 bytes allocated
+==42587== 
+==42587== 1 bytes in 1 blocks are definitely lost in loss record 1 of 129
+==42587==    at 0x1000A5626: malloc (in /Users/mfilahi/.brew/Cellar/valgrind/3.14.0/lib/valgrind/vgpreload_memcheck-amd64-darwin.so)
+==42587==    by 0x10000A28C: ft_strnew (in ./21sh)
+==42587==    by 0x100009F71: ft_strdup (in ./21sh)
+==42587==    by 0x100008C5C: parsin (in ./21sh)
+==42587==    by 0x1000090EC: mc_maker (in ./21sh)
+==42587==    by 0x10000675D: minishell (in ./21sh)
+==42587==    by 0x100006940: main (in ./21sh)
+==42587== 
+==42587== 58 bytes in 1 blocks are definitely lost in loss record 69 of 129
+==42587==    at 0x1000A5626: malloc (in /Users/mfilahi/.brew/Cellar/valgrind/3.14.0/lib/valgrind/vgpreload_memcheck-amd64-darwin.so)
+==42587==    by 0x10000A28C: ft_strnew (in ./21sh)
+==42587==    by 0x10000A3DF: ft_strsplit (in ./21sh)
+==42587==    by 0x10000902C: mc_lst (in ./21sh)
+==42587==    by 0x100009146: mc_maker (in ./21sh)
+==42587==    by 0x10000675D: minishell (in ./21sh)
+==42587==    by 0x100006940: main (in ./21sh)
+==42587== 
+==42587== 64 bytes in 1 blocks are definitely lost in loss record 79 of 129
+==42587==    at 0x1000A5626: malloc (in /Users/mfilahi/.brew/Cellar/valgrind/3.14.0/lib/valgrind/vgpreload_memcheck-amd64-darwin.so)
+==42587==    by 0x10000A31B: ft_strsplit (in ./21sh)
+==42587==    by 0x100005305: get_path (in ./21sh)
+==42587==    by 0x1000061BD: sys_cmd (in ./21sh)
+==42587==    by 0x1000062EB: child_pid (in ./21sh)
+==42587==    by 0x100006439: _minishell (in ./21sh)
+==42587==    by 0x100006792: minishell (in ./21sh)
+==42587==    by 0x100006940: main (in ./21sh)
+==42587== 
+==42587== 72 bytes in 3 blocks are possibly lost in loss record 81 of 129
+==42587==    at 0x1000A5C8A: calloc (in /Users/mfilahi/.brew/Cellar/valgrind/3.14.0/lib/valgrind/vgpreload_memcheck-amd64-darwin.so)
+==42587==    by 0x100601846: map_images_nolock (in /usr/lib/libobjc.A.dylib)
+==42587==    by 0x100614FE8: objc_object::sidetable_retainCount() (in /usr/lib/libobjc.A.dylib)
+==42587==    by 0x10001403B: dyld::notifyBatchPartial(dyld_image_states, bool, char const* (*)(dyld_image_states, unsigned int, dyld_image_info const*), bool, bool) (in /usr/lib/dyld)
+==42587==    by 0x100014255: dyld::registerObjCNotifiers(void (*)(unsigned int, char const* const*, mach_header const* const*), void (*)(char const*, mach_header const*), void (*)(char const*, mach_header const*)) (in /usr/lib/dyld)
+==42587==    by 0x10024F00A: _dyld_objc_notify_register (in /usr/lib/system/libdyld.dylib)
+==42587==    by 0x100601074: _objc_init (in /usr/lib/libobjc.A.dylib)
+==42587==    by 0x1001E268D: _os_object_init (in /usr/lib/system/libdispatch.dylib)
+==42587==    by 0x1001E263A: libdispatch_init (in /usr/lib/system/libdispatch.dylib)
+==42587==    by 0x1000F69D5: libSystem_initializer (in /usr/lib/libSystem.B.dylib)
+==42587==    by 0x100024A1A: ImageLoaderMachO::doModInitFunctions(ImageLoader::LinkContext const&) (in /usr/lib/dyld)
+==42587==    by 0x100024C1D: ImageLoaderMachO::doInitialization(ImageLoader::LinkContext const&) (in /usr/lib/dyld)
+==42587== 
+==42587== 216 (152 direct, 64 indirect) bytes in 1 blocks are definitely lost in loss record 89 of 129
+==42587==    at 0x1000A5626: malloc (in /Users/mfilahi/.brew/Cellar/valgrind/3.14.0/lib/valgrind/vgpreload_memcheck-amd64-darwin.so)
+==42587==    by 0x100008563: init_cases (in ./21sh)
+==42587==    by 0x100008C65: parsin (in ./21sh)
+==42587==    by 0x1000090EC: mc_maker (in ./21sh)
+==42587==    by 0x10000675D: minishell (in ./21sh)
+==42587==    by 0x100006940: main (in ./21sh)
+==42587== 
+==42587== 216 (152 direct, 64 indirect) bytes in 1 blocks are definitely lost in loss record 90 of 129
+==42587==    at 0x1000A5626: malloc (in /Users/mfilahi/.brew/Cellar/valgrind/3.14.0/lib/valgrind/vgpreload_memcheck-amd64-darwin.so)
+==42587==    by 0x100008563: init_cases (in ./21sh)
+==42587==    by 0x100006340: specialtoken (in ./21sh)
+==42587==    by 0x1000063E9: _minishell (in ./21sh)
+==42587==    by 0x100006792: minishell (in ./21sh)
+==42587==    by 0x100006940: main (in ./21sh)
+==42587== 
+==42587== 352 (16 direct, 336 indirect) bytes in 1 blocks are definitely lost in loss record 98 of 129
+==42587==    at 0x1000A5626: malloc (in /Users/mfilahi/.brew/Cellar/valgrind/3.14.0/lib/valgrind/vgpreload_memcheck-amd64-darwin.so)
+==42587==    by 0x10000846A: fill_lst (in ./21sh)
+==42587==    by 0x100008703: init_cases (in ./21sh)
+==42587==    by 0x100008C65: parsin (in ./21sh)
+==42587==    by 0x1000090EC: mc_maker (in ./21sh)
+==42587==    by 0x10000675D: minishell (in ./21sh)
+==42587==    by 0x100006940: main (in ./21sh)
+==42587== 
+==42587== 352 (16 direct, 336 indirect) bytes in 1 blocks are definitely lost in loss record 99 of 129
+==42587==    at 0x1000A5626: malloc (in /Users/mfilahi/.brew/Cellar/valgrind/3.14.0/lib/valgrind/vgpreload_memcheck-amd64-darwin.so)
+==42587==    by 0x10000846A: fill_lst (in ./21sh)
+==42587==    by 0x100008703: init_cases (in ./21sh)
+==42587==    by 0x100006340: specialtoken (in ./21sh)
+==42587==    by 0x1000063E9: _minishell (in ./21sh)
+==42587==    by 0x100006792: minishell (in ./21sh)
+==42587==    by 0x100006940: main (in ./21sh)
+==42587== 
+==42587== 856 bytes in 1 blocks are definitely lost in loss record 110 of 129
+==42587==    at 0x1000A5626: malloc (in /Users/mfilahi/.brew/Cellar/valgrind/3.14.0/lib/valgrind/vgpreload_memcheck-amd64-darwin.so)
+==42587==    by 0x100008744: skip_quote (in ./21sh)
+==42587==    by 0x100008FA3: parsin (in ./21sh)
+==42587==    by 0x1000090EC: mc_maker (in ./21sh)
+==42587==    by 0x10000675D: minishell (in ./21sh)
+==42587==    by 0x100006940: main (in ./21sh)
+==42587== 
+==42587== 858 bytes in 1 blocks are definitely lost in loss record 111 of 129
+==42587==    at 0x1000A5626: malloc (in /Users/mfilahi/.brew/Cellar/valgrind/3.14.0/lib/valgrind/vgpreload_memcheck-amd64-darwin.so)
+==42587==    by 0x10000A014: ft_strjoin (in ./21sh)
+==42587==    by 0x1000064FC: keephistory (in ./21sh)
+==42587==    by 0x10000674D: minishell (in ./21sh)
+==42587==    by 0x100006940: main (in ./21sh)
+==42587== 
+==42587== 872 (16 direct, 856 indirect) bytes in 1 blocks are definitely lost in loss record 112 of 129
+==42587==    at 0x1000A5626: malloc (in /Users/mfilahi/.brew/Cellar/valgrind/3.14.0/lib/valgrind/vgpreload_memcheck-amd64-darwin.so)
+==42587==    by 0x10000A31B: ft_strsplit (in ./21sh)
+==42587==    by 0x100009139: mc_maker (in ./21sh)
+==42587==    by 0x10000675D: minishell (in ./21sh)
+==42587==    by 0x100006940: main (in ./21sh)
+==42587== 
+==42587== 2,064 (16 direct, 2,048 indirect) bytes in 1 blocks are definitely lost in loss record 122 of 129
+==42587==    at 0x1000A5626: malloc (in /Users/mfilahi/.brew/Cellar/valgrind/3.14.0/lib/valgrind/vgpreload_memcheck-amd64-darwin.so)
+==42587==    by 0x100539103: _nc_table_new (in /usr/lib/system/libsystem_notify.dylib)
+==42587==    by 0x100534FB5: _notify_init_globals (in /usr/lib/system/libsystem_notify.dylib)
+==42587==    by 0x100542AC0: _os_once (in /usr/lib/system/libsystem_platform.dylib)
+==42587==    by 0x100542A91: _os_alloc_once (in /usr/lib/system/libsystem_platform.dylib)
+==42587==    by 0x1005350AD: _notify_fork_child (in /usr/lib/system/libsystem_notify.dylib)
+==42587==    by 0x1000F6B20: libSystem_atfork_child (in /usr/lib/libSystem.B.dylib)
+==42587==    by 0x1002BF436: fork (in /usr/lib/system/libsystem_c.dylib)
+==42587==    by 0x100006294: child_pid (in ./21sh)
+==42587==    by 0x100006439: _minishell (in ./21sh)
+==42587==    by 0x100006792: minishell (in ./21sh)
+==42587==    by 0x100006940: main (in ./21sh)
+==42587== 
+==42587== 2,064 (16 direct, 2,048 indirect) bytes in 1 blocks are definitely lost in loss record 123 of 129
+==42587==    at 0x1000A5626: malloc (in /Users/mfilahi/.brew/Cellar/valgrind/3.14.0/lib/valgrind/vgpreload_memcheck-amd64-darwin.so)
+==42587==    by 0x100539103: _nc_table_new (in /usr/lib/system/libsystem_notify.dylib)
+==42587==    by 0x100534FC6: _notify_init_globals (in /usr/lib/system/libsystem_notify.dylib)
+==42587==    by 0x100542AC0: _os_once (in /usr/lib/system/libsystem_platform.dylib)
+==42587==    by 0x100542A91: _os_alloc_once (in /usr/lib/system/libsystem_platform.dylib)
+==42587==    by 0x1005350AD: _notify_fork_child (in /usr/lib/system/libsystem_notify.dylib)
+==42587==    by 0x1000F6B20: libSystem_atfork_child (in /usr/lib/libSystem.B.dylib)
+==42587==    by 0x1002BF436: fork (in /usr/lib/system/libsystem_c.dylib)
+==42587==    by 0x100006294: child_pid (in ./21sh)
+==42587==    by 0x100006439: _minishell (in ./21sh)
+==42587==    by 0x100006792: minishell (in ./21sh)
+==42587==    by 0x100006940: main (in ./21sh)
+==42587== 
+==42587== 365,085 bytes in 854 blocks are definitely lost in loss record 128 of 129
+==42587==    at 0x1000A5626: malloc (in /Users/mfilahi/.brew/Cellar/valgrind/3.14.0/lib/valgrind/vgpreload_memcheck-amd64-darwin.so)
+==42587==    by 0x10000A28C: ft_strnew (in ./21sh)
+==42587==    by 0x100009F71: ft_strdup (in ./21sh)
+==42587==    by 0x100003D58: insert_element (in ./21sh)
+==42587==    by 0x100004B94: print_readablechar (in ./21sh)
+==42587==    by 0x100002B4B: get_input_1 (in ./21sh)
+==42587==    by 0x100002E53: get_input (in ./21sh)
+==42587==    by 0x100002ED5: ft_readline (in ./21sh)
+==42587==    by 0x1000065DC: call_readline (in ./21sh)
+==42587==    by 0x1000066B2: minishell (in ./21sh)
+==42587==    by 0x100006940: main (in ./21sh)
+==42587== 
+==42587== 366,795 bytes in 855 blocks are definitely lost in loss record 129 of 129
+==42587==    at 0x1000A5626: malloc (in /Users/mfilahi/.brew/Cellar/valgrind/3.14.0/lib/valgrind/vgpreload_memcheck-amd64-darwin.so)
+==42587==    by 0x1000083C4: ft_joinchar (in ./21sh)
+==42587==    by 0x100008F6F: parsin (in ./21sh)
+==42587==    by 0x1000090EC: mc_maker (in ./21sh)
+==42587==    by 0x10000675D: minishell (in ./21sh)
+==42587==    by 0x100006940: main (in ./21sh)
+==42587== 
+==42587== LEAK SUMMARY:
+==42587==    definitely lost: 734,101 bytes in 1,721 blocks
+==42587==    indirectly lost: 5,752 bytes in 109 blocks
+==42587==      possibly lost: 72 bytes in 3 blocks
+==42587==    still reachable: 10,861 bytes in 132 blocks
+==42587==         suppressed: 24,130 bytes in 161 blocks
+==42587== Reachable blocks (those to which a pointer was found) are not shown.
+==42587== To see them, rerun with: --leak-check=full --show-leak-kinds=all
+==42587== 
+==42587== For counts of detected and suppressed errors, rerun with: -v
+==42587== ERROR SUMMARY: 26 errors from 26 contexts (suppressed: 12 from 12)
+==42703== Syscall param execve(filename) points to unaddressable byte(s)
+==42703==    at 0x10040077E: execve (in /usr/lib/system/libsystem_kernel.dylib)
+==42703==    by 0x1000051E4: execute (in ./21sh)
+==42703==    by 0x10000626E: sys_cmd (in ./21sh)
+==42703==    by 0x1000062EB: child_pid (in ./21sh)
+==42703==    by 0x100006439: _minishell (in ./21sh)
+==42703==    by 0x100006792: minishell (in ./21sh)
+==42703==    by 0x100006940: main (in ./21sh)
+==42703==  Address 0x100d8f3b0 is 0 bytes inside a block of size 75 free'd
+==42703==    at 0x1000A5A03: free (in /Users/mfilahi/.brew/Cellar/valgrind/3.14.0/lib/valgrind/vgpreload_memcheck-amd64-darwin.so)
+==42703==    by 0x100006235: sys_cmd (in ./21sh)
+==42703==    by 0x1000062EB: child_pid (in ./21sh)
+==42703==    by 0x100006439: _minishell (in ./21sh)
+==42703==    by 0x100006792: minishell (in ./21sh)
+==42703==    by 0x100006940: main (in ./21sh)
+==42703==  Block was alloc'd at
+==42703==    at 0x1000A5626: malloc (in /Users/mfilahi/.brew/Cellar/valgrind/3.14.0/lib/valgrind/vgpreload_memcheck-amd64-darwin.so)
+==42703==    by 0x10000A014: ft_strjoin (in ./21sh)
+==42703==    by 0x1000061FD: sys_cmd (in ./21sh)
+==42703==    by 0x1000062EB: child_pid (in ./21sh)
+==42703==    by 0x100006439: _minishell (in ./21sh)
+==42703==    by 0x100006792: minishell (in ./21sh)
+==42703==    by 0x100006940: main (in ./21sh)
+==42703== 
+==42703== Syscall param execve(argv[i]) points to unaddressable byte(s)
+==42703==    at 0x10040077E: execve (in /usr/lib/system/libsystem_kernel.dylib)
+==42703==    by 0x1000051E4: execute (in ./21sh)
+==42703==    by 0x10000626E: sys_cmd (in ./21sh)
+==42703==    by 0x1000062EB: child_pid (in ./21sh)
+==42703==    by 0x100006439: _minishell (in ./21sh)
+==42703==    by 0x100006792: minishell (in ./21sh)
+==42703==    by 0x100006940: main (in ./21sh)
+==42703==  Address 0x100d8f3b0 is 0 bytes inside a block of size 75 free'd
+==42703==    at 0x1000A5A03: free (in /Users/mfilahi/.brew/Cellar/valgrind/3.14.0/lib/valgrind/vgpreload_memcheck-amd64-darwin.so)
+==42703==    by 0x100006235: sys_cmd (in ./21sh)
+==42703==    by 0x1000062EB: child_pid (in ./21sh)
+==42703==    by 0x100006439: _minishell (in ./21sh)
+==42703==    by 0x100006792: minishell (in ./21sh)
+==42703==    by 0x100006940: main (in ./21sh)
+==42703==  Block was alloc'd at
+==42703==    at 0x1000A5626: malloc (in /Users/mfilahi/.brew/Cellar/valgrind/3.14.0/lib/valgrind/vgpreload_memcheck-amd64-darwin.so)
+==42703==    by 0x10000A014: ft_strjoin (in ./21sh)
+==42703==    by 0x1000061FD: sys_cmd (in ./21sh)
+==42703==    by 0x1000062EB: child_pid (in ./21sh)
+==42703==    by 0x100006439: _minishell (in ./21sh)
+==42703==    by 0x100006792: minishell (in ./21sh)
+==42703==    by 0x100006940: main (in ./21sh)
+==42703== 
+==42703== Syscall param access(pathname) points to unaddressable byte(s)
+==42703==    at 0x1004004AE: access (in /usr/lib/system/libsystem_kernel.dylib)
+==42703==    by 0x1000051FB: execute (in ./21sh)
+==42703==    by 0x10000626E: sys_cmd (in ./21sh)
+==42703==    by 0x1000062EB: child_pid (in ./21sh)
+==42703==    by 0x100006439: _minishell (in ./21sh)
+==42703==    by 0x100006792: minishell (in ./21sh)
+==42703==    by 0x100006940: main (in ./21sh)
+==42703==  Address 0x100d8f3b0 is 0 bytes inside a block of size 75 free'd
+==42703==    at 0x1000A5A03: free (in /Users/mfilahi/.brew/Cellar/valgrind/3.14.0/lib/valgrind/vgpreload_memcheck-amd64-darwin.so)
+==42703==    by 0x100006235: sys_cmd (in ./21sh)
+==42703==    by 0x1000062EB: child_pid (in ./21sh)
+==42703==    by 0x100006439: _minishell (in ./21sh)
+==42703==    by 0x100006792: minishell (in ./21sh)
+==42703==    by 0x100006940: main (in ./21sh)
+==42703==  Block was alloc'd at
+==42703==    at 0x1000A5626: malloc (in /Users/mfilahi/.brew/Cellar/valgrind/3.14.0/lib/valgrind/vgpreload_memcheck-amd64-darwin.so)
+==42703==    by 0x10000A014: ft_strjoin (in ./21sh)
+==42703==    by 0x1000061FD: sys_cmd (in ./21sh)
+==42703==    by 0x1000062EB: child_pid (in ./21sh)
+==42703==    by 0x100006439: _minishell (in ./21sh)
+==42703==    by 0x100006792: minishell (in ./21sh)
+==42703==    by 0x100006940: main (in ./21sh)
+==42703== 
+==42703== Syscall param access(pathname) points to unaddressable byte(s)
+==42703==    at 0x1004004AE: access (in /usr/lib/system/libsystem_kernel.dylib)
+==42703==    by 0x100005234: execute (in ./21sh)
+==42703==    by 0x10000626E: sys_cmd (in ./21sh)
+==42703==    by 0x1000062EB: child_pid (in ./21sh)
+==42703==    by 0x100006439: _minishell (in ./21sh)
+==42703==    by 0x100006792: minishell (in ./21sh)
+==42703==    by 0x100006940: main (in ./21sh)
+==42703==  Address 0x100d8f3b0 is 0 bytes inside a block of size 75 free'd
+==42703==    at 0x1000A5A03: free (in /Users/mfilahi/.brew/Cellar/valgrind/3.14.0/lib/valgrind/vgpreload_memcheck-amd64-darwin.so)
+==42703==    by 0x100006235: sys_cmd (in ./21sh)
+==42703==    by 0x1000062EB: child_pid (in ./21sh)
+==42703==    by 0x100006439: _minishell (in ./21sh)
+==42703==    by 0x100006792: minishell (in ./21sh)
+==42703==    by 0x100006940: main (in ./21sh)
+==42703==  Block was alloc'd at
+==42703==    at 0x1000A5626: malloc (in /Users/mfilahi/.brew/Cellar/valgrind/3.14.0/lib/valgrind/vgpreload_memcheck-amd64-darwin.so)
+==42703==    by 0x10000A014: ft_strjoin (in ./21sh)
+==42703==    by 0x1000061FD: sys_cmd (in ./21sh)
+==42703==    by 0x1000062EB: child_pid (in ./21sh)
+==42703==    by 0x100006439: _minishell (in ./21sh)
+==42703==    by 0x100006792: minishell (in ./21sh)
+==42703==    by 0x100006940: main (in ./21sh)
+==42703== 
+==42703== 
+==42703== HEAP SUMMARY:
+==42703==     in use at exit: 1,509,663 bytes in 3,950 blocks
+==42703==   total heap usage: 4,096 allocs, 146 frees, 1,744,578 bytes allocated
+==42703== 
+==42703== 2 bytes in 1 blocks are definitely lost in loss record 2 of 131
+==42703==    at 0x1000A5626: malloc (in /Users/mfilahi/.brew/Cellar/valgrind/3.14.0/lib/valgrind/vgpreload_memcheck-amd64-darwin.so)
+==42703==    by 0x10000A28C: ft_strnew (in ./21sh)
+==42703==    by 0x100007395: heredoc_handler (in ./21sh)
+==42703==    by 0x1000079C2: recall_readline (in ./21sh)
+==42703==    by 0x10000666D: call_readline (in ./21sh)
+==42703==    by 0x1000066B2: minishell (in ./21sh)
+==42703==    by 0x100006940: main (in ./21sh)
+==42703== 
+==42703== 2 bytes in 2 blocks are definitely lost in loss record 3 of 131
+==42703==    at 0x1000A5626: malloc (in /Users/mfilahi/.brew/Cellar/valgrind/3.14.0/lib/valgrind/vgpreload_memcheck-amd64-darwin.so)
+==42703==    by 0x10000A28C: ft_strnew (in ./21sh)
+==42703==    by 0x100009F71: ft_strdup (in ./21sh)
+==42703==    by 0x100008C5C: parsin (in ./21sh)
+==42703==    by 0x1000090EC: mc_maker (in ./21sh)
+==42703==    by 0x10000675D: minishell (in ./21sh)
+==42703==    by 0x100006940: main (in ./21sh)
+==42703== 
+==42703== 58 bytes in 1 blocks are definitely lost in loss record 70 of 131
+==42703==    at 0x1000A5626: malloc (in /Users/mfilahi/.brew/Cellar/valgrind/3.14.0/lib/valgrind/vgpreload_memcheck-amd64-darwin.so)
+==42703==    by 0x10000A28C: ft_strnew (in ./21sh)
+==42703==    by 0x10000A3DF: ft_strsplit (in ./21sh)
+==42703==    by 0x10000902C: mc_lst (in ./21sh)
+==42703==    by 0x100009146: mc_maker (in ./21sh)
+==42703==    by 0x10000675D: minishell (in ./21sh)
+==42703==    by 0x100006940: main (in ./21sh)
+==42703== 
+==42703== 64 bytes in 1 blocks are definitely lost in loss record 78 of 131
+==42703==    at 0x1000A5626: malloc (in /Users/mfilahi/.brew/Cellar/valgrind/3.14.0/lib/valgrind/vgpreload_memcheck-amd64-darwin.so)
+==42703==    by 0x10000A31B: ft_strsplit (in ./21sh)
+==42703==    by 0x100005305: get_path (in ./21sh)
+==42703==    by 0x1000061BD: sys_cmd (in ./21sh)
+==42703==    by 0x1000062EB: child_pid (in ./21sh)
+==42703==    by 0x100006439: _minishell (in ./21sh)
+==42703==    by 0x100006792: minishell (in ./21sh)
+==42703==    by 0x100006940: main (in ./21sh)
+==42703== 
+==42703== 72 bytes in 3 blocks are possibly lost in loss record 80 of 131
+==42703==    at 0x1000A5C8A: calloc (in /Users/mfilahi/.brew/Cellar/valgrind/3.14.0/lib/valgrind/vgpreload_memcheck-amd64-darwin.so)
+==42703==    by 0x100601846: map_images_nolock (in /usr/lib/libobjc.A.dylib)
+==42703==    by 0x100614FE8: objc_object::sidetable_retainCount() (in /usr/lib/libobjc.A.dylib)
+==42703==    by 0x10001403B: dyld::notifyBatchPartial(dyld_image_states, bool, char const* (*)(dyld_image_states, unsigned int, dyld_image_info const*), bool, bool) (in /usr/lib/dyld)
+==42703==    by 0x100014255: dyld::registerObjCNotifiers(void (*)(unsigned int, char const* const*, mach_header const* const*), void (*)(char const*, mach_header const*), void (*)(char const*, mach_header const*)) (in /usr/lib/dyld)
+==42703==    by 0x10024F00A: _dyld_objc_notify_register (in /usr/lib/system/libdyld.dylib)
+==42703==    by 0x100601074: _objc_init (in /usr/lib/libobjc.A.dylib)
+==42703==    by 0x1001E268D: _os_object_init (in /usr/lib/system/libdispatch.dylib)
+==42703==    by 0x1001E263A: libdispatch_init (in /usr/lib/system/libdispatch.dylib)
+==42703==    by 0x1000F69D5: libSystem_initializer (in /usr/lib/libSystem.B.dylib)
+==42703==    by 0x100024A1A: ImageLoaderMachO::doModInitFunctions(ImageLoader::LinkContext const&) (in /usr/lib/dyld)
+==42703==    by 0x100024C1D: ImageLoaderMachO::doInitialization(ImageLoader::LinkContext const&) (in /usr/lib/dyld)
+==42703== 
+==42703== 432 (304 direct, 128 indirect) bytes in 2 blocks are definitely lost in loss record 97 of 131
+==42703==    at 0x1000A5626: malloc (in /Users/mfilahi/.brew/Cellar/valgrind/3.14.0/lib/valgrind/vgpreload_memcheck-amd64-darwin.so)
+==42703==    by 0x100008563: init_cases (in ./21sh)
+==42703==    by 0x100008C65: parsin (in ./21sh)
+==42703==    by 0x1000090EC: mc_maker (in ./21sh)
+==42703==    by 0x10000675D: minishell (in ./21sh)
+==42703==    by 0x100006940: main (in ./21sh)
+==42703== 
+==42703== 432 (304 direct, 128 indirect) bytes in 2 blocks are definitely lost in loss record 98 of 131
+==42703==    at 0x1000A5626: malloc (in /Users/mfilahi/.brew/Cellar/valgrind/3.14.0/lib/valgrind/vgpreload_memcheck-amd64-darwin.so)
+==42703==    by 0x100008563: init_cases (in ./21sh)
+==42703==    by 0x100006340: specialtoken (in ./21sh)
+==42703==    by 0x1000063E9: _minishell (in ./21sh)
+==42703==    by 0x100006792: minishell (in ./21sh)
+==42703==    by 0x100006940: main (in ./21sh)
+==42703== 
+==42703== 704 (32 direct, 672 indirect) bytes in 2 blocks are definitely lost in loss record 105 of 131
+==42703==    at 0x1000A5626: malloc (in /Users/mfilahi/.brew/Cellar/valgrind/3.14.0/lib/valgrind/vgpreload_memcheck-amd64-darwin.so)
+==42703==    by 0x10000846A: fill_lst (in ./21sh)
+==42703==    by 0x100008703: init_cases (in ./21sh)
+==42703==    by 0x100008C65: parsin (in ./21sh)
+==42703==    by 0x1000090EC: mc_maker (in ./21sh)
+==42703==    by 0x10000675D: minishell (in ./21sh)
+==42703==    by 0x100006940: main (in ./21sh)
+==42703== 
+==42703== 704 (32 direct, 672 indirect) bytes in 2 blocks are definitely lost in loss record 106 of 131
+==42703==    at 0x1000A5626: malloc (in /Users/mfilahi/.brew/Cellar/valgrind/3.14.0/lib/valgrind/vgpreload_memcheck-amd64-darwin.so)
+==42703==    by 0x10000846A: fill_lst (in ./21sh)
+==42703==    by 0x100008703: init_cases (in ./21sh)
+==42703==    by 0x100006340: specialtoken (in ./21sh)
+==42703==    by 0x1000063E9: _minishell (in ./21sh)
+==42703==    by 0x100006792: minishell (in ./21sh)
+==42703==    by 0x100006940: main (in ./21sh)
+==42703== 
+==42703== 858 bytes in 1 blocks are definitely lost in loss record 110 of 131
+==42703==    at 0x1000A5626: malloc (in /Users/mfilahi/.brew/Cellar/valgrind/3.14.0/lib/valgrind/vgpreload_memcheck-amd64-darwin.so)
+==42703==    by 0x10000A014: ft_strjoin (in ./21sh)
+==42703==    by 0x1000064FC: keephistory (in ./21sh)
+==42703==    by 0x10000674D: minishell (in ./21sh)
+==42703==    by 0x100006940: main (in ./21sh)
+==42703== 
+==42703== 1,712 bytes in 2 blocks are definitely lost in loss record 115 of 131
+==42703==    at 0x1000A5626: malloc (in /Users/mfilahi/.brew/Cellar/valgrind/3.14.0/lib/valgrind/vgpreload_memcheck-amd64-darwin.so)
+==42703==    by 0x100008744: skip_quote (in ./21sh)
+==42703==    by 0x100008FA3: parsin (in ./21sh)
+==42703==    by 0x1000090EC: mc_maker (in ./21sh)
+==42703==    by 0x10000675D: minishell (in ./21sh)
+==42703==    by 0x100006940: main (in ./21sh)
+==42703== 
+==42703== 1,744 (32 direct, 1,712 indirect) bytes in 2 blocks are definitely lost in loss record 116 of 131
+==42703==    at 0x1000A5626: malloc (in /Users/mfilahi/.brew/Cellar/valgrind/3.14.0/lib/valgrind/vgpreload_memcheck-amd64-darwin.so)
+==42703==    by 0x10000A31B: ft_strsplit (in ./21sh)
+==42703==    by 0x100009139: mc_maker (in ./21sh)
+==42703==    by 0x10000675D: minishell (in ./21sh)
+==42703==    by 0x100006940: main (in ./21sh)
+==42703== 
+==42703== 2,064 (16 direct, 2,048 indirect) bytes in 1 blocks are definitely lost in loss record 123 of 131
+==42703==    at 0x1000A5626: malloc (in /Users/mfilahi/.brew/Cellar/valgrind/3.14.0/lib/valgrind/vgpreload_memcheck-amd64-darwin.so)
+==42703==    by 0x100539103: _nc_table_new (in /usr/lib/system/libsystem_notify.dylib)
+==42703==    by 0x100534FB5: _notify_init_globals (in /usr/lib/system/libsystem_notify.dylib)
+==42703==    by 0x100542AC0: _os_once (in /usr/lib/system/libsystem_platform.dylib)
+==42703==    by 0x100542A91: _os_alloc_once (in /usr/lib/system/libsystem_platform.dylib)
+==42703==    by 0x1005350AD: _notify_fork_child (in /usr/lib/system/libsystem_notify.dylib)
+==42703==    by 0x1000F6B20: libSystem_atfork_child (in /usr/lib/libSystem.B.dylib)
+==42703==    by 0x1002BF436: fork (in /usr/lib/system/libsystem_c.dylib)
+==42703==    by 0x100006294: child_pid (in ./21sh)
+==42703==    by 0x100006439: _minishell (in ./21sh)
+==42703==    by 0x100006792: minishell (in ./21sh)
+==42703==    by 0x100006940: main (in ./21sh)
+==42703== 
+==42703== 2,064 (16 direct, 2,048 indirect) bytes in 1 blocks are definitely lost in loss record 124 of 131
+==42703==    at 0x1000A5626: malloc (in /Users/mfilahi/.brew/Cellar/valgrind/3.14.0/lib/valgrind/vgpreload_memcheck-amd64-darwin.so)
+==42703==    by 0x100539103: _nc_table_new (in /usr/lib/system/libsystem_notify.dylib)
+==42703==    by 0x100534FC6: _notify_init_globals (in /usr/lib/system/libsystem_notify.dylib)
+==42703==    by 0x100542AC0: _os_once (in /usr/lib/system/libsystem_platform.dylib)
+==42703==    by 0x100542A91: _os_alloc_once (in /usr/lib/system/libsystem_platform.dylib)
+==42703==    by 0x1005350AD: _notify_fork_child (in /usr/lib/system/libsystem_notify.dylib)
+==42703==    by 0x1000F6B20: libSystem_atfork_child (in /usr/lib/libSystem.B.dylib)
+==42703==    by 0x1002BF436: fork (in /usr/lib/system/libsystem_c.dylib)
+==42703==    by 0x100006294: child_pid (in ./21sh)
+==42703==    by 0x100006439: _minishell (in ./21sh)
+==42703==    by 0x100006792: minishell (in ./21sh)
+==42703==    by 0x100006940: main (in ./21sh)
+==42703== 
+==42703== 365,085 bytes in 854 blocks are definitely lost in loss record 129 of 131
+==42703==    at 0x1000A5626: malloc (in /Users/mfilahi/.brew/Cellar/valgrind/3.14.0/lib/valgrind/vgpreload_memcheck-amd64-darwin.so)
+==42703==    by 0x10000A28C: ft_strnew (in ./21sh)
+==42703==    by 0x100009F71: ft_strdup (in ./21sh)
+==42703==    by 0x100003D58: insert_element (in ./21sh)
+==42703==    by 0x100004B94: print_readablechar (in ./21sh)
+==42703==    by 0x100002B4B: get_input_1 (in ./21sh)
+==42703==    by 0x100002E53: get_input (in ./21sh)
+==42703==    by 0x100002ED5: ft_readline (in ./21sh)
+==42703==    by 0x1000065DC: call_readline (in ./21sh)
+==42703==    by 0x1000066B2: minishell (in ./21sh)
+==42703==    by 0x100006940: main (in ./21sh)
+==42703== 
+==42703== 365,085 bytes in 854 blocks are definitely lost in loss record 130 of 131
+==42703==    at 0x1000A5626: malloc (in /Users/mfilahi/.brew/Cellar/valgrind/3.14.0/lib/valgrind/vgpreload_memcheck-amd64-darwin.so)
+==42703==    by 0x10000A28C: ft_strnew (in ./21sh)
+==42703==    by 0x100009F71: ft_strdup (in ./21sh)
+==42703==    by 0x100003D58: insert_element (in ./21sh)
+==42703==    by 0x100004B94: print_readablechar (in ./21sh)
+==42703==    by 0x100003AFE: paste_of_mouse (in ./21sh)
+==42703==    by 0x100002ACD: get_input_2 (in ./21sh)
+==42703==    by 0x100002D20: get_input_1 (in ./21sh)
+==42703==    by 0x100002E53: get_input (in ./21sh)
+==42703==    by 0x100002ED5: ft_readline (in ./21sh)
+==42703==    by 0x1000065DC: call_readline (in ./21sh)
+==42703==    by 0x1000066B2: minishell (in ./21sh)
+==42703== 
+==42703== 733,590 bytes in 1,710 blocks are definitely lost in loss record 131 of 131
+==42703==    at 0x1000A5626: malloc (in /Users/mfilahi/.brew/Cellar/valgrind/3.14.0/lib/valgrind/vgpreload_memcheck-amd64-darwin.so)
+==42703==    by 0x1000083C4: ft_joinchar (in ./21sh)
+==42703==    by 0x100008F6F: parsin (in ./21sh)
+==42703==    by 0x1000090EC: mc_maker (in ./21sh)
+==42703==    by 0x10000675D: minishell (in ./21sh)
+==42703==    by 0x100006940: main (in ./21sh)
+==42703== 
+==42703== LEAK SUMMARY:
+==42703==    definitely lost: 1,467,192 bytes in 3,438 blocks
+==42703==    indirectly lost: 7,408 bytes in 216 blocks
+==42703==      possibly lost: 72 bytes in 3 blocks
+==42703==    still reachable: 10,861 bytes in 132 blocks
+==42703==         suppressed: 24,130 bytes in 161 blocks
+==42703== Reachable blocks (those to which a pointer was found) are not shown.
+==42703== To see them, rerun with: --leak-check=full --show-leak-kinds=all
+==42703== 
+==42703== For counts of detected and suppressed errors, rerun with: -v
+==42703== ERROR SUMMARY: 35 errors from 28 contexts (suppressed: 12 from 12)
+==42737== Syscall param execve(filename) points to unaddressable byte(s)
+==42737==    at 0x10040077E: execve (in /usr/lib/system/libsystem_kernel.dylib)
+==42737==    by 0x1000051E4: execute (in ./21sh)
+==42737==    by 0x10000626E: sys_cmd (in ./21sh)
+==42737==    by 0x1000062EB: child_pid (in ./21sh)
+==42737==    by 0x100006439: _minishell (in ./21sh)
+==42737==    by 0x100006792: minishell (in ./21sh)
+==42737==    by 0x100006940: main (in ./21sh)
+==42737==  Address 0x100dab3f0 is 0 bytes inside a block of size 23 free'd
+==42737==    at 0x1000A5A03: free (in /Users/mfilahi/.brew/Cellar/valgrind/3.14.0/lib/valgrind/vgpreload_memcheck-amd64-darwin.so)
+==42737==    by 0x100006235: sys_cmd (in ./21sh)
+==42737==    by 0x1000062EB: child_pid (in ./21sh)
+==42737==    by 0x100006439: _minishell (in ./21sh)
+==42737==    by 0x100006792: minishell (in ./21sh)
+==42737==    by 0x100006940: main (in ./21sh)
+==42737==  Block was alloc'd at
+==42737==    at 0x1000A5626: malloc (in /Users/mfilahi/.brew/Cellar/valgrind/3.14.0/lib/valgrind/vgpreload_memcheck-amd64-darwin.so)
+==42737==    by 0x10000A014: ft_strjoin (in ./21sh)
+==42737==    by 0x1000061FD: sys_cmd (in ./21sh)
+==42737==    by 0x1000062EB: child_pid (in ./21sh)
+==42737==    by 0x100006439: _minishell (in ./21sh)
+==42737==    by 0x100006792: minishell (in ./21sh)
+==42737==    by 0x100006940: main (in ./21sh)
+==42737== 
+==42737== Syscall param execve(argv[i]) points to unaddressable byte(s)
+==42737==    at 0x10040077E: execve (in /usr/lib/system/libsystem_kernel.dylib)
+==42737==    by 0x1000051E4: execute (in ./21sh)
+==42737==    by 0x10000626E: sys_cmd (in ./21sh)
+==42737==    by 0x1000062EB: child_pid (in ./21sh)
+==42737==    by 0x100006439: _minishell (in ./21sh)
+==42737==    by 0x100006792: minishell (in ./21sh)
+==42737==    by 0x100006940: main (in ./21sh)
+==42737==  Address 0x100dab3f0 is 0 bytes inside a block of size 23 free'd
+==42737==    at 0x1000A5A03: free (in /Users/mfilahi/.brew/Cellar/valgrind/3.14.0/lib/valgrind/vgpreload_memcheck-amd64-darwin.so)
+==42737==    by 0x100006235: sys_cmd (in ./21sh)
+==42737==    by 0x1000062EB: child_pid (in ./21sh)
+==42737==    by 0x100006439: _minishell (in ./21sh)
+==42737==    by 0x100006792: minishell (in ./21sh)
+==42737==    by 0x100006940: main (in ./21sh)
+==42737==  Block was alloc'd at
+==42737==    at 0x1000A5626: malloc (in /Users/mfilahi/.brew/Cellar/valgrind/3.14.0/lib/valgrind/vgpreload_memcheck-amd64-darwin.so)
+==42737==    by 0x10000A014: ft_strjoin (in ./21sh)
+==42737==    by 0x1000061FD: sys_cmd (in ./21sh)
+==42737==    by 0x1000062EB: child_pid (in ./21sh)
+==42737==    by 0x100006439: _minishell (in ./21sh)
+==42737==    by 0x100006792: minishell (in ./21sh)
+==42737==    by 0x100006940: main (in ./21sh)
+==42737== 
+==42737== Syscall param access(pathname) points to unaddressable byte(s)
+==42737==    at 0x1004004AE: access (in /usr/lib/system/libsystem_kernel.dylib)
+==42737==    by 0x1000051FB: execute (in ./21sh)
+==42737==    by 0x10000626E: sys_cmd (in ./21sh)
+==42737==    by 0x1000062EB: child_pid (in ./21sh)
+==42737==    by 0x100006439: _minishell (in ./21sh)
+==42737==    by 0x100006792: minishell (in ./21sh)
+==42737==    by 0x100006940: main (in ./21sh)
+==42737==  Address 0x100dab3f0 is 0 bytes inside a block of size 23 free'd
+==42737==    at 0x1000A5A03: free (in /Users/mfilahi/.brew/Cellar/valgrind/3.14.0/lib/valgrind/vgpreload_memcheck-amd64-darwin.so)
+==42737==    by 0x100006235: sys_cmd (in ./21sh)
+==42737==    by 0x1000062EB: child_pid (in ./21sh)
+==42737==    by 0x100006439: _minishell (in ./21sh)
+==42737==    by 0x100006792: minishell (in ./21sh)
+==42737==    by 0x100006940: main (in ./21sh)
+==42737==  Block was alloc'd at
+==42737==    at 0x1000A5626: malloc (in /Users/mfilahi/.brew/Cellar/valgrind/3.14.0/lib/valgrind/vgpreload_memcheck-amd64-darwin.so)
+==42737==    by 0x10000A014: ft_strjoin (in ./21sh)
+==42737==    by 0x1000061FD: sys_cmd (in ./21sh)
+==42737==    by 0x1000062EB: child_pid (in ./21sh)
+==42737==    by 0x100006439: _minishell (in ./21sh)
+==42737==    by 0x100006792: minishell (in ./21sh)
+==42737==    by 0x100006940: main (in ./21sh)
+==42737== 
+==42737== Syscall param access(pathname) points to unaddressable byte(s)
+==42737==    at 0x1004004AE: access (in /usr/lib/system/libsystem_kernel.dylib)
+==42737==    by 0x100005234: execute (in ./21sh)
+==42737==    by 0x10000626E: sys_cmd (in ./21sh)
+==42737==    by 0x1000062EB: child_pid (in ./21sh)
+==42737==    by 0x100006439: _minishell (in ./21sh)
+==42737==    by 0x100006792: minishell (in ./21sh)
+==42737==    by 0x100006940: main (in ./21sh)
+==42737==  Address 0x100dab3f0 is 0 bytes inside a block of size 23 free'd
+==42737==    at 0x1000A5A03: free (in /Users/mfilahi/.brew/Cellar/valgrind/3.14.0/lib/valgrind/vgpreload_memcheck-amd64-darwin.so)
+==42737==    by 0x100006235: sys_cmd (in ./21sh)
+==42737==    by 0x1000062EB: child_pid (in ./21sh)
+==42737==    by 0x100006439: _minishell (in ./21sh)
+==42737==    by 0x100006792: minishell (in ./21sh)
+==42737==    by 0x100006940: main (in ./21sh)
+==42737==  Block was alloc'd at
+==42737==    at 0x1000A5626: malloc (in /Users/mfilahi/.brew/Cellar/valgrind/3.14.0/lib/valgrind/vgpreload_memcheck-amd64-darwin.so)
+==42737==    by 0x10000A014: ft_strjoin (in ./21sh)
+==42737==    by 0x1000061FD: sys_cmd (in ./21sh)
+==42737==    by 0x1000062EB: child_pid (in ./21sh)
+==42737==    by 0x100006439: _minishell (in ./21sh)
+==42737==    by 0x100006792: minishell (in ./21sh)
+==42737==    by 0x100006940: main (in ./21sh)
+==42737== 
+==42737== 
+==42737== HEAP SUMMARY:
+==42737==     in use at exit: 1,509,841 bytes in 4,114 blocks
+==42737==   total heap usage: 4,279 allocs, 165 frees, 1,845,963 bytes allocated
+==42737== 
+==42737== 3 bytes in 3 blocks are definitely lost in loss record 2 of 131
+==42737==    at 0x1000A5626: malloc (in /Users/mfilahi/.brew/Cellar/valgrind/3.14.0/lib/valgrind/vgpreload_memcheck-amd64-darwin.so)
+==42737==    by 0x10000A28C: ft_strnew (in ./21sh)
+==42737==    by 0x100009F71: ft_strdup (in ./21sh)
+==42737==    by 0x100008C5C: parsin (in ./21sh)
+==42737==    by 0x1000090EC: mc_maker (in ./21sh)
+==42737==    by 0x10000675D: minishell (in ./21sh)
+==42737==    by 0x100006940: main (in ./21sh)
+==42737== 
+==42737== 4 bytes in 2 blocks are definitely lost in loss record 3 of 131
+==42737==    at 0x1000A5626: malloc (in /Users/mfilahi/.brew/Cellar/valgrind/3.14.0/lib/valgrind/vgpreload_memcheck-amd64-darwin.so)
+==42737==    by 0x10000A28C: ft_strnew (in ./21sh)
+==42737==    by 0x100007395: heredoc_handler (in ./21sh)
+==42737==    by 0x1000079C2: recall_readline (in ./21sh)
+==42737==    by 0x10000666D: call_readline (in ./21sh)
+==42737==    by 0x1000066B2: minishell (in ./21sh)
+==42737==    by 0x100006940: main (in ./21sh)
+==42737== 
+==42737== 6 bytes in 1 blocks are definitely lost in loss record 10 of 131
+==42737==    at 0x1000A5626: malloc (in /Users/mfilahi/.brew/Cellar/valgrind/3.14.0/lib/valgrind/vgpreload_memcheck-amd64-darwin.so)
+==42737==    by 0x10000A28C: ft_strnew (in ./21sh)
+==42737==    by 0x10000A3DF: ft_strsplit (in ./21sh)
+==42737==    by 0x10000902C: mc_lst (in ./21sh)
+==42737==    by 0x100009146: mc_maker (in ./21sh)
+==42737==    by 0x10000675D: minishell (in ./21sh)
+==42737==    by 0x100006940: main (in ./21sh)
+==42737== 
+==42737== 64 bytes in 1 blocks are definitely lost in loss record 80 of 131
+==42737==    at 0x1000A5626: malloc (in /Users/mfilahi/.brew/Cellar/valgrind/3.14.0/lib/valgrind/vgpreload_memcheck-amd64-darwin.so)
+==42737==    by 0x10000A31B: ft_strsplit (in ./21sh)
+==42737==    by 0x100005305: get_path (in ./21sh)
+==42737==    by 0x1000061BD: sys_cmd (in ./21sh)
+==42737==    by 0x1000062EB: child_pid (in ./21sh)
+==42737==    by 0x100006439: _minishell (in ./21sh)
+==42737==    by 0x100006792: minishell (in ./21sh)
+==42737==    by 0x100006940: main (in ./21sh)
+==42737== 
+==42737== 72 bytes in 3 blocks are possibly lost in loss record 82 of 131
+==42737==    at 0x1000A5C8A: calloc (in /Users/mfilahi/.brew/Cellar/valgrind/3.14.0/lib/valgrind/vgpreload_memcheck-amd64-darwin.so)
+==42737==    by 0x100601846: map_images_nolock (in /usr/lib/libobjc.A.dylib)
+==42737==    by 0x100614FE8: objc_object::sidetable_retainCount() (in /usr/lib/libobjc.A.dylib)
+==42737==    by 0x10001403B: dyld::notifyBatchPartial(dyld_image_states, bool, char const* (*)(dyld_image_states, unsigned int, dyld_image_info const*), bool, bool) (in /usr/lib/dyld)
+==42737==    by 0x100014255: dyld::registerObjCNotifiers(void (*)(unsigned int, char const* const*, mach_header const* const*), void (*)(char const*, mach_header const*), void (*)(char const*, mach_header const*)) (in /usr/lib/dyld)
+==42737==    by 0x10024F00A: _dyld_objc_notify_register (in /usr/lib/system/libdyld.dylib)
+==42737==    by 0x100601074: _objc_init (in /usr/lib/libobjc.A.dylib)
+==42737==    by 0x1001E268D: _os_object_init (in /usr/lib/system/libdispatch.dylib)
+==42737==    by 0x1001E263A: libdispatch_init (in /usr/lib/system/libdispatch.dylib)
+==42737==    by 0x1000F69D5: libSystem_initializer (in /usr/lib/libSystem.B.dylib)
+==42737==    by 0x100024A1A: ImageLoaderMachO::doModInitFunctions(ImageLoader::LinkContext const&) (in /usr/lib/dyld)
+==42737==    by 0x100024C1D: ImageLoaderMachO::doInitialization(ImageLoader::LinkContext const&) (in /usr/lib/dyld)
+==42737== 
+==42737== 648 (456 direct, 192 indirect) bytes in 3 blocks are definitely lost in loss record 102 of 131
+==42737==    at 0x1000A5626: malloc (in /Users/mfilahi/.brew/Cellar/valgrind/3.14.0/lib/valgrind/vgpreload_memcheck-amd64-darwin.so)
+==42737==    by 0x100008563: init_cases (in ./21sh)
+==42737==    by 0x100008C65: parsin (in ./21sh)
+==42737==    by 0x1000090EC: mc_maker (in ./21sh)
+==42737==    by 0x10000675D: minishell (in ./21sh)
+==42737==    by 0x100006940: main (in ./21sh)
+==42737== 
+==42737== 648 (456 direct, 192 indirect) bytes in 3 blocks are definitely lost in loss record 103 of 131
+==42737==    at 0x1000A5626: malloc (in /Users/mfilahi/.brew/Cellar/valgrind/3.14.0/lib/valgrind/vgpreload_memcheck-amd64-darwin.so)
+==42737==    by 0x100008563: init_cases (in ./21sh)
+==42737==    by 0x100006340: specialtoken (in ./21sh)
+==42737==    by 0x1000063E9: _minishell (in ./21sh)
+==42737==    by 0x100006792: minishell (in ./21sh)
+==42737==    by 0x100006940: main (in ./21sh)
+==42737== 
+==42737== 885 bytes in 2 blocks are definitely lost in loss record 108 of 131
+==42737==    at 0x1000A5626: malloc (in /Users/mfilahi/.brew/Cellar/valgrind/3.14.0/lib/valgrind/vgpreload_memcheck-amd64-darwin.so)
+==42737==    by 0x10000A014: ft_strjoin (in ./21sh)
+==42737==    by 0x1000064FC: keephistory (in ./21sh)
+==42737==    by 0x10000674D: minishell (in ./21sh)
+==42737==    by 0x100006940: main (in ./21sh)
+==42737== 
+==42737== 1,056 (48 direct, 1,008 indirect) bytes in 3 blocks are definitely lost in loss record 111 of 131
+==42737==    at 0x1000A5626: malloc (in /Users/mfilahi/.brew/Cellar/valgrind/3.14.0/lib/valgrind/vgpreload_memcheck-amd64-darwin.so)
+==42737==    by 0x10000846A: fill_lst (in ./21sh)
+==42737==    by 0x100008703: init_cases (in ./21sh)
+==42737==    by 0x100008C65: parsin (in ./21sh)
+==42737==    by 0x1000090EC: mc_maker (in ./21sh)
+==42737==    by 0x10000675D: minishell (in ./21sh)
+==42737==    by 0x100006940: main (in ./21sh)
+==42737== 
+==42737== 1,056 (48 direct, 1,008 indirect) bytes in 3 blocks are definitely lost in loss record 112 of 131
+==42737==    at 0x1000A5626: malloc (in /Users/mfilahi/.brew/Cellar/valgrind/3.14.0/lib/valgrind/vgpreload_memcheck-amd64-darwin.so)
+==42737==    by 0x10000846A: fill_lst (in ./21sh)
+==42737==    by 0x100008703: init_cases (in ./21sh)
+==42737==    by 0x100006340: specialtoken (in ./21sh)
+==42737==    by 0x1000063E9: _minishell (in ./21sh)
+==42737==    by 0x100006792: minishell (in ./21sh)
+==42737==    by 0x100006940: main (in ./21sh)
+==42737== 
+==42737== 1,737 bytes in 3 blocks are definitely lost in loss record 115 of 131
+==42737==    at 0x1000A5626: malloc (in /Users/mfilahi/.brew/Cellar/valgrind/3.14.0/lib/valgrind/vgpreload_memcheck-amd64-darwin.so)
+==42737==    by 0x100008744: skip_quote (in ./21sh)
+==42737==    by 0x100008FA3: parsin (in ./21sh)
+==42737==    by 0x1000090EC: mc_maker (in ./21sh)
+==42737==    by 0x10000675D: minishell (in ./21sh)
+==42737==    by 0x100006940: main (in ./21sh)
+==42737== 
+==42737== 1,785 (48 direct, 1,737 indirect) bytes in 3 blocks are definitely lost in loss record 116 of 131
+==42737==    at 0x1000A5626: malloc (in /Users/mfilahi/.brew/Cellar/valgrind/3.14.0/lib/valgrind/vgpreload_memcheck-amd64-darwin.so)
+==42737==    by 0x10000A31B: ft_strsplit (in ./21sh)
+==42737==    by 0x100009139: mc_maker (in ./21sh)
+==42737==    by 0x10000675D: minishell (in ./21sh)
+==42737==    by 0x100006940: main (in ./21sh)
+==42737== 
+==42737== 2,064 (16 direct, 2,048 indirect) bytes in 1 blocks are definitely lost in loss record 123 of 131
+==42737==    at 0x1000A5626: malloc (in /Users/mfilahi/.brew/Cellar/valgrind/3.14.0/lib/valgrind/vgpreload_memcheck-amd64-darwin.so)
+==42737==    by 0x100539103: _nc_table_new (in /usr/lib/system/libsystem_notify.dylib)
+==42737==    by 0x100534FB5: _notify_init_globals (in /usr/lib/system/libsystem_notify.dylib)
+==42737==    by 0x100542AC0: _os_once (in /usr/lib/system/libsystem_platform.dylib)
+==42737==    by 0x100542A91: _os_alloc_once (in /usr/lib/system/libsystem_platform.dylib)
+==42737==    by 0x1005350AD: _notify_fork_child (in /usr/lib/system/libsystem_notify.dylib)
+==42737==    by 0x1000F6B20: libSystem_atfork_child (in /usr/lib/libSystem.B.dylib)
+==42737==    by 0x1002BF436: fork (in /usr/lib/system/libsystem_c.dylib)
+==42737==    by 0x100006294: child_pid (in ./21sh)
+==42737==    by 0x100006439: _minishell (in ./21sh)
+==42737==    by 0x100006792: minishell (in ./21sh)
+==42737==    by 0x100006940: main (in ./21sh)
+==42737== 
+==42737== 2,064 (16 direct, 2,048 indirect) bytes in 1 blocks are definitely lost in loss record 124 of 131
+==42737==    at 0x1000A5626: malloc (in /Users/mfilahi/.brew/Cellar/valgrind/3.14.0/lib/valgrind/vgpreload_memcheck-amd64-darwin.so)
+==42737==    by 0x100539103: _nc_table_new (in /usr/lib/system/libsystem_notify.dylib)
+==42737==    by 0x100534FC6: _notify_init_globals (in /usr/lib/system/libsystem_notify.dylib)
+==42737==    by 0x100542AC0: _os_once (in /usr/lib/system/libsystem_platform.dylib)
+==42737==    by 0x100542A91: _os_alloc_once (in /usr/lib/system/libsystem_platform.dylib)
+==42737==    by 0x1005350AD: _notify_fork_child (in /usr/lib/system/libsystem_notify.dylib)
+==42737==    by 0x1000F6B20: libSystem_atfork_child (in /usr/lib/libSystem.B.dylib)
+==42737==    by 0x1002BF436: fork (in /usr/lib/system/libsystem_c.dylib)
+==42737==    by 0x100006294: child_pid (in ./21sh)
+==42737==    by 0x100006439: _minishell (in ./21sh)
+==42737==    by 0x100006792: minishell (in ./21sh)
+==42737==    by 0x100006940: main (in ./21sh)
+==42737== 
+==42737== 365,085 bytes in 854 blocks are definitely lost in loss record 129 of 131
+==42737==    at 0x1000A5626: malloc (in /Users/mfilahi/.brew/Cellar/valgrind/3.14.0/lib/valgrind/vgpreload_memcheck-amd64-darwin.so)
+==42737==    by 0x10000A28C: ft_strnew (in ./21sh)
+==42737==    by 0x100009F71: ft_strdup (in ./21sh)
+==42737==    by 0x100003D58: insert_element (in ./21sh)
+==42737==    by 0x100004B94: print_readablechar (in ./21sh)
+==42737==    by 0x100003AFE: paste_of_mouse (in ./21sh)
+==42737==    by 0x100002ACD: get_input_2 (in ./21sh)
+==42737==    by 0x100002D20: get_input_1 (in ./21sh)
+==42737==    by 0x100002E53: get_input (in ./21sh)
+==42737==    by 0x100002ED5: ft_readline (in ./21sh)
+==42737==    by 0x1000065DC: call_readline (in ./21sh)
+==42737==    by 0x1000066B2: minishell (in ./21sh)
+==42737== 
+==42737== 365,361 bytes in 877 blocks are definitely lost in loss record 130 of 131
+==42737==    at 0x1000A5626: malloc (in /Users/mfilahi/.brew/Cellar/valgrind/3.14.0/lib/valgrind/vgpreload_memcheck-amd64-darwin.so)
+==42737==    by 0x10000A28C: ft_strnew (in ./21sh)
+==42737==    by 0x100009F71: ft_strdup (in ./21sh)
+==42737==    by 0x100003D58: insert_element (in ./21sh)
+==42737==    by 0x100004B94: print_readablechar (in ./21sh)
+==42737==    by 0x100002B4B: get_input_1 (in ./21sh)
+==42737==    by 0x100002E53: get_input (in ./21sh)
+==42737==    by 0x100002ED5: ft_readline (in ./21sh)
+==42737==    by 0x1000065DC: call_readline (in ./21sh)
+==42737==    by 0x1000066B2: minishell (in ./21sh)
+==42737==    by 0x100006940: main (in ./21sh)
+==42737== 
+==42737== 733,914 bytes in 1,734 blocks are definitely lost in loss record 131 of 131
+==42737==    at 0x1000A5626: malloc (in /Users/mfilahi/.brew/Cellar/valgrind/3.14.0/lib/valgrind/vgpreload_memcheck-amd64-darwin.so)
+==42737==    by 0x1000083C4: ft_joinchar (in ./21sh)
+==42737==    by 0x100008F6F: parsin (in ./21sh)
+==42737==    by 0x1000090EC: mc_maker (in ./21sh)
+==42737==    by 0x10000675D: minishell (in ./21sh)
+==42737==    by 0x100006940: main (in ./21sh)
+==42737== 
+==42737== LEAK SUMMARY:
+==42737==    definitely lost: 1,468,147 bytes in 3,494 blocks
+==42737==    indirectly lost: 8,233 bytes in 323 blocks
+==42737==      possibly lost: 72 bytes in 3 blocks
+==42737==    still reachable: 9,259 bytes in 133 blocks
+==42737==         suppressed: 24,130 bytes in 161 blocks
+==42737== Reachable blocks (those to which a pointer was found) are not shown.
+==42737== To see them, rerun with: --leak-check=full --show-leak-kinds=all
+==42737== 
+==42737== For counts of detected and suppressed errors, rerun with: -v
+==42737== ERROR SUMMARY: 42 errors from 28 contexts (suppressed: 12 from 12)
+==42476== 
+==42476== HEAP SUMMARY:
+==42476==     in use at exit: 1,499,731 bytes in 4,245 blocks
+==42476==   total heap usage: 4,497 allocs, 252 frees, 2,036,981 bytes allocated
+==42476== 
+==42476== 5 bytes in 5 blocks are definitely lost in loss record 1 of 106
+==42476==    at 0x1000A5626: malloc (in /Users/mfilahi/.brew/Cellar/valgrind/3.14.0/lib/valgrind/vgpreload_memcheck-amd64-darwin.so)
+==42476==    by 0x10000A28C: ft_strnew (in ./21sh)
+==42476==    by 0x100009F71: ft_strdup (in ./21sh)
+==42476==    by 0x100008C5C: parsin (in ./21sh)
+==42476==    by 0x1000090EC: mc_maker (in ./21sh)
+==42476==    by 0x10000675D: minishell (in ./21sh)
+==42476==    by 0x100006940: main (in ./21sh)
+==42476== 
+==42476== 10 bytes in 5 blocks are definitely lost in loss record 9 of 106
+==42476==    at 0x1000A5626: malloc (in /Users/mfilahi/.brew/Cellar/valgrind/3.14.0/lib/valgrind/vgpreload_memcheck-amd64-darwin.so)
+==42476==    by 0x10000A28C: ft_strnew (in ./21sh)
+==42476==    by 0x100007395: heredoc_handler (in ./21sh)
+==42476==    by 0x1000079C2: recall_readline (in ./21sh)
+==42476==    by 0x10000666D: call_readline (in ./21sh)
+==42476==    by 0x1000066B2: minishell (in ./21sh)
+==42476==    by 0x100006940: main (in ./21sh)
+==42476== 
+==42476== 72 bytes in 3 blocks are possibly lost in loss record 68 of 106
+==42476==    at 0x1000A5C8A: calloc (in /Users/mfilahi/.brew/Cellar/valgrind/3.14.0/lib/valgrind/vgpreload_memcheck-amd64-darwin.so)
+==42476==    by 0x100601846: map_images_nolock (in /usr/lib/libobjc.A.dylib)
+==42476==    by 0x100614FE8: objc_object::sidetable_retainCount() (in /usr/lib/libobjc.A.dylib)
+==42476==    by 0x10001403B: dyld::notifyBatchPartial(dyld_image_states, bool, char const* (*)(dyld_image_states, unsigned int, dyld_image_info const*), bool, bool) (in /usr/lib/dyld)
+==42476==    by 0x100014255: dyld::registerObjCNotifiers(void (*)(unsigned int, char const* const*, mach_header const* const*), void (*)(char const*, mach_header const*), void (*)(char const*, mach_header const*)) (in /usr/lib/dyld)
+==42476==    by 0x10024F00A: _dyld_objc_notify_register (in /usr/lib/system/libdyld.dylib)
+==42476==    by 0x100601074: _objc_init (in /usr/lib/libobjc.A.dylib)
+==42476==    by 0x1001E268D: _os_object_init (in /usr/lib/system/libdispatch.dylib)
+==42476==    by 0x1001E263A: libdispatch_init (in /usr/lib/system/libdispatch.dylib)
+==42476==    by 0x1000F69D5: libSystem_initializer (in /usr/lib/libSystem.B.dylib)
+==42476==    by 0x100024A1A: ImageLoaderMachO::doModInitFunctions(ImageLoader::LinkContext const&) (in /usr/lib/dyld)
+==42476==    by 0x100024C1D: ImageLoaderMachO::doInitialization(ImageLoader::LinkContext const&) (in /usr/lib/dyld)
+==42476== 
+==42476== 902 bytes in 4 blocks are definitely lost in loss record 87 of 106
+==42476==    at 0x1000A5626: malloc (in /Users/mfilahi/.brew/Cellar/valgrind/3.14.0/lib/valgrind/vgpreload_memcheck-amd64-darwin.so)
+==42476==    by 0x10000A014: ft_strjoin (in ./21sh)
+==42476==    by 0x1000064FC: keephistory (in ./21sh)
+==42476==    by 0x10000674D: minishell (in ./21sh)
+==42476==    by 0x100006940: main (in ./21sh)
+==42476== 
+==42476== 1,080 (760 direct, 320 indirect) bytes in 5 blocks are definitely lost in loss record 88 of 106
+==42476==    at 0x1000A5626: malloc (in /Users/mfilahi/.brew/Cellar/valgrind/3.14.0/lib/valgrind/vgpreload_memcheck-amd64-darwin.so)
+==42476==    by 0x100008563: init_cases (in ./21sh)
+==42476==    by 0x100008C65: parsin (in ./21sh)
+==42476==    by 0x1000090EC: mc_maker (in ./21sh)
+==42476==    by 0x10000675D: minishell (in ./21sh)
+==42476==    by 0x100006940: main (in ./21sh)
+==42476== 
+==42476== 1,080 (760 direct, 320 indirect) bytes in 5 blocks are definitely lost in loss record 89 of 106
+==42476==    at 0x1000A5626: malloc (in /Users/mfilahi/.brew/Cellar/valgrind/3.14.0/lib/valgrind/vgpreload_memcheck-amd64-darwin.so)
+==42476==    by 0x100008563: init_cases (in ./21sh)
+==42476==    by 0x100006340: specialtoken (in ./21sh)
+==42476==    by 0x1000063E9: _minishell (in ./21sh)
+==42476==    by 0x100006792: minishell (in ./21sh)
+==42476==    by 0x100006940: main (in ./21sh)
+==42476== 
+==42476== 1,750 bytes in 5 blocks are definitely lost in loss record 94 of 106
+==42476==    at 0x1000A5626: malloc (in /Users/mfilahi/.brew/Cellar/valgrind/3.14.0/lib/valgrind/vgpreload_memcheck-amd64-darwin.so)
+==42476==    by 0x100008744: skip_quote (in ./21sh)
+==42476==    by 0x100008FA3: parsin (in ./21sh)
+==42476==    by 0x1000090EC: mc_maker (in ./21sh)
+==42476==    by 0x10000675D: minishell (in ./21sh)
+==42476==    by 0x100006940: main (in ./21sh)
+==42476== 
+==42476== 1,760 (80 direct, 1,680 indirect) bytes in 5 blocks are definitely lost in loss record 95 of 106
+==42476==    at 0x1000A5626: malloc (in /Users/mfilahi/.brew/Cellar/valgrind/3.14.0/lib/valgrind/vgpreload_memcheck-amd64-darwin.so)
+==42476==    by 0x10000846A: fill_lst (in ./21sh)
+==42476==    by 0x100008703: init_cases (in ./21sh)
+==42476==    by 0x100008C65: parsin (in ./21sh)
+==42476==    by 0x1000090EC: mc_maker (in ./21sh)
+==42476==    by 0x10000675D: minishell (in ./21sh)
+==42476==    by 0x100006940: main (in ./21sh)
+==42476== 
+==42476== 1,760 (80 direct, 1,680 indirect) bytes in 5 blocks are definitely lost in loss record 96 of 106
+==42476==    at 0x1000A5626: malloc (in /Users/mfilahi/.brew/Cellar/valgrind/3.14.0/lib/valgrind/vgpreload_memcheck-amd64-darwin.so)
+==42476==    by 0x10000846A: fill_lst (in ./21sh)
+==42476==    by 0x100008703: init_cases (in ./21sh)
+==42476==    by 0x100006340: specialtoken (in ./21sh)
+==42476==    by 0x1000063E9: _minishell (in ./21sh)
+==42476==    by 0x100006792: minishell (in ./21sh)
+==42476==    by 0x100006940: main (in ./21sh)
+==42476== 
+==42476== 1,830 (80 direct, 1,750 indirect) bytes in 5 blocks are definitely lost in loss record 97 of 106
+==42476==    at 0x1000A5626: malloc (in /Users/mfilahi/.brew/Cellar/valgrind/3.14.0/lib/valgrind/vgpreload_memcheck-amd64-darwin.so)
+==42476==    by 0x10000A31B: ft_strsplit (in ./21sh)
+==42476==    by 0x100009139: mc_maker (in ./21sh)
+==42476==    by 0x10000675D: minishell (in ./21sh)
+==42476==    by 0x100006940: main (in ./21sh)
+==42476== 
+==42476== 365,085 bytes in 854 blocks are definitely lost in loss record 104 of 106
+==42476==    at 0x1000A5626: malloc (in /Users/mfilahi/.brew/Cellar/valgrind/3.14.0/lib/valgrind/vgpreload_memcheck-amd64-darwin.so)
+==42476==    by 0x10000A28C: ft_strnew (in ./21sh)
+==42476==    by 0x100009F71: ft_strdup (in ./21sh)
+==42476==    by 0x100003D58: insert_element (in ./21sh)
+==42476==    by 0x100004B94: print_readablechar (in ./21sh)
+==42476==    by 0x100003AFE: paste_of_mouse (in ./21sh)
+==42476==    by 0x100002ACD: get_input_2 (in ./21sh)
+==42476==    by 0x100002D20: get_input_1 (in ./21sh)
+==42476==    by 0x100002E53: get_input (in ./21sh)
+==42476==    by 0x100002ED5: ft_readline (in ./21sh)
+==42476==    by 0x1000065DC: call_readline (in ./21sh)
+==42476==    by 0x1000066B2: minishell (in ./21sh)
+==42476== 
+==42476== 365,422 bytes in 894 blocks are definitely lost in loss record 105 of 106
+==42476==    at 0x1000A5626: malloc (in /Users/mfilahi/.brew/Cellar/valgrind/3.14.0/lib/valgrind/vgpreload_memcheck-amd64-darwin.so)
+==42476==    by 0x10000A28C: ft_strnew (in ./21sh)
+==42476==    by 0x100009F71: ft_strdup (in ./21sh)
+==42476==    by 0x100003D58: insert_element (in ./21sh)
+==42476==    by 0x100004B94: print_readablechar (in ./21sh)
+==42476==    by 0x100002B4B: get_input_1 (in ./21sh)
+==42476==    by 0x100002E53: get_input (in ./21sh)
+==42476==    by 0x100002ED5: ft_readline (in ./21sh)
+==42476==    by 0x1000065DC: call_readline (in ./21sh)
+==42476==    by 0x1000066B2: minishell (in ./21sh)
+==42476==    by 0x100006940: main (in ./21sh)
+==42476== 
+==42476== 733,961 bytes in 1,745 blocks are definitely lost in loss record 106 of 106
+==42476==    at 0x1000A5626: malloc (in /Users/mfilahi/.brew/Cellar/valgrind/3.14.0/lib/valgrind/vgpreload_memcheck-amd64-darwin.so)
+==42476==    by 0x1000083C4: ft_joinchar (in ./21sh)
+==42476==    by 0x100008F6F: parsin (in ./21sh)
+==42476==    by 0x1000090EC: mc_maker (in ./21sh)
+==42476==    by 0x10000675D: minishell (in ./21sh)
+==42476==    by 0x100006940: main (in ./21sh)
+==42476== 
+==42476== LEAK SUMMARY:
+==42476==    definitely lost: 1,468,895 bytes in 3,537 blocks
+==42476==    indirectly lost: 5,750 bytes in 535 blocks
+==42476==      possibly lost: 72 bytes in 3 blocks
+==42476==    still reachable: 7,186 bytes in 18 blocks
+==42476==         suppressed: 17,828 bytes in 152 blocks
+==42476== Reachable blocks (those to which a pointer was found) are not shown.
+==42476== To see them, rerun with: --leak-check=full --show-leak-kinds=all
+==42476== 
+==42476== For counts of detected and suppressed errors, rerun with: -v
+==42476== ERROR SUMMARY: 48 errors from 20 contexts (suppressed: 11 from 11)

@@ -6,7 +6,7 @@
 /*   By: mfilahi <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/04 19:53:19 by mfilahi           #+#    #+#             */
-/*   Updated: 2019/07/16 11:47:32 by aariss           ###   ########.fr       */
+/*   Updated: 2019/07/20 13:17:41 by aariss           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ void	child_pid(char **command, t_god *lst, t_env **head_ref, int cast)
 	{
 		if (cast)
 			if (!deathly_hallows(lst->demi_god))
-				return  ;
+				exit (0);
 		path_found = ft_strdup(command[0]);
 		if (command[0][0] == '/')
 			execute(command, path_found, head_ref);
@@ -61,10 +61,11 @@ void	child_pid(char **command, t_god *lst, t_env **head_ref, int cast)
 	}
 	else
 	{
-		g_signal_num = 1;
-		wait(NULL);
+		g_signal_num = 0;
+		if (lst->next == NULL)
+			wait(NULL);
 	}
-	g_signal_num = 0;
+	g_signal_num = 1;
 }
 
 int		specialtoken(char **argv)
@@ -167,9 +168,15 @@ char	**get_arg(char **argv, int index, char **which_token)
 		voidy(h->lst->cmd);
 	else
 	{
+<<<<<<< HEAD
 		if ((j = own_commands(h->lst->cmd[0])))
 			builtin_cmds(h, j);
 		else
+=======
+		//if (count)
+		//	_child_pid(h, count);
+		//else
+>>>>>>> 3e5bec39aa9676f24ed7cf71fa550a9a5d5c4dc0
 			child_pid(h->lst->cmd, &h->head_ref);
 	}
 }*/
@@ -214,6 +221,10 @@ int just_spaces(char *line)
 	}
 	return (1);
 }
+
+/*
+** - get line from readline func;
+*/
 
 char	*call_readline(t_holder *h, int index, int *flag)
 {
@@ -304,7 +315,10 @@ int		main(int ac, char **av, char **envp)
 
 	(void)ac;
 	(void)av;
-	g_signal_num = 0;
+		
+
+	fd2 = open("/dev/ttys001", O_WRONLY);
+	g_signal_num = 1;
 	signal(SIGINT, signal_handler);
 	h = ft_memalloc(sizeof(t_holder));
 	h->head_ref = copy_of_env(envp);

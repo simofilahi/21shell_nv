@@ -6,7 +6,7 @@
 /*   By: aariss <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/09 17:50:13 by aariss            #+#    #+#             */
-/*   Updated: 2019/07/17 15:31:03 by aariss           ###   ########.fr       */
+/*   Updated: 2019/07/20 14:25:26 by aariss           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ int	deathly_hallows(t_info *lst_demi)
 				fd = open(lst_demi->file, O_RDONLY, 0644);
 				t = 2;
 			}
-			if (t == 1)
+			if (t == 1) /* GET RIDE OF THE 'T' using the lst->demi_read_meth > 0 conditition */
 				(lst_demi->sfd) ? dup2(fd, lst_demi->sfd) :	dup2(fd, 1);
 			else if (t == 2)
 			{
@@ -73,15 +73,65 @@ int	deathly_hallows(t_info *lst_demi)
 	return (1);
 }
 
+void	pipe_master(t_god *lst, int *fds, int back_fd, int *fds_backup)
+{
+
+	if (lst->next != NULL)
+	{
+		dup2(fds[1], 1);
+		dup2(fds[1], 2);
+		dup2(back_fd, 0);
+	}
+	else if (lst->next == NULL)
+	{
+		dup2(fds_backup[1], 1);
+		dup2(fds_backup[2], 2);
+ 	}
+	close (back_fd);
+	close (fds[0]);
+	close (fds[1]);
+	close(fds_backup[0]);
+	close(fds_backup[1]);
+	close(fds_backup[2]);
+}
+
 void	master_of_death(t_holder *h)
 {
-	t_god *lst;
+	int		t;
+	int		lcount;
+	t_god	*lst;
+	int		fds_backup[3];
+	int		fds[2];
+	int		back_fd;
 
+	t = 0;
+	fds_backup[0] = dup(0);
+	fds_backup[1] = dup(1);
+	fds_backup[2] = dup(2);
 	lst = h->lst;
+	lcount = count_lstgod(lst);
 	while (lst)
 	{
+		if (lst->next)
+		{
+			if (t != 0)
+				back_fd = dup(fds[0]);
+			pipe(fds);
+			ft_putnbr(fds[0]);
+			ft_putchar('.');
+			ft_putnbr(fds[1]);
+			ft_putchar('\n');
+			if (t == 0)
+			{
+				dup2(fds[1], 1);
+				dup2(fds[1], 2);
+			}
+			else if (lcount > 1)
+				pipe_master(lst, fds, back_fd ,fds_backup);
+		}
 		child_pid(lst->cmd, lst, &h->head_ref, 1);
 		lst = lst->next;
+		t++;
 	}
 //	ft_putendl("The true master does not seek to run away from Death. He accepts that he must die, and understands that there are far, far worse things in the living world than dying.");
 }

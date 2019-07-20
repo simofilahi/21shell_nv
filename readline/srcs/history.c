@@ -6,38 +6,17 @@
 /*   By: mfilahi <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/02 20:26:35 by mfilahi           #+#    #+#             */
-/*   Updated: 2019/06/19 11:02:30 by aariss           ###   ########.fr       */
+/*   Updated: 2019/07/20 14:48:05 by aariss           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "line_edition.h"
 
-// 
-#include <stdio.h>
 
-void print_history_line(t_package *p)
+void	ft_history_upkey(t_package *p)
 {
-	/*p->posy = p->init_y;
-	p->posx = 3;
-	p->w.ws_row  = p->init_row;*/
-
-	while (p->line[p->index])
-	{
-		(p->posx == p->w.ws_col - 1 || p->line[p->index] == '\n') ?\
-				  p->posx = 0 : p->posx++;
-		if (p->posx == 0)
-			p->posy++;
-		if (p->posy + 1  > p->w.ws_row)
-			p->w.ws_row++;
-		ft_putchar_fd(p->line[p->index++], 1);
-	}
-	if (p->posx == 0)
-		tputs(MCDOL, 1, my_putchar);
-}
-
-void ft_history_upkey(t_package *p)
-{
-	int fd;
+	int		fd;
+	char	*tmp;
 
 	if (p->ll_index > -1)
 	{
@@ -46,7 +25,7 @@ void ft_history_upkey(t_package *p)
 		ft_strdel(&p->line);
 		p->line = ft_strnew(1);
 		fd = open(p->path, O_RDONLY);
-		if (!gline(fd, &p->line, p->ll_index--))
+		if (!gline(fd, &tmp, p->ll_index--))
 		{
 			p->ll_index++;
 			close(fd);
@@ -55,13 +34,17 @@ void ft_history_upkey(t_package *p)
 		close(fd);
 		home_key();
 		clear_screen();
-		print_history_line(p);
+		ft_bzero(p->buffer, BUFFER_SIZE);
+		ft_memcpy(p->buffer, tmp, ft_strlen(tmp));
+		ft_strdel(&tmp);
+		paste_of_mouse(p);
 	}
 }
 
-void ft_history_downkey(t_package *p)
+void	ft_history_downkey(t_package *p)
 {
-	int fd;
+	int		fd;
+	char	*tmp;
 
 	if (p->ll_index > -1)
 	{
@@ -70,7 +53,7 @@ void ft_history_downkey(t_package *p)
 		ft_strdel(&p->line);
 		p->line = ft_strnew(1);
 		fd = open(p->path, O_RDONLY);
-		if (!gline(fd, &p->line, ++p->ll_index))
+		if (!gline(fd, &tmp, ++p->ll_index))
 		{
 			--p->ll_index;
 			close(fd);
@@ -79,6 +62,9 @@ void ft_history_downkey(t_package *p)
 		close(fd);
 		home_key();
 		clear_screen();
-		print_history_line(p);
+		ft_bzero(p->buffer, BUFFER_SIZE);
+		ft_memcpy(p->buffer, tmp, ft_strlen(tmp));
+		ft_strdel(&tmp);
+		paste_of_mouse(p);
 	}
 }

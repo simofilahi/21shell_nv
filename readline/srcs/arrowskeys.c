@@ -6,11 +6,15 @@
 /*   By: mfilahi <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/21 15:55:21 by mfilahi           #+#    #+#             */
-/*   Updated: 2019/05/04 12:21:47 by mfilahi          ###   ########.fr       */
+/*   Updated: 2019/07/17 12:07:01 by mfilahi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "line_edition.h"
+
+/*
+** - travers with rightkey in line until begin of new word;
+*/
 
 void	forwardkey(t_package *p)
 {
@@ -22,6 +26,10 @@ void	forwardkey(t_package *p)
 		right_key(p);
 }
 
+/*
+** - travers with left_key in line until begin of new word;
+*/
+
 void	backwardkey(t_package *p)
 {
 	while (!(ft_isalnum(p->line[p->index - 1])) && p->index > 0)
@@ -29,6 +37,10 @@ void	backwardkey(t_package *p)
 	while ((ft_isalnum(p->line[p->index - 1])) && p->index > 0)
 		left_key(p);
 }
+
+/*
+** - move cursor to right char by char;
+*/
 
 void	right_key(t_package *p)
 {
@@ -52,6 +64,10 @@ void	right_key(t_package *p)
 		}
 	}
 }
+
+/*
+** - move cursor to left but this one work when new line found;
+*/
 
 void	left_key_with_history(int tmp, int x, int y, t_package *p)
 {
@@ -78,6 +94,10 @@ void	left_key_with_history(int tmp, int x, int y, t_package *p)
 	get_pos(&y, &x);
 	tputs(tgoto(CM_POS, p->posx, y - 2), 1, my_putchar);
 }
+
+/*
+** - move cursor to left char by char;
+*/
 
 void	left_key(t_package *p)
 {

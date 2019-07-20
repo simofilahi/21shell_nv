@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "minishell.h"
+//
 
 /*
 ** check if any of metachar found;
@@ -58,64 +59,119 @@ int		get_needle(char *s, char **needle)
 	int	i;
 	int	start;
 
+
 	i = 0;
 	while (s[i] && s[i] == ' ')
 		i++;
 	start = i;
 	while (s[i] && s[i] != ' ' && s[i] != '\n' &&\
 		   	!metacharacters(s[i], 0) &&\
-		   	!metacharacters(s[i], 1))
+		   	!metacharacters(s[i], 1) &&\
+			(s[i] != '<' && s[i + 1] != '<'))
 		i++;
 	if (s[i])
-		i -= 1;
-	if ((*needle = ft_strsub(s, start, i)) && ft_strlen(*needle) >= 1)
+		i += 1;
+	*needle = ft_strsub(s, start, i);
+	if (ft_strlen(*needle) >= 1 && !(*needle[0] == '\n'))
 		return (1);
 	return (0);
 }
 
-int		heredoc_is_found(char *s, char **needle)
+int	last_heredoc(char *s)
 {
 	while (*s)
 	{
 		if (*s == '<' && *(s + 1) == '<')
-		{
-			if (get_needle(s + 2, needle))
-				return (1);
 			return (0);
+		s++;
+	}
+	return (1);
+}
+
+int		heredoc_is_found(char *s, char **needle, int *index)
+{
+	int i;
+
+	i = 0;
+	while (*s)
+	{
+		if (*s == '<' && *(s + 1) == '<')
+		{
+			if (i == *index)
+			{
+				if (get_needle(s + 2, needle))
+				{
+					if (last_heredoc(s + 2))
+						*index = -1;
+					return (1);
+				}
+				else
+					return (0);
+			}
+			i++;
 		}
 		s++;
 	}
 	return (0);
 }
 
-int		heredoc_handler(t_holder *h, char *line)
+int		heredoc_handler_(t_holder *h, char **line, char **s, char *needle)
+{
+	char	*tmp;
+
+	while ((*s = ft_readline("<<.", NULL, -2)))
+	{
+		ft_putchar_fd('\n', 1);
+		if (g_signal_num == 3)
+		{
+			*line = ft_strdup(*s);
+			ft_strdel(s);
+			return (0);
+			g_signal_num = 1;
+		}
+		if ((ft_strncmp(*s, needle, ft_strlen(needle)) == 0))
+		{
+			ft_strdel(&needle);
+			return(1) ;
+		}
+		else
+		{
+			tmp = h->heredoc;
+			h->heredoc = ft_strjoin(h->heredoc, *s);
+			ft_strdel(&tmp);
+		}
+	}
+	return (1);
+}
+
+int		heredoc_handler(t_holder *h, char **line)
 {
 	char	*needle;
 	char	*s;
-	char	*tmp;
+	int		index;
 
 	needle = NULL;
 	s = NULL;
+	index = 0;
 	h->heredoc = ft_strnew(1);
-	if (heredoc_is_found(line, &needle))
+	while (heredoc_is_found(*line, &needle, &index))
 	{
-		while ((s = ft_readline("<<.", NULL, -2)))
-		{
-			ft_putchar_fd('\n', 1);
-			if ((ft_strncmp(s, needle, ft_strlen(needle)) == 0))
-			{
-				ft_strdel(&needle);
-				break ;
-			}
-			else
-			{
-				tmp = h->heredoc;
-				h->heredoc = ft_strjoin(h->heredoc, s);
-				ft_strdel(&tmp);
-			}
-		}
-		if (!s)
+		
+		if (!(heredoc_handler_(h, line, &s, needle)))
 			return (0);
+		if (!s)
+		{
+			ft_putchar('\n');
+			return (0);
+		}
+		if (index == -1)
+			break;
+		else
+		{
+		   index++;
+		   ft_strdel(&h->heredoc);
+		   h->heredoc = ft_strnew(1);
+		}
 	}
 	return (1);
 }
@@ -194,7 +250,7 @@ char	*recall_readline(t_holder *h, char *line, char *homepath)
 
 	flag = 0;
 	s = NULL;
-	if (!(heredoc_handler(h, line)))
+	if (!(heredoc_handler(h, &line)))
 		return (line);
 	while (meta_handler(line, &flag))
 	{
@@ -206,8 +262,15 @@ char	*recall_readline(t_holder *h, char *line, char *homepath)
 				ft_putchar_fd('\n', 1);
 				return (line);
 			}
-			ft_putchar_fd('\n', 1);
+			ft_putchar('\n');
 			ft_strdel(&line);
+			if (g_signal_num == 3)
+			{
+				line = ft_strdup(s);
+				ft_strdel(&s);
+				return (line);
+				g_signal_num = 1;
+			}
 			line = ft_strjoin(tmp, s);
 			ft_strdel(&tmp);
 			ft_strdel(&s);

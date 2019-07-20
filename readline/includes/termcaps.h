@@ -23,5 +23,6 @@
 # define EVC tgetstr("ve", NULL)
 # define SRV tgetstr("mr", NULL)
 # define ERV tgetstr("me", NULL)
+# define HC tgetstr("ho", NULL)
 
 #endif

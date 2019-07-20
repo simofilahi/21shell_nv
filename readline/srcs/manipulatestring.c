@@ -6,71 +6,98 @@
 /*   By: mfilahi <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/02 15:00:34 by mfilahi           #+#    #+#             */
-/*   Updated: 2019/07/03 15:29:39 by aariss           ###   ########.fr       */
+/*   Updated: 2019/07/18 21:15:12 by aariss           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "line_edition.h"
 
-void	delete_element(char *string, int key)
+/*
+** delete char from line;
+*/
+
+void	delete_element(t_package *p)
 {
 	int		i;
-	size_t	len;
+	int		length;
 
-	len = ft_strlen(string);
-	i = 0;
-	if ((int)len == key)
-		string[len - 1] = '\0';
-	while (i < key)
-		i++;
-	while (string[i])
+	length = (int)ft_strlen(p->line) - 1;
+	if (length == p->index)
 	{
-		string[i] = string[i + 1];
+		p->line[length] = '\0';
+		return ;
+	}
+	i = 0;
+	while (i < p->index)
+		i++;
+	while (p->line[i])
+	{
+		p->line[i] = p->line[i + 1];
 		i++;
 	}
 }
 
-void	insert_element_1(char *string, char *ptr, int key, char ch)
+/*
+** - followed to insert_element;
+*/
+
+void	insert_element_1(t_package *p, char *ptr)
 {
 	int i;
 	int j;
 
-	i = -1;
-	while (++i < key && ptr[i])
-		string[i] = ptr[i];
-	string[i++] = ch;
-	j = i - 1;
-	while (ptr[j])
-		string[i++] = ptr[j++];
-	string[i] = '\0';
+	i = 0;
+	j = 0;
+	while (ptr[i] && i <= p->index)
+	{
+		if (i == p->index)
+		{
+			p->line[j] = p->buffer[0];
+			j++;
+			break ;
+		}
+		p->line[j++] = ptr[i++];
+	}
+	while (ptr[i])
+		p->line[j++] = ptr[i++];
+	p->line[j] = '\0';
 }
 
-char	*insert_element(char *string, char ch, int key, int *lline)
+/*
+** - insert char into line;
+*/
+
+void	insert_element(t_package *p)
 {
-	int		len;
+	int		length;
+	int		i;
 	char	*ptr;
-	
-	len = ft_strlen(string);
-	ptr = ft_strdup(string);
-	if (len >= *lline)
+
+	length = ft_strlen(p->line);
+	ptr = ft_strdup(p->line);
+	if (length >= p->len)
 	{
-		*lline += (len > *lline) ? len + 20 : 20;
-		*lline += (len > *lline) ? len + 20 : 20; 
-		ft_strdel(&string);
-		if (!(string = ft_strnew(*lline)))
-			return (NULL);
-		ft_strcpy(string, ptr);
+		p->len = (length > p->len) ? length + 50 : p->len + 50;
+		ft_strdel(&p->line);
+		if (!(p->line = ft_strnew(p->len)))
+			return ;
+		i = -1;
+		while (ptr[++i])
+			p->line[i] = ptr[i];
+		p->line[i] = '\0';
 	}
-	if (key == len)
+	if (p->index == length)
 	{
-		string[key] = ch;
-		string[++key] = '\0';
+		p->line[p->index] = p->buffer[0];
+		p->line[p->index + 1] = '\0';
 	}
-	else if (!(key < 0) && key < len)
-		insert_element_1(string, ptr, key, ch);
-	ft_strdel(&ptr);
-	return (string);
+	else
+		insert_element_1(p, ptr);
 }
+
+/*
+** - delete range of chars from line;
+*/
 
 char	*delrange_of_elem(char *string, int startindex, int endindex)
 {
@@ -91,6 +118,10 @@ char	*delrange_of_elem(char *string, int startindex, int endindex)
 	tmp[i] = '\0';
 	return (tmp);
 }
+
+/*
+** - insert range of chars into line;
+*/
 
 char	*addrange_of_elem(char *s1, char *s2, int key)
 {

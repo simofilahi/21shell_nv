@@ -6,13 +6,13 @@
 /*   By: mfilahi <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/03 15:26:05 by mfilahi           #+#    #+#             */
-/*   Updated: 2019/05/04 12:31:42 by mfilahi          ###   ########.fr       */
+/*   Updated: 2019/07/17 15:08:59 by mfilahi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "line_edition.h"
 
-void	_get_pos(int *y, int *x, int *i, char *buf)
+void	get_pos_1(int *y, int *x, int *i, char *buf)
 {
 	int	pow;
 
@@ -36,7 +36,7 @@ void	_get_pos(int *y, int *x, int *i, char *buf)
 	}
 }
 
-int	get_pos(int *y, int *x)
+int		get_pos(int *y, int *x)
 {
 	char	buf[30];
 	char	ch;
@@ -56,11 +56,11 @@ int	get_pos(int *y, int *x)
 		buf[i] = ch;
 		i++;
 	}
-	_get_pos(y, x, &i, &buf[0]);
+	get_pos_1(y, x, &i, &buf[0]);
 	return (0);
 }
 
-int	count_lines(char *line, int ws_col)
+int		count_lines(char *line, int ws_col)
 {
 	int	count;
 	int	posx;
@@ -87,7 +87,7 @@ int	count_lines(char *line, int ws_col)
 	return (++count);
 }
 
-int	new_line_is_found(char *line)
+int		new_line_is_found(char *line)
 {
 	int	i;
 
