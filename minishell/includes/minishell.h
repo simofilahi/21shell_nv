@@ -100,6 +100,7 @@ struct		s_holder
 	t_env	*head_ref;
 	t__mc	*mclst;
 	t_god	*lst;
+	char	*line;
 	char	*homepath;
 	char	*heredoc;
 	char	*ptr;
@@ -180,7 +181,7 @@ void		signal_handler(int sign);
 void		free_list(t_env **head_ref);
 char		*ft_readline(char prompt[3], char *path, int ll_index);
 int			setenv_cmd(char *arg, char *sarg, t_env **head_ref, int flag);
-char		*recall_readline(t_holder *h, char *line, char *homepath);
+char		*recall_readline(t_holder *h, char *homepath);
 void		free_structure(t_holder *h);
 
 #endif

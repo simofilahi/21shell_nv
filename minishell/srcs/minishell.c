@@ -6,7 +6,7 @@
 /*   By: mfilahi <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/04 19:53:19 by mfilahi           #+#    #+#             */
-/*   Updated: 2019/07/20 13:17:41 by aariss           ###   ########.fr       */
+/*   Updated: 2019/07/22 15:56:20 by mfilahi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -157,32 +157,9 @@ char	**get_arg(char **argv, int index, char **which_token)
 	return (arg);
 }
 
-/*void	_minishell(t_holder *h)
-{
-	int		j;
-	int		count;
-
-	j = 0;
-	count = 0;
-	if ((count = specialtoken(h->lst->cmd)))
-		voidy(h->lst->cmd);
-	else
-	{
-<<<<<<< HEAD
-		if ((j = own_commands(h->lst->cmd[0])))
-			builtin_cmds(h, j);
-		else
-=======
-		//if (count)
-		//	_child_pid(h, count);
-		//else
->>>>>>> 3e5bec39aa9676f24ed7cf71fa550a9a5d5c4dc0
-			child_pid(h->lst->cmd, &h->head_ref);
-	}
-}*/
 
 
-void	keephistory(t_holder *h, char *line, int fd, int *index)
+void	keephistory(t_holder *h, int fd, int *index)
 {
 	char		*ret;
 	char		*historyline;
@@ -190,21 +167,21 @@ void	keephistory(t_holder *h, char *line, int fd, int *index)
 	static char *lline;
 
 	if (*index == 1)
-		lline = ft_strdup(line);
+		lline = ft_strdup(h->line);
 	else
 	{
-		if (ft_strcmp(line, lline) == 0)
+		if (ft_strcmp(h->line, lline) == 0)
 		{
 			(*index)--;
 			return ;
 		}
 		free(lline);
-		lline = ft_strdup(line);
+		lline = ft_strdup(h->line);
 	}
 	h->ptr = lline;
 	ret = ft_itoa(*index);
 	tmp = ft_strjoin(ret, ":");
-	historyline = ft_strjoin(tmp, line);
+	historyline = ft_strjoin(tmp, h->line);
 	write(fd, historyline, ft_strlen(historyline));
 	ft_strdel(&ret);
 	ft_strdel(&tmp);
@@ -228,27 +205,29 @@ int just_spaces(char *line)
 
 char	*call_readline(t_holder *h, int index, int *flag)
 {
-	char		*line;
-
-	line = ft_readline("$> ",h->homepath, index);
-	ft_putchar_fd('\n', 1);
+	if (g_signal_num == 3)
+		g_signal_num = 1;
+	else
+	{
+		h->line = ft_readline("$> ",h->homepath, index);
+		ft_putchar_fd('\n', 1);
+	}
 	*flag = 0;
-	if (!line)
+	if (!h->line)
 	{
 		*flag = 1;
 		return (NULL);
 	}
-	else if (line[0] == '\n' || just_spaces(line))
+	else if (h->line[0] == '\n' || just_spaces(h->line))
 	{
-		ft_strdel(&line);
+		ft_strdel(&h->line);
 		return (NULL);
 	}
-	return (recall_readline(h, line, h->homepath));
+	return (recall_readline(h, h->homepath));
 }
 
 void	minishell(t_holder *h, int fd, int index)
 {
-	char		*line;
 	int			flag;
 	int			count;
 	t__mc		*curr;
@@ -258,35 +237,36 @@ void	minishell(t_holder *h, int fd, int index)
 	flag = 0;
 	while ("21sh")
 	{
-		while (!(line = call_readline(h, index - 1, &flag)) && !flag)
+		while (((!(call_readline(h, index - 1, &flag)) && !flag)) || (g_signal_num == 3))
 			;
 		if (!flag)
 		{
-			if (line[0] == PIPE)
-			{
-				ft_putstr_fd("21sh: parse error near ", 2);
-				ft_putchar_fd(line[0], 2);
-				ft_putchar_fd('\n', 2);
-			}
-			else
-			{
-				keephistory(h, line, fd, &index);
-				h->mclst = mc_maker(line, h->head_ref);
-				ft_strdel(&line);
-				curr = h->mclst;
-				count = count_mclst(curr);
-				i = 0;
-				while (i < count)
+				if (h->line[0] == PIPE)
 				{
-					valhala = last_splice(&curr);
-					h->lst = valhala;
-				//	print_lstra(valhala);
-					darlin_g(h);
-				//		_minishell(valhala);
-					i++;
+					ft_putstr_fd("21sh: parse error near ", 2);
+					ft_putchar_fd(h->line[0], 2);
+					ft_putchar_fd('\n', 2);
 				}
-				_free_list(curr);
-			}
+				else
+				{
+					keephistory(h, fd, &index);
+					h->mclst = mc_maker(h->line, h->head_ref);
+					ft_strdel(&h->line);
+					h->line = ft_strnew(1);
+					curr = h->mclst;
+					count = count_mclst(curr);
+					i = 0;
+					while (i < count)
+					{
+						valhala = last_splice(&curr);
+						h->lst = valhala;
+					//	print_lstra(valhala);
+						darlin_g(h);
+					//		_minishell(valhala);
+						i++;
+					}
+					_free_list(curr);
+				}
 		}
 		else
 			break ;
@@ -301,8 +281,8 @@ int		create_hfile(t_holder *h)
 
 	h->homepath = get_var("HOME=", &h->head_ref);
 	tmp = h->homepath;
-	h->homepath = ft_strjoin(h->homepath, "/.21sh_history");
-	ft_strdel(&tmp);
+	h->homepath = ft_strjoin(h->homepath, "/.21sh_history");  
+	ft_strdel(&tmp);  
 	if ((fd = open(h->homepath, O_RDWR | O_CREAT | O_TRUNC | O_APPEND, 0777)) < 0)
 		return (0);
 	return (fd);
@@ -317,7 +297,7 @@ int		main(int ac, char **av, char **envp)
 	(void)av;
 		
 
-	fd2 = open("/dev/ttys001", O_WRONLY);
+	fd2 = open("/dev/ttys000", O_WRONLY);
 	g_signal_num = 1;
 	signal(SIGINT, signal_handler);
 	h = ft_memalloc(sizeof(t_holder));

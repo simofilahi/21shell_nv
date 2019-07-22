@@ -56,36 +56,27 @@ int		beforepipe(char *line, int index)
 
 int		get_needle(char *s, char **needle)
 {
-	int	i;
+	int	end;
 	int	start;
 
-
-	i = 0;
-	while (s[i] && s[i] == ' ')
-		i++;
-	start = i;
-	while (s[i] && s[i] != ' ' && s[i] != '\n' &&\
-		   	!metacharacters(s[i], 0) &&\
-		   	!metacharacters(s[i], 1) &&\
-			(s[i] != '<' && s[i + 1] != '<'))
-		i++;
-	if (s[i])
-		i += 1;
-	*needle = ft_strsub(s, start, i);
+	start = 0;
+	while (s[start] && s[start] == ' ')
+		start++;
+	end = start;
+	while (s[end] &&\
+	       !(s[end] == ' ' || s[end] == '\n') &&\
+		   	!metacharacters(s[end], 0) &&\
+		   	!metacharacters(s[end], 1) &&\
+			!(s[end] == '<' && s[end + 1] == '<'))
+	{
+		end++;
+	}
+	if (s[end] == ' ')
+	  end -= 1;
+	*needle = ft_strsub(s, start, end);
 	if (ft_strlen(*needle) >= 1 && !(*needle[0] == '\n'))
 		return (1);
 	return (0);
-}
-
-int	last_heredoc(char *s)
-{
-	while (*s)
-	{
-		if (*s == '<' && *(s + 1) == '<')
-			return (0);
-		s++;
-	}
-	return (1);
 }
 
 int		heredoc_is_found(char *s, char **needle, int *index)
@@ -100,11 +91,7 @@ int		heredoc_is_found(char *s, char **needle, int *index)
 			if (i == *index)
 			{
 				if (get_needle(s + 2, needle))
-				{
-					if (last_heredoc(s + 2))
-						*index = -1;
 					return (1);
-				}
 				else
 					return (0);
 			}
@@ -115,21 +102,23 @@ int		heredoc_is_found(char *s, char **needle, int *index)
 	return (0);
 }
 
-int		heredoc_handler_(t_holder *h, char **line, char **s, char *needle)
+int		heredoc_handler_(t_holder *h, char **line, char *needle)
 {
 	char	*tmp;
+	char	*s;
 
-	while ((*s = ft_readline("<<.", NULL, -2)))
+	while ((s = ft_readline("<<.", NULL, -2)))
 	{
 		ft_putchar_fd('\n', 1);
+		if (!s)
+			return (0);
 		if (g_signal_num == 3)
 		{
-			*line = ft_strdup(*s);
-			ft_strdel(s);
+			*line = ft_strdup(s);
+			ft_strdel(&s);
 			return (0);
-			g_signal_num = 1;
 		}
-		if ((ft_strncmp(*s, needle, ft_strlen(needle)) == 0))
+		if ((ft_strncmp(s, needle, ft_strlen(needle)) == 0))
 		{
 			ft_strdel(&needle);
 			return(1) ;
@@ -137,42 +126,102 @@ int		heredoc_handler_(t_holder *h, char **line, char **s, char *needle)
 		else
 		{
 			tmp = h->heredoc;
-			h->heredoc = ft_strjoin(h->heredoc, *s);
+			h->heredoc = ft_strjoin(h->heredoc, s);
 			ft_strdel(&tmp);
 		}
 	}
 	return (1);
 }
 
+int 	get_len_before_heredoc(char *str, int counter)
+{
+	int i;
+	int flag;
+
+	i = 0;
+	flag = 0;
+	while (str[i])
+	{
+		if (str[i] == '<' && str[i + 1] == '<')
+		{
+			if (flag == counter)
+				return (i += 2);
+			flag++;
+		}
+		i++;
+	}
+	return (-1);
+}
+
+int   get_len_of_needle(char *s)
+{
+	int	end;
+	int	start;
+
+	start = 0;
+	while (s[start] && s[start] == ' ')
+		start++;
+	end = start;
+	while (s[end] &&\
+	       !(s[end] == ' ' || s[end] == '\n') &&\
+		   	!metacharacters(s[end], 0) &&\
+		   	!metacharacters(s[end], 1) &&\
+			!(s[end] == '<' && s[end + 1] == '<'))
+	{
+		end++;
+	}
+	return ((end > start) ? end  : 1);
+}
+
+char	*join_in_line(char *str, char *heredoc, int *counter)
+{
+	int		key;
+	char	*tmp;
+	char	*str2;
+	int		len;
+	int		i;
+	char	*ptr;
+	
+	ptr = NULL;
+	str2 = ft_strdup(str);
+	key = get_len_before_heredoc(str2, *counter);
+	i = key;
+	if (str2[key] == ' ')
+		key++;
+	str2[key] = '\0';
+	tmp = ft_strjoin(str2, heredoc);
+	ft_strdel(&str2);
+	len = get_len_of_needle(str + i);
+	ptr = tmp;
+	tmp = ft_strjoin(tmp, str + len + i);
+	ft_strdel(&ptr);
+	return (tmp);
+}
+
 int		heredoc_handler(t_holder *h, char **line)
 {
 	char	*needle;
 	char	*s;
-	int		index;
+	int		counter;
+	char	*tmp;
 
 	needle = NULL;
 	s = NULL;
-	index = 0;
+	counter = 0;
+	tmp = ft_strdup(*line);
 	h->heredoc = ft_strnew(1);
-	while (heredoc_is_found(*line, &needle, &index))
+	while (heredoc_is_found(*line, &needle, &counter))
 	{
-		
-		if (!(heredoc_handler_(h, line, &s, needle)))
+		if (!(heredoc_handler_(h, line, needle)))
 			return (0);
-		if (!s)
-		{
-			ft_putchar('\n');
-			return (0);
-		}
-		if (index == -1)
-			break;
-		else
-		{
-		   index++;
-		   ft_strdel(&h->heredoc);
-		   h->heredoc = ft_strnew(1);
-		}
+		tmp = join_in_line(tmp, h->heredoc, &counter);
+		ft_strdel(&h->heredoc);
+		h->heredoc = ft_strnew(1);
+		counter++;
 	}
+	*line = ft_strdup(tmp);
+	ft_putstr_fd("here final line ", fd2);
+	ft_putstr_fd(*line, fd2);
 	return (1);
 }
 
@@ -242,7 +291,7 @@ int		meta_handler(char *line, int *flag)
  ** recall readline in cases where qoutes or backslach or pipe found;
  */
 
-char	*recall_readline(t_holder *h, char *line, char *homepath)
+char	*recall_readline(t_holder *h, char *homepath)
 {
 	int 	flag;
 	char	*tmp;
@@ -250,33 +299,32 @@ char	*recall_readline(t_holder *h, char *line, char *homepath)
 
 	flag = 0;
 	s = NULL;
-	if (!(heredoc_handler(h, &line)))
-		return (line);
-	while (meta_handler(line, &flag))
+	if (!(heredoc_handler(h, &h->line)))
+		return (h->line);
+	while (meta_handler(h->line, &flag))
 	{
 		if (flag)
 		{
-			tmp = ft_strdup(line);
+			tmp = ft_strdup(h->line);
 			if (!(s = ft_readline("...", homepath, -2)))
 			{
 				ft_putchar_fd('\n', 1);
-				return (line);
+				return (h->line);
 			}
 			ft_putchar('\n');
-			ft_strdel(&line);
+			ft_strdel(&h->line);
 			if (g_signal_num == 3)
 			{
-				line = ft_strdup(s);
+				 h->line = ft_strdup(s);
 				ft_strdel(&s);
-				return (line);
-				g_signal_num = 1;
+				return (h->line);
 			}
-			line = ft_strjoin(tmp, s);
+			h->line = ft_strjoin(tmp, s);
 			ft_strdel(&tmp);
 			ft_strdel(&s);
 		}
 		else 
 			break ;
 	}
-	return (line);
+	return (h->line);
 }

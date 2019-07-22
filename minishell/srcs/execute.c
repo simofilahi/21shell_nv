@@ -58,7 +58,7 @@ void	signal_handler(int sign)
 	if (sign == SIGINT && g_signal_num > 0)
 	{
 		end_key(p);
-		ft_putchar('\n');		
+		ft_putchar('\n');	
 		ft_putstr_fd("\033[1;34m$> \033[0m", 1);
 		g_signal_num = 2;
 	}

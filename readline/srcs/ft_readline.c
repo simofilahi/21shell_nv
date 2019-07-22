@@ -87,7 +87,7 @@ t_package	*get_input(char *s, t_package *p)
 	while ((read(0, p->buffer, BUFFER_SIZE)) > 0)
 	{
 		if (g_signal_num == 2)
-			p = handler_ctrl_c(p);
+			p = handler_ctrl_c();
 		sum = *((int *)p->buffer);
 		if (sum == 10)
 			break ;
