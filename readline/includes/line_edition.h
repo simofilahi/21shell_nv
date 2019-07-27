@@ -50,6 +50,7 @@ typedef struct		s_package
 	int				len;
 	char			*path;
 	int				ll_index;
+	int				h_flag;
 	struct termios	oldconf;
 	struct winsize	w;
 }					t_package;

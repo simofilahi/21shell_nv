@@ -84,7 +84,7 @@ t_package	*init_structure_members(char *path, int ll_index)
 	p->ll_index = ll_index;
 	p->oldconf = termios_config();
 	get_pos(&p->posy, &p->posx);
-	if (p->posx > 1 && g_signal_num == 0)
+	if (p->posx > 1 && !(g_signal_num == 2))
 	{
 		tputs(SRV, 1, my_putchar);
 		ft_putchar_fd('%', 1);

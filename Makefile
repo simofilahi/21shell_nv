@@ -48,6 +48,8 @@ SRCS_SH = $(SRCS_SH_DIR)/execute.c \
 		  $(SRCS_SH_DIR)/sec_count.c \
 		  $(SRCS_SH_DIR)/darlin.c \
 		  $(SRCS_SH_DIR)/recall_readline.c \
+		  $(SRCS_SH_DIR)/heredoc.c \
+		  $(SRCS_SH_DIR)/qoutes.c
 
 SRCS_PR = $(SRCS_PR_DIR)/extras.c \
 		  $(SRCS_PR_DIR)/parsin.c \

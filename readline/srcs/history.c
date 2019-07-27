@@ -18,16 +18,19 @@ void	ft_history_upkey(t_package *p)
 	int		fd;
 	char	*tmp;
 
-	if (p->ll_index > -1)
+	ft_putstr_fd("before index ==>", fd2);
+	ft_putnbr_fd(p->ll_index, fd2);
+	ft_putchar_fd('\n', fd2);
+	if (p->ll_index >= 0)
 	{
 		home_key();
 		clear_screen();
 		ft_strdel(&p->line);
 		p->line = ft_strnew(1);
 		fd = open(p->path, O_RDONLY);
-		if (!gline(fd, &tmp, p->ll_index--))
+		if (!gline(fd, &tmp, --p->ll_index))
 		{
-			p->ll_index++;
+			++p->ll_index;
 			close(fd);
 			return ;
 		}
@@ -38,27 +41,57 @@ void	ft_history_upkey(t_package *p)
 		ft_memcpy(p->buffer, tmp, ft_strlen(tmp));
 		ft_strdel(&tmp);
 		paste_of_mouse(p);
+		ft_putstr_fd("after index ==>", fd2);
+	ft_putnbr_fd(p->ll_index, fd2);
+	ft_putchar_fd('\n', fd2);
+		// if (!p->h_flag)
+		// {
+		// 	p->h_flag = 1;
+		// 	p->ll_index += 1;
+		// }
+		// else
+		// {
+		// 	p->ll_index += 2;
+		// }
+		
+		return ;
 	}
-}
+	
+// 	ft_strdel(&p->line);
+// 	home_key();
+// 	clear_screen();
+// 	p->line = ft_strnew(1);
+// 	p->ll_index++;
+ }
 
 void	ft_history_downkey(t_package *p)
 {
 	int		fd;
 	char	*tmp;
 
-	if (p->ll_index > -1)
+	ft_putstr_fd("downkey before index ==>", fd2);
+	ft_putnbr_fd(p->ll_index, fd2);
+	ft_putchar_fd('\n', fd2);
+	if (p->ll_index >= 0)
 	{
 		home_key();
 		clear_screen();
 		ft_strdel(&p->line);
 		p->line = ft_strnew(1);
 		fd = open(p->path, O_RDONLY);
-		if (!gline(fd, &tmp, ++p->ll_index))
+		if (!gline(fd, &tmp, p->ll_index++))
 		{
-			--p->ll_index;
+			
+	     	--p->ll_index;
+			 ft_putstr_fd("downkey in condi index ==>", fd2);
+		ft_putnbr_fd(p->ll_index, fd2);
+		ft_putchar_fd('\n', fd2);
 			close(fd);
 			return ;
 		}
+		ft_putstr_fd("downkey after index ==>", fd2);
+		ft_putnbr_fd(p->ll_index, fd2);
+		ft_putchar_fd('\n', fd2);
 		close(fd);
 		home_key();
 		clear_screen();
@@ -66,5 +99,14 @@ void	ft_history_downkey(t_package *p)
 		ft_memcpy(p->buffer, tmp, ft_strlen(tmp));
 		ft_strdel(&tmp);
 		paste_of_mouse(p);
+		if (!p->h_flag)
+			p->h_flag = 1;
+		return ;
 	}
+	
+	// ft_strdel(&p->line);
+	// home_key();
+	// clear_screen();
+	// p->line = ft_strnew(1);
+	// p->ll_index++;
 }

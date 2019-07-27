@@ -157,8 +157,6 @@ char	**get_arg(char **argv, int index, char **which_token)
 	return (arg);
 }
 
-
-
 void	keephistory(t_holder *h, int fd, int *index)
 {
 	char		*ret;
@@ -219,10 +217,7 @@ char	*call_readline(t_holder *h, int index, int *flag)
 		return (NULL);
 	}
 	else if (h->line[0] == '\n' || just_spaces(h->line))
-	{
-		ft_strdel(&h->line);
 		return (NULL);
-	}
 	return (recall_readline(h, h->homepath));
 }
 
@@ -237,7 +232,7 @@ void	minishell(t_holder *h, int fd, int index)
 	flag = 0;
 	while ("21sh")
 	{
-		while (((!(call_readline(h, index - 1, &flag)) && !flag)) || (g_signal_num == 3))
+		while (((!(call_readline(h, index, &flag)) && !flag)) || (g_signal_num == 3))
 			;
 		if (!flag)
 		{
@@ -280,9 +275,16 @@ int		create_hfile(t_holder *h)
 	int		fd;
 
 	h->homepath = get_var("HOME=", &h->head_ref);
+   if (!h->homepath)
+	{
+		h->homepath = ft_strdup(".21sh_history");
+		if ((fd = open(h->homepath, O_RDWR | O_CREAT | O_TRUNC | O_APPEND, 0777)) < 0)
+			return (0);
+		return (fd);
+	}
 	tmp = h->homepath;
 	h->homepath = ft_strjoin(h->homepath, "/.21sh_history");  
-	ft_strdel(&tmp);  
+	ft_strdel(&tmp);
 	if ((fd = open(h->homepath, O_RDWR | O_CREAT | O_TRUNC | O_APPEND, 0777)) < 0)
 		return (0);
 	return (fd);
@@ -292,12 +294,10 @@ int		main(int ac, char **av, char **envp)
 {
 	t_holder *h;
 	int		fd;
-
 	(void)ac;
 	(void)av;
-		
 
-	fd2 = open("/dev/ttys000", O_WRONLY);
+	fd2 = open("/dev/ttys002", O_WRONLY);
 	g_signal_num = 1;
 	signal(SIGINT, signal_handler);
 	h = ft_memalloc(sizeof(t_holder));

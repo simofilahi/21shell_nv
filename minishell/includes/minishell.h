@@ -143,6 +143,11 @@ void	_free_list(t__mc	*lst);
 /*
  **********	Others ********
  */
+int			get_len_before_heredoc(char *str, int counter);
+int			get_len_of_needle(char *s);
+int			metacharacters(char ch, int flag);
+int         meta_handler(char *line, int *flag);
+int			heredoc_handler(t_holder *h, char **line);
 int			count_words(char **args, int index);
 char		**get_arg(char **argv, int index, char **which_token);
 int			specialtoken(char **argv);
