@@ -38,21 +38,18 @@ void		move_cursor(int ch)
 
 t_package	*handler_ctrl_c(void)
 {
-	t_package	*p;
-	char		*path;
 	char		*tmp[BUFFER_SIZE];
-	int			ll_index;
+	t_package	*p;	
+	t_his		**his_tail;
 
 	p = cloud(NULL);
 	normal_mode();
-	path = (p->path != NULL) ? ft_strdup(p->path) : NULL;
-	ll_index = p->ll_index;
+	his_tail = &p->his_tail;
 	ft_memcpy(tmp, p->buffer, BUFFER_SIZE);
 	ft_strdel(&p->line);
 	ft_strdel(&p->holdcopy);
-	(p->path != NULL) ? ft_strdel(&p->path) : 0;
 	free(p);
-	p = init_structure_members(path, ll_index);
+	p = init_structure_members(*his_tail);
 	ft_memcpy(p->buffer, tmp, BUFFER_SIZE);
 	g_signal_num = 3;
 	return (p);
@@ -63,25 +60,23 @@ t_package	*handler_ctrl_c(void)
 ** - reprint line if not null;
 */
 
-t_package	*ctrl_l(char *s, t_package *p)
+t_package	*ctrl_l(char *prompt, t_package *p)
 {
-	char	*path;
-	int		ll_index;
 	char	*tmp;
+	t_his   **his_tail;
 
 	end_key(p);
+	normal_mode();
 	tmp = (p->line[0] != '\0') ? ft_strdup(p->line) : NULL;
-	path = (p->path != NULL) ? ft_strdup(p->path) : NULL;
-	ll_index = p->ll_index;
 	ft_strdel(&p->line);
 	ft_strdel(&p->holdcopy);
-	(p->path != NULL) ? ft_strdel(&p->path) : 0;
+	his_tail = &p->his_tail;
 	free(p);
 	tputs(HC, 1, my_putchar);
 	clear_screen();
-	p = init_structure_members(path, ll_index);
+	p = init_structure_members(*his_tail);
 	ft_putstr_fd("\033[1;34m", 1);
-	ft_putstr_fd(s, 1);
+	ft_putstr_fd(prompt, 1);
 	ft_putstr_fd("\033[0m", 1);
 	if (!tmp)
 		return (p);

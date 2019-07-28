@@ -72,7 +72,7 @@ int			checking(char *line, int index, int key)
 ** and other things like apply new configuratin termios;
 */
 
-t_package	*init_structure_members(char *path, int ll_index)
+t_package	*init_structure_members(t_his *his_tail)
 {
 	t_package		*p;
 
@@ -80,8 +80,7 @@ t_package	*init_structure_members(char *path, int ll_index)
 	p->len = 50;
 	p->line = ft_strnew(p->len);
 	p->holdcopy = ft_strnew(1);
-	p->path = (path != NULL) ? ft_strdup(path) : NULL;
-	p->ll_index = ll_index;
+	p->his_tail = his_tail;
 	p->oldconf = termios_config();
 	get_pos(&p->posy, &p->posx);
 	if (p->posx > 1 && !(g_signal_num == 2))

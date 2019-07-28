@@ -157,31 +157,43 @@ char	**get_arg(char **argv, int index, char **which_token)
 	return (arg);
 }
 
-void	keephistory(t_holder *h, int fd, int *index)
+void	keephistory(t_his **his_tail, char *line)
 {
-	char		*ret;
-	char		*historyline;
+	// char		*ret;
+	// char		*historyline;
+	int 		len;
 	char		*tmp;
-	static char *lline;
+	//static char *lline;
 
-	if (*index == 1)
-		lline = ft_strdup(h->line);
+	 tmp = ft_strdup(line);
+	len = ft_strlen(tmp);
+	tmp[len - 1] = '\0';
+	//  if (!h->his_tail)
+	//  	lline = ft_strdup(tmp);
+	// else
+	// {
+	// 	if (ft_strcmp(tmp, lline) == 0)
+	//  		return ;
+	//  	free(lline);
+	//  	lline = ft_strdup(tmp);
+	// }
+	t_his *newnode;
+
+	if (!(newnode = (t_his *)malloc(sizeof(t_his))))
+		return ;
+	newnode->hline = ft_strdup(tmp);
+	newnode->next = NULL;
+	if (!(*his_tail))
+	{
+		(*his_tail) = newnode;
+		(*his_tail)->prev = NULL;
+	}
 	else
 	{
-		if (ft_strcmp(h->line, lline) == 0)
-		{
-			(*index)--;
-			return ;
-		}
-		free(lline);
-		lline = ft_strdup(h->line);
+		newnode->prev = (*his_tail);
+		(*his_tail)->next = newnode;
+		(*his_tail) = newnode;
 	}
-	h->ptr = lline;
-	ret = ft_itoa(*index);
-	tmp = ft_strjoin(ret, ":");
-	historyline = ft_strjoin(tmp, h->line);
-	write(fd, historyline, ft_strlen(historyline));
-	ft_strdel(&ret);
 	ft_strdel(&tmp);
 }
 
@@ -201,13 +213,13 @@ int just_spaces(char *line)
 ** - get line from readline func;
 */
 
-char	*call_readline(t_holder *h, int index, int *flag)
+char	*call_readline(t_holder *h, int *flag)
 {
 	if (g_signal_num == 3)
 		g_signal_num = 1;
 	else
 	{
-		h->line = ft_readline("$> ",h->homepath, index);
+		h->line = ft_readline("$> ",h->his_tail);
 		ft_putchar_fd('\n', 1);
 	}
 	*flag = 0;
@@ -218,10 +230,10 @@ char	*call_readline(t_holder *h, int index, int *flag)
 	}
 	else if (h->line[0] == '\n' || just_spaces(h->line))
 		return (NULL);
-	return (recall_readline(h, h->homepath));
+	return (recall_readline(h));
 }
 
-void	minishell(t_holder *h, int fd, int index)
+void	minishell(t_holder *h)
 {
 	int			flag;
 	int			count;
@@ -232,7 +244,7 @@ void	minishell(t_holder *h, int fd, int index)
 	flag = 0;
 	while ("21sh")
 	{
-		while (((!(call_readline(h, index, &flag)) && !flag)) || (g_signal_num == 3))
+		while (((!(call_readline(h, &flag)) && !flag)) || (g_signal_num == 3))
 			;
 		if (!flag)
 		{
@@ -244,7 +256,8 @@ void	minishell(t_holder *h, int fd, int index)
 				}
 				else
 				{
-					keephistory(h, fd, &index);
+					ft_putendl_fd(h->line, fd2);
+					keephistory(&h->his_tail, h->line);
 					h->mclst = mc_maker(h->line, h->head_ref);
 					ft_strdel(&h->line);
 					h->line = ft_strnew(1);
@@ -265,49 +278,42 @@ void	minishell(t_holder *h, int fd, int index)
 		}
 		else
 			break ;
-		index++;
 	}
 }
 
-int		create_hfile(t_holder *h)
-{
-	char	*tmp;
-	int		fd;
+// int		create_hfile(t_holder *h)
+// {
+// 	char	*tmp;
+// 	int		fd;
 
-	h->homepath = get_var("HOME=", &h->head_ref);
-   if (!h->homepath)
-	{
-		h->homepath = ft_strdup(".21sh_history");
-		if ((fd = open(h->homepath, O_RDWR | O_CREAT | O_TRUNC | O_APPEND, 0777)) < 0)
-			return (0);
-		return (fd);
-	}
-	tmp = h->homepath;
-	h->homepath = ft_strjoin(h->homepath, "/.21sh_history");  
-	ft_strdel(&tmp);
-	if ((fd = open(h->homepath, O_RDWR | O_CREAT | O_TRUNC | O_APPEND, 0777)) < 0)
-		return (0);
-	return (fd);
-}
+// 	h->homepath = get_var("HOME=", &h->head_ref);
+//    if (!h->homepath)
+// 	{
+// 		h->homepath = ft_strdup(".21sh_history");
+// 		if ((fd = open(h->homepath, O_RDWR | O_CREAT | O_TRUNC | O_APPEND, 0777)) < 0)
+// 			return (0);
+// 		return (fd);
+// 	}
+// 	tmp = h->homepath;
+// 	h->homepath = ft_strjoin(h->homepath, "/.21sh_history");  
+// 	ft_strdel(&tmp);
+// 	if ((fd = open(h->homepath, O_RDWR | O_CREAT | O_TRUNC | O_APPEND, 0777)) < 0)
+// 		return (0);
+// 	return (fd);
+// }
 
 int		main(int ac, char **av, char **envp)
 {
 	t_holder *h;
-	int		fd;
 	(void)ac;
 	(void)av;
 
-	fd2 = open("/dev/ttys002", O_WRONLY);
+	fd2 = open("/dev/ttys004", O_WRONLY);
 	g_signal_num = 1;
 	signal(SIGINT, signal_handler);
 	h = ft_memalloc(sizeof(t_holder));
 	h->head_ref = copy_of_env(envp);
-	if (!(fd = create_hfile(h)))
-	{
-		ft_putendl_fd("Failed To Create History File \n", 2);
-		return (0);
-	}
-	minishell(h, fd, 1);
+	minishell(h);
 	free_structure(h);
 	return (0);
 }

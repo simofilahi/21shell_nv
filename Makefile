@@ -17,7 +17,7 @@ LIBFT_HEADER = -I libft/
 SRCS_SH_DIR = minishell/srcs
 SRCS_RL_DIR = readline/srcs
 SRCS_PR_DIR = minishell/srcs/parsin
-INCS_RL_DIR = -I readline/includes/  $(LIBFT_HEADER)
+INCS_RL_DIR = -I readline/includes/ $(LIBFT_HEADER)
 INCS_SH_DIR = -I minishell/includes/ $(INCS_RL_DIR)
 LIBS_DIR = libft/libft.a -ltermcap
 
@@ -72,7 +72,7 @@ ED =
 
 all: $(NAME)
 
-$(NAME): $(OBJS_DIR) $(OBJECT_RL) $(OBJECT_SH) $(OBJECT_PR)
+$(NAME): $(OBJS_DIR) $(OBJECT_SH) $(OBJECT_RL) $(OBJECT_PR)
 	@make -C libft/
 	@echo "$(BoldBlue)Linking...$(ED)"
 	@$(CC) $(OBJECT_RL) $(OBJECT_SH) $(OBJECT_PR) $(LIBS_DIR) -o $(NAME)

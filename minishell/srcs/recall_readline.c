@@ -58,14 +58,14 @@ int		get_len_of_needle(char *s)
 **   or if both not pressed;
 */
 
-char	*meta_hander_ctrl_c_d(t_holder *h, char *homepath, int *flag)
+char	*meta_hander_ctrl_c_d(t_holder *h, int *flag)
 {
 	char	*tmp;
 	char	*s;
 
 	tmp = h->line;
 	s = NULL;
-	if (!(s = ft_readline("...", homepath, -2)))
+	if (!(s = ft_readline("...", NULL)))
 	{
 		*flag = 1;
 		ft_putchar_fd('\n', 1);
@@ -90,7 +90,7 @@ char	*meta_hander_ctrl_c_d(t_holder *h, char *homepath, int *flag)
 ** qoutes or backslach or pipe or heredoc found;
 */
 
-char	*recall_readline(t_holder *h, char *homepath)
+char	*recall_readline(t_holder *h)
 {
 	int		flag;
 	int		s_flag;
@@ -103,7 +103,7 @@ char	*recall_readline(t_holder *h, char *homepath)
 	{
 		if (flag)
 		{
-			meta_hander_ctrl_c_d(h, homepath, &s_flag);
+			meta_hander_ctrl_c_d(h, &s_flag);
 			if (s_flag == 0)
 				continue ;
 			else if (s_flag == 1)

@@ -33,9 +33,9 @@ void		get_input_2(t_package *p, int sum)
 	else if (sum == PASTEKEY)
 		paste_key(p);
 	else if (sum == KEYUP)
-		ft_history_upkey(p);
+		ft_history_upkey();
 	else if (sum == KEYDOWN)
-		ft_history_downkey(p);
+		ft_history_downkey();
 	else if ((p->buffer[0] >= 32 && p->buffer[0] <= 126) &&\
 			(p->buffer[1] >= 32 && p->buffer[1] <= 126))
 	{
@@ -109,13 +109,13 @@ t_package	*get_input(char *s, t_package *p)
 ** main function;
 */
 
-char		*ft_readline(char prompt[3], char *path, int ll_index)
+char		*ft_readline(char prompt[3], t_his *his_tail)
 {
 	t_package	*p;
 	char		*line;
 
 	line = NULL;
-	p = init_structure_members(path, ll_index);
+	p = init_structure_members(his_tail);
 	if (termcap_config())
 		p = get_input(&prompt[0], p);
 	normal_mode();
@@ -123,7 +123,6 @@ char		*ft_readline(char prompt[3], char *path, int ll_index)
 		line = ft_strdup(p->line);
 	ft_strdel(&p->line);
 	ft_strdel(&p->holdcopy);
-	(p->path != NULL) ? ft_strdel(&p->path) : 0;
 	free(p);
 	return (line);
 }

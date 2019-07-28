@@ -38,11 +38,23 @@
 int				g_signal_num;
 
 typedef struct	s_env t_env;
+
 struct		s_env
 {
 	char			*var;
 	char			*value;
 	struct s_env	*next;
+};
+
+typedef	struct	s_var t_var;
+
+struct		s_var
+{
+	int		a;
+	int		b;
+	int		c;
+	int		d;
+	int		index;
 };
 
 typedef struct	s__mc t__mc;
@@ -59,18 +71,6 @@ struct		s_defined
 {
 	char				*data;
 	struct s_defined	*next;
-};
-
-
-typedef	struct	s_var t_var;
-
-struct		s_var
-{
-	int		a;
-	int		b;
-	int		c;
-	int		d;
-	int		index;
 };
 
 typedef	struct	s_info t_info;
@@ -93,19 +93,6 @@ struct		s_god
 	struct s_god	*next;
 };
 
-typedef	struct	s_holder t_holder;
-
-struct		s_holder
-{
-	t_env	*head_ref;
-	t__mc	*mclst;
-	t_god	*lst;
-	char	*line;
-	char	*homepath;
-	char	*heredoc;
-	char	*ptr;
-};
-
 typedef	struct	s_childs t_childs;
 
 struct		s_childs
@@ -115,6 +102,19 @@ struct		s_childs
 	struct	s_childs *next;
 };
 
+typedef	struct	s_holder t_holder;
+
+struct		s_holder
+{
+	t_env	*head_ref;
+	t_his   *his_tail;
+	t__mc	*mclst;
+	t_god	*lst;
+	char	*line;
+	char	*homepath;
+	char	*heredoc;
+	char	*ptr;
+};
 /*
  **********	BUILDING Functions ********
  */
@@ -153,7 +153,7 @@ char		**get_arg(char **argv, int index, char **which_token);
 int			specialtoken(char **argv);
 void		khilo(t_god *lst, t_env *env);
 t_god		*god_like(char **cmd);
-void		minishell(t_holder *h, int fd, int index);
+void		minishell(t_holder *h);
 void		_child_pid(t_holder *h, int count);
 t__mc		*mc_maker(char *line, t_env *env);
 char		*parsin(char *line, t_env *env, t_defined *tokens);
@@ -184,9 +184,9 @@ char		**get_path(t_env **head_ref);
 int			find_path(char *penv);
 void		signal_handler(int sign);
 void		free_list(t_env **head_ref);
-char		*ft_readline(char prompt[3], char *path, int ll_index);
+char		*ft_readline(char prompt[3], t_his *his_tail);
 int			setenv_cmd(char *arg, char *sarg, t_env **head_ref, int flag);
-char		*recall_readline(t_holder *h, char *homepath);
+char		*recall_readline(t_holder *h);
 void		free_structure(t_holder *h);
 
 #endif

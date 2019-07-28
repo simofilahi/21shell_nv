@@ -36,6 +36,15 @@ int fd2;
 
 int				g_signal_num;
 
+typedef struct	s_his t_his;
+
+struct		s_his
+{
+	char			*hline;
+	struct s_his	*next;
+	struct s_his	*prev;
+};
+
 typedef struct		s_package
 {
 	char			*line;
@@ -48,9 +57,8 @@ typedef struct		s_package
 	int				last_y;
 	int				init_row;
 	int				len;
-	char			*path;
-	int				ll_index;
-	int				h_flag;
+	t_his			*his_tail;
+	t_his			*his_tmp;
 	struct termios	oldconf;
 	struct winsize	w;
 }					t_package;
@@ -79,8 +87,8 @@ void				ft_alt_downkey(t_package *p);
 void				backwardkey(t_package *p);
 void				forwardkey(t_package *p);
 void				ft_alt_upkey(t_package *p);
-void				ft_history_downkey(t_package *p);
-void				ft_history_upkey(t_package *p);
+void				ft_history_downkey();
+void				ft_history_upkey();
 int					ctrl_d();
 void				left_key_with_history(int tmp, int x, int y, t_package *p);
 /*
@@ -125,8 +133,8 @@ void				print_readablechar(t_package *p);
 /*
 ** read from stdin
 */
-void				read_line();
-char				*ft_readline(char prompt[3], char *path, int ll_index);
+// void				read_line();
+char				*ft_readline(char prompt[3], t_his *his_tail);
 /*
 ** others :
 **			- initialization memeber of structure
@@ -134,7 +142,7 @@ char				*ft_readline(char prompt[3], char *path, int ll_index);
 **			- count lines if newline is found
 **          - made a new structure hold new info if ctrl_c catched
 */
-t_package			*init_structure_members(char *path, int ll_index);
+t_package			*init_structure_members(t_his *his_tail);
 t_package			*cloud(t_package *p);
 int					get_n_line(int fd, char **line, int n);
 int					new_line_is_found(char *line);

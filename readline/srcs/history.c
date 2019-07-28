@@ -12,101 +12,58 @@
 
 #include "line_edition.h"
 
-
-void	ft_history_upkey(t_package *p)
+void	ft_history_upkey()
 {
-	int		fd;
-	char	*tmp;
+	t_package *p;
 
-	ft_putstr_fd("before index ==>", fd2);
-	ft_putnbr_fd(p->ll_index, fd2);
-	ft_putchar_fd('\n', fd2);
-	if (p->ll_index >= 0)
+	p = cloud(NULL);
+	home_key();
+	clear_screen();
+	ft_strdel(&p->line);
+	p->line = ft_strnew(1);
+	if (!p->his_tail)
+		return ;
+	if (p->his_tail->prev != NULL)
 	{
-		home_key();
-		clear_screen();
-		ft_strdel(&p->line);
-		p->line = ft_strnew(1);
-		fd = open(p->path, O_RDONLY);
-		if (!gline(fd, &tmp, --p->ll_index))
-		{
-			++p->ll_index;
-			close(fd);
-			return ;
-		}
-		close(fd);
-		home_key();
-		clear_screen();
+		p->his_tmp = p->his_tail;
 		ft_bzero(p->buffer, BUFFER_SIZE);
-		ft_memcpy(p->buffer, tmp, ft_strlen(tmp));
-		ft_strdel(&tmp);
+		ft_memcpy(p->buffer, p->his_tail->hline, ft_strlen(p->his_tail->hline));
 		paste_of_mouse(p);
-		ft_putstr_fd("after index ==>", fd2);
-	ft_putnbr_fd(p->ll_index, fd2);
-	ft_putchar_fd('\n', fd2);
-		// if (!p->h_flag)
-		// {
-		// 	p->h_flag = 1;
-		// 	p->ll_index += 1;
-		// }
-		// else
-		// {
-		// 	p->ll_index += 2;
-		// }
-		
+		p->his_tail = p->his_tail->prev;
 		return ;
 	}
-	
-// 	ft_strdel(&p->line);
-// 	home_key();
-// 	clear_screen();
-// 	p->line = ft_strnew(1);
-// 	p->ll_index++;
+	else if (p->his_tail->prev == NULL)
+	{
+		p->his_tmp = p->his_tail;
+		ft_bzero(p->buffer, BUFFER_SIZE);
+		ft_memcpy(p->buffer, p->his_tail->hline, ft_strlen(p->his_tail->hline));
+		paste_of_mouse(p);
+		return ;
+	}
  }
 
-void	ft_history_downkey(t_package *p)
+void	ft_history_downkey()
 {
-	int		fd;
-	char	*tmp;
+		t_package *p;
 
-	ft_putstr_fd("downkey before index ==>", fd2);
-	ft_putnbr_fd(p->ll_index, fd2);
-	ft_putchar_fd('\n', fd2);
-	if (p->ll_index >= 0)
-	{
+		p = cloud(NULL);
 		home_key();
 		clear_screen();
 		ft_strdel(&p->line);
 		p->line = ft_strnew(1);
-		fd = open(p->path, O_RDONLY);
-		if (!gline(fd, &tmp, p->ll_index++))
+		if (!p->his_tmp)
+			return ;
+		if (p->his_tmp->next == NULL)
 		{
-			
-	     	--p->ll_index;
-			 ft_putstr_fd("downkey in condi index ==>", fd2);
-		ft_putnbr_fd(p->ll_index, fd2);
-		ft_putchar_fd('\n', fd2);
-			close(fd);
+			p->his_tail = p->his_tmp;
 			return ;
 		}
-		ft_putstr_fd("downkey after index ==>", fd2);
-		ft_putnbr_fd(p->ll_index, fd2);
-		ft_putchar_fd('\n', fd2);
-		close(fd);
-		home_key();
-		clear_screen();
-		ft_bzero(p->buffer, BUFFER_SIZE);
-		ft_memcpy(p->buffer, tmp, ft_strlen(tmp));
-		ft_strdel(&tmp);
-		paste_of_mouse(p);
-		if (!p->h_flag)
-			p->h_flag = 1;
-		return ;
-	}
-	
-	// ft_strdel(&p->line);
-	// home_key();
-	// clear_screen();
-	// p->line = ft_strnew(1);
-	// p->ll_index++;
-}
+		else if (p->his_tmp)
+		{
+			p->his_tail = p->his_tmp;
+			p->his_tmp = p->his_tmp->next;
+			ft_bzero(p->buffer, BUFFER_SIZE);
+		 	ft_memcpy(p->buffer, p->his_tmp->hline, ft_strlen(p->his_tmp->hline));
+		 	paste_of_mouse(p);
+		}
+}	
