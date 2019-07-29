@@ -184,7 +184,7 @@ char		**get_path(t_env **head_ref);
 int			find_path(char *penv);
 void		signal_handler(int sign);
 void		free_list(t_env **head_ref);
-char		*ft_readline(char prompt[3], t_his *his_tail);
+char		*ft_readline(char prompt[3], t_his *his_tail, int his_flag);
 int			setenv_cmd(char *arg, char *sarg, t_env **head_ref, int flag);
 char		*recall_readline(t_holder *h);
 void		free_structure(t_holder *h);

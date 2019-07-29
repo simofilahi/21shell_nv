@@ -6,7 +6,7 @@
 /*   By: mfilahi <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/02 15:00:34 by mfilahi           #+#    #+#             */
-/*   Updated: 2019/07/18 21:15:12 by aariss           ###   ########.fr       */
+/*   Updated: 2019/07/29 15:50:42 by mfilahi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,6 @@ void	insert_element_1(t_package *p, char *ptr)
 void	insert_element(t_package *p)
 {
 	int		length;
-	int		i;
 	char	*ptr;
 
 	length = ft_strlen(p->line);
@@ -81,18 +80,16 @@ void	insert_element(t_package *p)
 		ft_strdel(&p->line);
 		if (!(p->line = ft_strnew(p->len)))
 			return ;
-		i = -1;
-		while (ptr[++i])
-			p->line[i] = ptr[i];
-		p->line[i] = '\0';
 	}
 	if (p->index == length)
 	{
+		ft_strcpy(p->line, ptr);
 		p->line[p->index] = p->buffer[0];
 		p->line[p->index + 1] = '\0';
 	}
 	else
 		insert_element_1(p, ptr);
+	ft_strdel(&ptr);
 }
 
 /*

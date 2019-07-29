@@ -85,6 +85,5 @@ int				ft_islower(int c);
 int				ft_isupper(int c);
 int				ft_isxdigit(int c);
 int				ft_isblank(int c);
-char			*ft_trim(char *str, char delim);
 void			ft_free2d(char **p);
 #endif

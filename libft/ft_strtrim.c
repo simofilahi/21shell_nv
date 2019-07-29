@@ -29,7 +29,7 @@ char	*ft_strtrim(char const *s)
 		return (ft_strnew(0));
 	while (s[len - 1] && ft_isspace(s[len - 1]))
 		len--;
-	if (!(str = (char *)malloc(sizeof(char) * (len - i) + 1)))
+	if (!(str = ft_strnew(len - i)))
 		return (NULL);
 	j = 0;
 	while (s[i] && i < len)

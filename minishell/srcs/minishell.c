@@ -157,31 +157,13 @@ char	**get_arg(char **argv, int index, char **which_token)
 	return (arg);
 }
 
-void	keephistory(t_his **his_tail, char *line)
+void    keephistorylst(t_his **his_tail, char *hline)
 {
-	// char		*ret;
-	// char		*historyline;
-	int 		len;
-	char		*tmp;
-	//static char *lline;
-
-	 tmp = ft_strdup(line);
-	len = ft_strlen(tmp);
-	tmp[len - 1] = '\0';
-	//  if (!h->his_tail)
-	//  	lline = ft_strdup(tmp);
-	// else
-	// {
-	// 	if (ft_strcmp(tmp, lline) == 0)
-	//  		return ;
-	//  	free(lline);
-	//  	lline = ft_strdup(tmp);
-	// }
-	t_his *newnode;
+	t_his		*newnode;
 
 	if (!(newnode = (t_his *)malloc(sizeof(t_his))))
 		return ;
-	newnode->hline = ft_strdup(tmp);
+	newnode->hline = ft_strdup(hline);
 	newnode->next = NULL;
 	if (!(*his_tail))
 	{
@@ -194,7 +176,25 @@ void	keephistory(t_his **his_tail, char *line)
 		(*his_tail)->next = newnode;
 		(*his_tail) = newnode;
 	}
-	ft_strdel(&tmp);
+}
+void	keephistory(t_his **his_tail, char *hline)
+{
+	int 		len;
+	static char *lline;
+
+	len = ft_strlen(hline);
+	hline[len - 1] = '\0';
+	if (!(*his_tail))
+	 	lline = ft_strdup(hline);
+	else
+	{
+		if (ft_strcmp(hline, lline) == 0)
+	 		return ;
+	 	free(lline);
+	 	lline = ft_strdup(hline);
+	}
+	keephistorylst(his_tail, hline);
+	ft_strdel(&hline);
 }
 
 int just_spaces(char *line)
@@ -219,7 +219,7 @@ char	*call_readline(t_holder *h, int *flag)
 		g_signal_num = 1;
 	else
 	{
-		h->line = ft_readline("$> ",h->his_tail);
+		h->line = ft_readline("$> ",h->his_tail, 0);
 		ft_putchar_fd('\n', 1);
 	}
 	*flag = 0;
@@ -256,8 +256,7 @@ void	minishell(t_holder *h)
 				}
 				else
 				{
-					ft_putendl_fd(h->line, fd2);
-					keephistory(&h->his_tail, h->line);
+					keephistory(&h->his_tail, ft_strdup(h->line));
 					h->mclst = mc_maker(h->line, h->head_ref);
 					ft_strdel(&h->line);
 					h->line = ft_strnew(1);
@@ -281,34 +280,13 @@ void	minishell(t_holder *h)
 	}
 }
 
-// int		create_hfile(t_holder *h)
-// {
-// 	char	*tmp;
-// 	int		fd;
-
-// 	h->homepath = get_var("HOME=", &h->head_ref);
-//    if (!h->homepath)
-// 	{
-// 		h->homepath = ft_strdup(".21sh_history");
-// 		if ((fd = open(h->homepath, O_RDWR | O_CREAT | O_TRUNC | O_APPEND, 0777)) < 0)
-// 			return (0);
-// 		return (fd);
-// 	}
-// 	tmp = h->homepath;
-// 	h->homepath = ft_strjoin(h->homepath, "/.21sh_history");  
-// 	ft_strdel(&tmp);
-// 	if ((fd = open(h->homepath, O_RDWR | O_CREAT | O_TRUNC | O_APPEND, 0777)) < 0)
-// 		return (0);
-// 	return (fd);
-// }
-
 int		main(int ac, char **av, char **envp)
 {
 	t_holder *h;
 	(void)ac;
 	(void)av;
 
-	fd2 = open("/dev/ttys004", O_WRONLY);
+	fd2 = open("/dev/ttys000", O_WRONLY);
 	g_signal_num = 1;
 	signal(SIGINT, signal_handler);
 	h = ft_memalloc(sizeof(t_holder));

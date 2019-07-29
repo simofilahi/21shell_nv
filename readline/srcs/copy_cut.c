@@ -6,7 +6,7 @@
 /*   By: mfilahi <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/08 20:53:59 by mfilahi           #+#    #+#             */
-/*   Updated: 2019/07/17 12:36:30 by mfilahi          ###   ########.fr       */
+/*   Updated: 2019/07/29 15:53:50 by mfilahi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,8 +72,7 @@ void	cut_line_key(char **buffer_ref, char **line)
 	free(tmp);
 	home_key();
 	clear_screen();
-	free(*line);
-	*line = NULL;
+	ft_strdel(line);
 	*line = ft_strnew(1);
 }
 

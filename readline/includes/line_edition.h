@@ -6,7 +6,7 @@
 /*   By: mfilahi <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/08 21:03:31 by mfilahi           #+#    #+#             */
-/*   Updated: 2019/07/17 14:56:07 by mfilahi          ###   ########.fr       */
+/*   Updated: 2019/07/29 15:25:16 by mfilahi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,15 +15,12 @@
 # include "libft.h"
 # include "termcaps.h"
 # include "keys.h"
-# include "get_next_line.h"
 # include <termios.h>
 # include <termcap.h>
 # include <sys/ioctl.h>
 # include <fcntl.h>
 # include <unistd.h>
 
-// 
-#include <stdio.h>
 //
 int fd2;
 
@@ -32,18 +29,14 @@ int fd2;
 # define BUFF_SIZE 100
 # define BUFFER_SIZE 100000
 
-//
+int					g_signal_num;
 
-int				g_signal_num;
-
-typedef struct	s_his t_his;
-
-struct		s_his
+typedef struct		s_his
 {
 	char			*hline;
 	struct s_his	*next;
 	struct s_his	*prev;
-};
+}					t_his;
 
 typedef struct		s_package
 {
@@ -57,8 +50,8 @@ typedef struct		s_package
 	int				last_y;
 	int				init_row;
 	int				len;
-	t_his			*his_tail;
 	t_his			*his_tmp;
+	int				his_flag;
 	struct termios	oldconf;
 	struct winsize	w;
 }					t_package;
@@ -73,7 +66,8 @@ int					gline(const int fd, char **line_target, int delimiter);
 */
 void				insert_element(t_package *p);
 void				delete_element(t_package *p);
-char				*delrange_of_elem(char *string, int startindex, int endindex);
+char				*delrange_of_elem(char *string, int startindex, \
+					int endindex);
 char				*addrange_of_elem(char *s1, char *s2, int key);
 /*
 ** Keys
@@ -87,8 +81,8 @@ void				ft_alt_downkey(t_package *p);
 void				backwardkey(t_package *p);
 void				forwardkey(t_package *p);
 void				ft_alt_upkey(t_package *p);
-void				ft_history_downkey();
-void				ft_history_upkey();
+void				ft_history_downkey(t_package *p, t_his **his_tail);
+void				ft_history_upkey(t_package *p, t_his **his_tail);
 int					ctrl_d();
 void				left_key_with_history(int tmp, int x, int y, t_package *p);
 /*
@@ -133,8 +127,7 @@ void				print_readablechar(t_package *p);
 /*
 ** read from stdin
 */
-// void				read_line();
-char				*ft_readline(char prompt[3], t_his *his_tail);
+char				*ft_readline(char prompt[3], t_his *his_tail, int his_flag);
 /*
 ** others :
 **			- initialization memeber of structure
@@ -142,13 +135,13 @@ char				*ft_readline(char prompt[3], t_his *his_tail);
 **			- count lines if newline is found
 **          - made a new structure hold new info if ctrl_c catched
 */
-t_package			*init_structure_members(t_his *his_tail);
+t_package			*init_structure_members(t_his *his_tail, int his_flag);
 t_package			*cloud(t_package *p);
 int					get_n_line(int fd, char **line, int n);
 int					new_line_is_found(char *line);
 int					checking(char *line, int index, int key);
 int					count_lines(char *line, int w_col);
-t_package			*handler_ctrl_c();
-t_package			*ctrl_l(char *s, t_package *p);
+t_package			*handler_ctrl_c(t_his **his_tail, t_his *tail_ptr);
+t_package			*ctrl_l(char *s, t_package *p, t_his *his_tail);
 t_package			*joinnewline(t_package *p, int sum);
 #endif

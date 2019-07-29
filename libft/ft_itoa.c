@@ -40,7 +40,7 @@ char			*ft_itoa(int n)
 		n = -n;
 		sign = 1;
 	}
-	if (!(s = (char *)malloc(sizeof(char) * len + 1)))
+	if (!(s = ft_strnew(len)))
 		return (NULL);
 	s[len] = '\0';
 	while (len--)

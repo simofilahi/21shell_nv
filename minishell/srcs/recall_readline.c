@@ -65,7 +65,7 @@ char	*meta_hander_ctrl_c_d(t_holder *h, int *flag)
 
 	tmp = h->line;
 	s = NULL;
-	if (!(s = ft_readline("...", NULL)))
+	if (!(s = ft_readline("...", h->his_tail, 1)))
 	{
 		*flag = 1;
 		ft_putchar_fd('\n', 1);

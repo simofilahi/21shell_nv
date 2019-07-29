@@ -6,7 +6,7 @@
 /*   By: mfilahi <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/11 14:00:58 by mfilahi           #+#    #+#             */
-/*   Updated: 2019/07/17 15:27:26 by mfilahi          ###   ########.fr       */
+/*   Updated: 2019/07/29 15:08:57 by mfilahi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ int			checking(char *line, int index, int key)
 ** and other things like apply new configuratin termios;
 */
 
-t_package	*init_structure_members(t_his *his_tail)
+t_package	*init_structure_members(t_his *his_tail, int his_flag)
 {
 	t_package		*p;
 
@@ -80,9 +80,10 @@ t_package	*init_structure_members(t_his *his_tail)
 	p->len = 50;
 	p->line = ft_strnew(p->len);
 	p->holdcopy = ft_strnew(1);
-	p->his_tail = his_tail;
 	p->oldconf = termios_config();
 	get_pos(&p->posy, &p->posx);
+	p->his_tmp = his_tail;
+	p->his_flag = his_flag;
 	if (p->posx > 1 && !(g_signal_num == 2))
 	{
 		tputs(SRV, 1, my_putchar);

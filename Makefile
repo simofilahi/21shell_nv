@@ -6,7 +6,7 @@
 #    By: mfilahi <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/05/03 16:07:14 by mfilahi           #+#    #+#              #
-#    Updated: 2019/07/09 17:50:57 by aariss           ###   ########.fr        #
+#    Updated: 2019/07/29 15:25:41 by mfilahi          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -33,8 +33,7 @@ SRCS_RL = $(SRCS_RL_DIR)/arrowskeys.c \
 		  $(SRCS_RL_DIR)/manipulatestring.c \
 		  $(SRCS_RL_DIR)/paste.c \
 		  $(SRCS_RL_DIR)/term_capios_config.c \
-		  $(SRCS_RL_DIR)/srcs/write.c \
-		  $(SRCS_RL_DIR)/gline.c
+		  $(SRCS_RL_DIR)/srcs/write.c
 
 SRCS_SH = $(SRCS_SH_DIR)/execute.c \
 		  $(SRCS_SH_DIR)/builtin_cmds.c \

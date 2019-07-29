@@ -6,7 +6,7 @@
 /*   By: mfilahi <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/02 22:18:39 by mfilahi           #+#    #+#             */
-/*   Updated: 2019/07/17 16:40:42 by mfilahi          ###   ########.fr       */
+/*   Updated: 2019/07/29 15:20:14 by mfilahi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,20 +36,21 @@ void		move_cursor(int ch)
 **   about position cursor(x,y) and other things;
 */
 
-t_package	*handler_ctrl_c(void)
+t_package	*handler_ctrl_c(t_his **his_tail, t_his *ptr_tail)
 {
 	char		*tmp[BUFFER_SIZE];
-	t_package	*p;	
-	t_his		**his_tail;
+	t_package	*p;
+	int			his_flag;
 
 	p = cloud(NULL);
 	normal_mode();
-	his_tail = &p->his_tail;
 	ft_memcpy(tmp, p->buffer, BUFFER_SIZE);
 	ft_strdel(&p->line);
 	ft_strdel(&p->holdcopy);
+	his_flag = 0;
 	free(p);
-	p = init_structure_members(*his_tail);
+	(*his_tail) = ptr_tail;
+	p = init_structure_members(ptr_tail, his_flag);
 	ft_memcpy(p->buffer, tmp, BUFFER_SIZE);
 	g_signal_num = 3;
 	return (p);
@@ -60,21 +61,21 @@ t_package	*handler_ctrl_c(void)
 ** - reprint line if not null;
 */
 
-t_package	*ctrl_l(char *prompt, t_package *p)
+t_package	*ctrl_l(char *prompt, t_package *p, t_his *his_tail)
 {
 	char	*tmp;
-	t_his   **his_tail;
+	int		his_flag;
 
 	end_key(p);
 	normal_mode();
 	tmp = (p->line[0] != '\0') ? ft_strdup(p->line) : NULL;
 	ft_strdel(&p->line);
 	ft_strdel(&p->holdcopy);
-	his_tail = &p->his_tail;
+	his_flag = p->his_flag;
 	free(p);
 	tputs(HC, 1, my_putchar);
 	clear_screen();
-	p = init_structure_members(*his_tail);
+	p = init_structure_members(his_tail, his_flag);
 	ft_putstr_fd("\033[1;34m", 1);
 	ft_putstr_fd(prompt, 1);
 	ft_putstr_fd("\033[0m", 1);

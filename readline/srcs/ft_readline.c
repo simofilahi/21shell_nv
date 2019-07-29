@@ -6,7 +6,7 @@
 /*   By: mfilahi <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/25 21:41:28 by mfilahi           #+#    #+#             */
-/*   Updated: 2019/07/18 19:51:32 by mfilahi          ###   ########.fr       */
+/*   Updated: 2019/07/29 16:02:55 by mfilahi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 ** check any key pressed;
 */
 
-void		get_input_2(t_package *p, int sum)
+void		get_input_2(t_package *p, int sum, t_his **his_tail)
 {
 	if (sum == COPYKEY)
 		copy_line_key(&p->holdcopy, p->line);
@@ -33,9 +33,9 @@ void		get_input_2(t_package *p, int sum)
 	else if (sum == PASTEKEY)
 		paste_key(p);
 	else if (sum == KEYUP)
-		ft_history_upkey();
+		ft_history_upkey(p, his_tail);
 	else if (sum == KEYDOWN)
-		ft_history_downkey();
+		ft_history_downkey(p, his_tail);
 	else if ((p->buffer[0] >= 32 && p->buffer[0] <= 126) &&\
 			(p->buffer[1] >= 32 && p->buffer[1] <= 126))
 	{
@@ -47,7 +47,7 @@ void		get_input_2(t_package *p, int sum)
 ** check any key pressed;
 */
 
-void		get_input_1(t_package *p, int sum)
+void		get_input_1(t_package *p, int sum, t_his **his_tail)
 {
 	if (sum >= 32 && sum <= 126)
 		print_readablechar(p);
@@ -70,14 +70,14 @@ void		get_input_1(t_package *p, int sum)
 	else if (sum == ALT_DOWNKEY)
 		ft_alt_downkey(p);
 	else
-		get_input_2(p, sum);
+		get_input_2(p, sum, his_tail);
 }
 
 /*
 ** read data from stdin & check any key pressed;
 */
 
-t_package	*get_input(char *s, t_package *p)
+t_package	*get_input(char *s, t_package *p, t_his *his_tail, t_his *tail_ptr)
 {
 	int	sum;
 
@@ -87,7 +87,7 @@ t_package	*get_input(char *s, t_package *p)
 	while ((read(0, p->buffer, BUFFER_SIZE)) > 0)
 	{
 		if (g_signal_num == 2)
-			p = handler_ctrl_c();
+			p = handler_ctrl_c(&his_tail, tail_ptr);
 		sum = *((int *)p->buffer);
 		if (sum == 10)
 			break ;
@@ -97,9 +97,9 @@ t_package	*get_input(char *s, t_package *p)
 				break ;
 		}
 		else if (sum == CTRL_L)
-			p = ctrl_l(s, p);
+			p = ctrl_l(s, p, his_tail);
 		else
-			get_input_1(p, sum);
+			get_input_1(p, sum, &his_tail);
 		ft_bzero(p->buffer, BUFFER_SIZE);
 	}
 	return (joinnewline(p, sum));
@@ -109,15 +109,17 @@ t_package	*get_input(char *s, t_package *p)
 ** main function;
 */
 
-char		*ft_readline(char prompt[3], t_his *his_tail)
+char		*ft_readline(char prompt[3], t_his *his_tail, int his_flag)
 {
 	t_package	*p;
+	t_his		*tail_ptr;
 	char		*line;
 
 	line = NULL;
-	p = init_structure_members(his_tail);
+	tail_ptr = his_tail;
+	p = init_structure_members(tail_ptr, his_flag);
 	if (termcap_config())
-		p = get_input(&prompt[0], p);
+		p = get_input(&prompt[0], p, his_tail, tail_ptr);
 	normal_mode();
 	if (ft_strlen(p->line) > 0)
 		line = ft_strdup(p->line);

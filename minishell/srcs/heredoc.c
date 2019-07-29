@@ -92,7 +92,7 @@ static int	heredoc_handler_(t_holder *h, char **line, char *tmp, char *needle)
 {
 	char	*s;
 
-	while ((s = ft_readline("<<.", NULL)))
+	while ((s = ft_readline("<<.", h->his_tail, 1)))
 	{
 		ft_putchar_fd('\n', 1);
 		if (g_signal_num == 3)
