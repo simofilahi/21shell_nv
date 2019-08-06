@@ -6,12 +6,11 @@
 #    By: mfilahi <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/05/03 16:07:14 by mfilahi           #+#    #+#              #
-#    Updated: 2019/07/29 15:25:41 by mfilahi          ###   ########.fr        #
+#    Updated: 2019/08/06 21:34:39 by mfilahi          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = 21sh
-
 OBJS_DIR = objs
 LIBFT_HEADER = -I libft/
 SRCS_SH_DIR = minishell/srcs
@@ -67,7 +66,7 @@ BoldRed =
 BoldGreen =
 BoldBlue = 
 BoldYellow = 
-ED = 
+ED = \033[0m 
 
 all: $(NAME)
 

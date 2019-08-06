@@ -6,7 +6,7 @@
 /*   By: mfilahi <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/02 20:26:35 by mfilahi           #+#    #+#             */
-/*   Updated: 2019/07/29 15:04:25 by mfilahi          ###   ########.fr       */
+/*   Updated: 2019/08/06 20:57:14 by mfilahi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ void	ft_history_upkey(t_package *p, t_his **his_tail)
 	}
 }
 
-int   ft_history_downkey_2(t_package *p)
+int		ft_history_downkey_2(t_package *p)
 {
 	if (p->hisline_tmp)
 	{
@@ -55,7 +55,7 @@ int   ft_history_downkey_2(t_package *p)
 	return (0);
 }
 
-void   ft_history_downkey_3(t_package *p, t_his **his_tail)
+void	ft_history_downkey_3(t_package *p, t_his **his_tail)
 {
 	(*his_tail) = p->his_tmp;
 	p->his_tmp = p->his_tmp->next;
@@ -74,14 +74,14 @@ void	ft_history_downkey(t_package *p, t_his **his_tail)
 	clear_screen();
 	if (!p->his_tmp)
 	{
-		 if (ft_history_downkey_2(p))
-			return ;
-	}
-	if (p->his_tmp->next == NULL)
-	{
 		if (ft_history_downkey_2(p))
 			return ;
+	}
+	else if (p->his_tmp->next == NULL)
+	{
 		(*his_tail) = p->his_tmp;
+		if (ft_history_downkey_2(p))
+			return ;
 	}
 	else if (p->his_tmp)
 	{

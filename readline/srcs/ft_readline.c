@@ -6,7 +6,7 @@
 /*   By: mfilahi <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/25 21:41:28 by mfilahi           #+#    #+#             */
-/*   Updated: 2019/07/29 16:02:55 by mfilahi          ###   ########.fr       */
+/*   Updated: 2019/08/06 20:59:28 by mfilahi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,11 +47,8 @@ void		get_input_3(t_package *p, int sum, t_his **his_tail)
 ** check any key pressed;
 */
 
-void		get_input_2(t_package *p, int sum, t_his **his_tail)
+void		get_input_2(t_package *p, int sum, t_his **his_tail, char *tmp)
 {
-	char *tmp;
-
-	tmp = NULL;
 	if (sum == COPYKEY_BC)
 		copy_before_cursor_key(&p->holdcopy, p->line, p->index);
 	else if (sum == COPYKEY_AC)
@@ -64,12 +61,14 @@ void		get_input_2(t_package *p, int sum, t_his **his_tail)
 		cut_after_cursor_key(&p->holdcopy, &p->line, p->index);
 	else if (sum == KEYUP)
 	{
-		if ((ft_strlen(p->line) > 0 ) && p->flag_hislastline)
+		if ((ft_strlen(p->line) > 0) && p->flag_hislastline)
 		{
 			tmp = p->hisline_tmp;
 			p->hisline_tmp = ft_strdup(p->line);
 			(tmp != NULL) ? ft_strdel(&tmp) : 0;
 		}
+		else if (p->flag_hislastline && ft_strlen(p->hisline_tmp) > 0)
+			ft_strdel(&p->hisline_tmp);
 		p->flag_hislastline = 0;
 		ft_history_upkey(p, his_tail);
 	}
@@ -102,7 +101,7 @@ void		get_input_1(t_package *p, int sum, t_his **his_tail)
 	if (sum == COPYKEY)
 		copy_line_key(&p->holdcopy, p->line);
 	else
-		get_input_2(p, sum, his_tail);
+		get_input_2(p, sum, his_tail, NULL);
 }
 
 /*

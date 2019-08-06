@@ -6,11 +6,15 @@
 /*   By: mfilahi <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/21 13:15:10 by mfilahi           #+#    #+#             */
-/*   Updated: 2019/07/18 19:48:30 by mfilahi          ###   ########.fr       */
+/*   Updated: 2019/08/06 21:00:45 by mfilahi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "line_edition.h"
+
+/*
+** free structure and members;
+*/
 
 void	free_structure_rl(t_package *p)
 {
@@ -20,6 +24,7 @@ void	free_structure_rl(t_package *p)
 		ft_strdel(&p->holdcopy);
 	free(p);
 }
+
 /*
 ** - increment row (that mean when terminal scrolling in last line);
 ** - recover position of cursor after saving in print_readablechar;
