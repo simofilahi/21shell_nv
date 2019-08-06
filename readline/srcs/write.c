@@ -12,6 +12,14 @@
 
 #include "line_edition.h"
 
+void	free_structure_rl(t_package *p)
+{
+	ft_strdel(&p->line);
+	ft_strdel(&p->holdcopy);
+	if (p->hisline_tmp)
+		ft_strdel(&p->holdcopy);
+	free(p);
+}
 /*
 ** - increment row (that mean when terminal scrolling in last line);
 ** - recover position of cursor after saving in print_readablechar;

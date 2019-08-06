@@ -18,8 +18,6 @@ void	ft_history_upkey(t_package *p, t_his **his_tail)
 		return ;
 	home_key();
 	clear_screen();
-	ft_strdel(&p->line);
-	p->line = ft_strnew(1);
 	if (!(*his_tail))
 		return ;
 	if ((*his_tail)->prev != NULL)
@@ -27,18 +25,45 @@ void	ft_history_upkey(t_package *p, t_his **his_tail)
 		p->his_tmp = (*his_tail);
 		ft_bzero(p->buffer, BUFFER_SIZE);
 		ft_memcpy(p->buffer, (*his_tail)->hline, ft_strlen((*his_tail)->hline));
+		ft_strdel(&p->line);
+		p->line = ft_strnew(ft_strlen((*his_tail)->hline));
 		paste_of_mouse(p);
 		(*his_tail) = (*his_tail)->prev;
-		return ;
 	}
 	else if ((*his_tail)->prev == NULL)
 	{
 		p->his_tmp = (*his_tail);
 		ft_bzero(p->buffer, BUFFER_SIZE);
 		ft_memcpy(p->buffer, (*his_tail)->hline, ft_strlen((*his_tail)->hline));
+		ft_strdel(&p->line);
+		p->line = ft_strnew(ft_strlen((*his_tail)->hline));
 		paste_of_mouse(p);
-		return ;
 	}
+}
+
+int   ft_history_downkey_2(t_package *p)
+{
+	if (p->hisline_tmp)
+	{
+		ft_bzero(p->buffer, BUFFER_SIZE);
+		ft_memcpy(p->buffer, p->hisline_tmp, ft_strlen(p->hisline_tmp));
+		ft_strdel(&p->line);
+		p->line = ft_strnew(ft_strlen(p->hisline_tmp));
+		paste_of_mouse(p);
+		return (1);
+	}
+	return (0);
+}
+
+void   ft_history_downkey_3(t_package *p, t_his **his_tail)
+{
+	(*his_tail) = p->his_tmp;
+	p->his_tmp = p->his_tmp->next;
+	ft_bzero(p->buffer, BUFFER_SIZE);
+	ft_memcpy(p->buffer, p->his_tmp->hline, ft_strlen(p->his_tmp->hline));
+	ft_strdel(&p->line);
+	p->line = ft_strnew(ft_strlen(p->his_tmp->hline));
+	paste_of_mouse(p);
 }
 
 void	ft_history_downkey(t_package *p, t_his **his_tail)
@@ -47,21 +72,22 @@ void	ft_history_downkey(t_package *p, t_his **his_tail)
 		return ;
 	home_key();
 	clear_screen();
-	ft_strdel(&p->line);
-	p->line = ft_strnew(1);
 	if (!p->his_tmp)
-		return ;
+	{
+		 if (ft_history_downkey_2(p))
+			return ;
+	}
 	if (p->his_tmp->next == NULL)
 	{
+		if (ft_history_downkey_2(p))
+			return ;
 		(*his_tail) = p->his_tmp;
-		return ;
 	}
 	else if (p->his_tmp)
 	{
-		(*his_tail) = p->his_tmp;
-		p->his_tmp = p->his_tmp->next;
-		ft_bzero(p->buffer, BUFFER_SIZE);
-		ft_memcpy(p->buffer, p->his_tmp->hline, ft_strlen(p->his_tmp->hline));
-		paste_of_mouse(p);
+		ft_history_downkey_3(p, his_tail);
+		return ;
 	}
+	ft_strdel(&p->line);
+	p->line = ft_strnew(p->len);
 }

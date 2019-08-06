@@ -45,10 +45,8 @@ t_package	*handler_ctrl_c(t_his **his_tail, t_his *ptr_tail)
 	p = cloud(NULL);
 	normal_mode();
 	ft_memcpy(tmp, p->buffer, BUFFER_SIZE);
-	ft_strdel(&p->line);
-	ft_strdel(&p->holdcopy);
+	free_structure_rl(p);
 	his_flag = 0;
-	free(p);
 	(*his_tail) = ptr_tail;
 	p = init_structure_members(ptr_tail, his_flag);
 	ft_memcpy(p->buffer, tmp, BUFFER_SIZE);

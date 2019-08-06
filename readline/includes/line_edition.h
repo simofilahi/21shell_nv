@@ -22,7 +22,8 @@
 # include <unistd.h>
 
 //
-int fd2;
+#include <stdio.h>
+FILE *fd2;
 
 # define TRUE 1
 # define FALSE 0
@@ -43,6 +44,8 @@ typedef struct		s_package
 	char			*line;
 	char			buffer[BUFFER_SIZE];
 	char			*holdcopy;
+	char			*hisline_tmp;
+	int				flag_hislastline;
 	int				index;
 	int				posx;
 	int				posy;
@@ -144,4 +147,5 @@ int					count_lines(char *line, int w_col);
 t_package			*handler_ctrl_c(t_his **his_tail, t_his *tail_ptr);
 t_package			*ctrl_l(char *s, t_package *p, t_his *his_tail);
 t_package			*joinnewline(t_package *p, int sum);
+void				free_structure_rl(t_package *p);
 #endif

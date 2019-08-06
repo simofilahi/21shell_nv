@@ -70,26 +70,29 @@ void	insert_element_1(t_package *p, char *ptr)
 void	insert_element(t_package *p)
 {
 	int		length;
+	int		flag;
 	char	*ptr;
 
 	length = ft_strlen(p->line);
 	ptr = ft_strdup(p->line);
+	flag = 0;
 	if (length >= p->len)
 	{
 		p->len = (length > p->len) ? length + 50 : p->len + 50;
 		ft_strdel(&p->line);
 		if (!(p->line = ft_strnew(p->len)))
 			return ;
+		flag = 1;
 	}
 	if (p->index == length)
 	{
-		ft_strcpy(p->line, ptr);
+		if (flag)
+			ft_memcpy(p->line, ptr, ft_strlen(ptr));
 		p->line[p->index] = p->buffer[0];
 		p->line[p->index + 1] = '\0';
 	}
 	else
 		insert_element_1(p, ptr);
-	ft_strdel(&ptr);
 }
 
 /*

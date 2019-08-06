@@ -16,11 +16,43 @@
 ** check any key pressed;
 */
 
+void		get_input_3(t_package *p, int sum, t_his **his_tail)
+{
+	if (sum == PASTEKEY)
+	{
+		p->flag_hislastline = 1;
+		paste_key(p);
+	}
+	else if (sum >= 32 && sum <= 126)
+	{
+		p->flag_hislastline = 1;
+		print_readablechar(p);
+	}
+	else if (sum == BACKSPACE && checking(p->line, p->index, 2))
+	{
+		p->flag_hislastline = 1;
+		backspace_key(p);
+	}
+	else if (sum == KEYDOWN)
+		ft_history_downkey(p, his_tail);
+	else if ((p->buffer[0] >= 32 && p->buffer[0] <= 126) &&\
+			(p->buffer[1] >= 32 && p->buffer[1] <= 126))
+	{
+		p->flag_hislastline = 1;
+		paste_of_mouse(p);
+	}
+}
+
+/*
+** check any key pressed;
+*/
+
 void		get_input_2(t_package *p, int sum, t_his **his_tail)
 {
-	if (sum == COPYKEY)
-		copy_line_key(&p->holdcopy, p->line);
-	else if (sum == COPYKEY_BC)
+	char *tmp;
+
+	tmp = NULL;
+	if (sum == COPYKEY_BC)
 		copy_before_cursor_key(&p->holdcopy, p->line, p->index);
 	else if (sum == COPYKEY_AC)
 		copy_after_cursor_key(&p->holdcopy, p->line, p->index);
@@ -30,17 +62,19 @@ void		get_input_2(t_package *p, int sum, t_his **his_tail)
 		cut_before_cursor_key(&p->holdcopy, &p->line, p->index);
 	else if (sum == CUTKEY_AC)
 		cut_after_cursor_key(&p->holdcopy, &p->line, p->index);
-	else if (sum == PASTEKEY)
-		paste_key(p);
 	else if (sum == KEYUP)
-		ft_history_upkey(p, his_tail);
-	else if (sum == KEYDOWN)
-		ft_history_downkey(p, his_tail);
-	else if ((p->buffer[0] >= 32 && p->buffer[0] <= 126) &&\
-			(p->buffer[1] >= 32 && p->buffer[1] <= 126))
 	{
-		paste_of_mouse(p);
+		if ((ft_strlen(p->line) > 0 ) && p->flag_hislastline)
+		{
+			tmp = p->hisline_tmp;
+			p->hisline_tmp = ft_strdup(p->line);
+			(tmp != NULL) ? ft_strdel(&tmp) : 0;
+		}
+		p->flag_hislastline = 0;
+		ft_history_upkey(p, his_tail);
 	}
+	else
+		get_input_3(p, sum, his_tail);
 }
 
 /*
@@ -49,14 +83,10 @@ void		get_input_2(t_package *p, int sum, t_his **his_tail)
 
 void		get_input_1(t_package *p, int sum, t_his **his_tail)
 {
-	if (sum >= 32 && sum <= 126)
-		print_readablechar(p);
-	else if (sum == RIGHTKEY && checking(p->line, p->index, 1))
+	if (sum == RIGHTKEY && checking(p->line, p->index, 1))
 		right_key(p);
 	else if (sum == LEFTKEY && checking(p->line, p->index, 2))
 		left_key(p);
-	else if (sum == BACKSPACE && checking(p->line, p->index, 2))
-		backspace_key(p);
 	else if (sum == HOMEKEY && p->index > 0)
 		home_key();
 	else if (sum == ENDKEY && checking(p->line, p->index, 3))
@@ -69,6 +99,8 @@ void		get_input_1(t_package *p, int sum, t_his **his_tail)
 		ft_alt_upkey(p);
 	else if (sum == ALT_DOWNKEY)
 		ft_alt_downkey(p);
+	if (sum == COPYKEY)
+		copy_line_key(&p->holdcopy, p->line);
 	else
 		get_input_2(p, sum, his_tail);
 }
@@ -123,8 +155,6 @@ char		*ft_readline(char prompt[3], t_his *his_tail, int his_flag)
 	normal_mode();
 	if (ft_strlen(p->line) > 0)
 		line = ft_strdup(p->line);
-	ft_strdel(&p->line);
-	ft_strdel(&p->holdcopy);
-	free(p);
+	free_structure_rl(p);
 	return (line);
 }

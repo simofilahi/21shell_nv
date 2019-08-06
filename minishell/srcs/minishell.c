@@ -286,7 +286,7 @@ int		main(int ac, char **av, char **envp)
 	(void)ac;
 	(void)av;
 
-	fd2 = open("/dev/ttys000", O_WRONLY);
+	fd2 = fopen("/dev/ttys002", "a+");
 	g_signal_num = 1;
 	signal(SIGINT, signal_handler);
 	h = ft_memalloc(sizeof(t_holder));
