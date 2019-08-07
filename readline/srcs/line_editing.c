@@ -6,7 +6,7 @@
 /*   By: mfilahi <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/11 14:00:58 by mfilahi           #+#    #+#             */
-/*   Updated: 2019/07/29 15:08:57 by mfilahi          ###   ########.fr       */
+/*   Updated: 2019/08/07 19:29:59 by mfilahi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,6 +97,8 @@ t_package	*init_structure_members(t_his *his_tail, int his_flag)
 	p->last_y = p->init_y;
 	ft_bzero(p->buffer, BUFFER_SIZE);
 	ioctl(0, TIOCGWINSZ, &p->w);
+	fprintf(fd2, "p->w.row %d\n", p->w.ws_row);
+	fprintf(fd2, "p->w.col %d\n", p->w.ws_col);
 	return (cloud(p));
 }
 

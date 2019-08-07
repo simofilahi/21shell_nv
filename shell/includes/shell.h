@@ -199,6 +199,7 @@ void		sys_cmd(char **command, char *path_found, t_env **head_ref);
 void		execute(char **command, char *path_found, t_env **head_ref);
 char		**get_env(t_env **head_ref);
 void		builtin_cmds(t_holder *h, int j);
+void		builtin_cmds_1(t_holder *h, int j, int i, int flag);
 void		which_cmd(char *arg, t_env **head_ref);
 void		env_gerror(void);
 int			own_commands(char *ptab);

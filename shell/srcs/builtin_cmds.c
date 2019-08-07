@@ -101,7 +101,7 @@ int		setenv_cmd(char *arg, char *sarg, t_env **head_ref, int flag)
 	return (1);
 }
 
-void	builtin_cmds(t_holder *h, int j, int i, int flag)
+void	builtin_cmds_1(t_holder *h, int j, int i, int flag)
 {
 	while (h->lst->cmd[i])
 	{
@@ -145,7 +145,7 @@ void	builtin_cmds(t_holder *h, int j)
 		exit(0);
 	}
 	else
-		builtin_cmds(h, j, 1, flag);
+		builtin_cmds_1(h, j, 1, flag);
 }
 
 int		own_commands(char *cmd)
