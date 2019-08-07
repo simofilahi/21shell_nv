@@ -6,18 +6,19 @@
 #    By: mfilahi <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/05/03 16:07:14 by mfilahi           #+#    #+#              #
-#    Updated: 2019/08/06 21:34:39 by mfilahi          ###   ########.fr        #
+#    Updated: 2019/08/07 09:24:52 by aariss           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = 21sh
+
 OBJS_DIR = objs
 LIBFT_HEADER = -I libft/
-SRCS_SH_DIR = minishell/srcs
+SRCS_SH_DIR = shell/srcs
 SRCS_RL_DIR = readline/srcs
-SRCS_PR_DIR = minishell/srcs/parsin
+SRCS_PR_DIR = shell/srcs/parsin
 INCS_RL_DIR = -I readline/includes/ $(LIBFT_HEADER)
-INCS_SH_DIR = -I minishell/includes/ $(INCS_RL_DIR)
+INCS_SH_DIR = -I shell/includes/ $(INCS_RL_DIR)
 LIBS_DIR = libft/libft.a -ltermcap
 
 SRCS_RL = $(SRCS_RL_DIR)/arrowskeys.c \
@@ -32,28 +33,39 @@ SRCS_RL = $(SRCS_RL_DIR)/arrowskeys.c \
 		  $(SRCS_RL_DIR)/manipulatestring.c \
 		  $(SRCS_RL_DIR)/paste.c \
 		  $(SRCS_RL_DIR)/term_capios_config.c \
-		  $(SRCS_RL_DIR)/srcs/write.c
+		  $(SRCS_RL_DIR)/srcs/write.c \
 
 SRCS_SH = $(SRCS_SH_DIR)/execute.c \
 		  $(SRCS_SH_DIR)/builtin_cmds.c \
 		  $(SRCS_SH_DIR)/list.c \
 		  $(SRCS_SH_DIR)/list_1.c \
-		  $(SRCS_SH_DIR)/minishell.c \
+		  $(SRCS_SH_DIR)/shell.c \
 		  $(SRCS_SH_DIR)/own_cmds.c \
 		  $(SRCS_SH_DIR)/srcs.c \
-		  $(SRCS_SH_DIR)/voidy.c \
-		  $(SRCS_SH_DIR)/next_voidy.c \
 		  $(SRCS_SH_DIR)/sec_count.c \
 		  $(SRCS_SH_DIR)/darlin.c \
-		  $(SRCS_SH_DIR)/recall_readline.c \
+		  $(SRCS_SH_DIR)/free.c \
+		  $(SRCS_SH_DIR)/redirection_master.c \
+		  $(SRCS_SH_DIR)/errors.c \
+		  $(SRCS_SH_DIR)/childs.c \
+		  $(SRCS_SH_DIR)/recall_readline.c\
+ 		  $(SRCS_SH_DIR)/qoutes.c \
 		  $(SRCS_SH_DIR)/heredoc.c \
-		  $(SRCS_SH_DIR)/qoutes.c
+		  $(SRCS_SH_DIR)/shell_1.c
 
 SRCS_PR = $(SRCS_PR_DIR)/extras.c \
+		  $(SRCS_PR_DIR)/more_extras.c \
 		  $(SRCS_PR_DIR)/parsin.c \
 		  $(SRCS_PR_DIR)/dollar.c \
 		  $(SRCS_PR_DIR)/count.c \
-		  $(SRCS_PR_DIR)/check.c
+		  $(SRCS_PR_DIR)/check.c \
+		  $(SRCS_PR_DIR)/token.c \
+		  $(SRCS_PR_DIR)/info.c \
+		  $(SRCS_PR_DIR)/escape_n_quote.c \
+		  $(SRCS_PR_DIR)/lst_make.c \
+		  $(SRCS_PR_DIR)/add_funcs.c \
+		  $(SRCS_PR_DIR)/mc.c \
+		  $(SRCS_PR_DIR)/ultimate_check.c
 
 OBJECT_RL = $(patsubst %, $(OBJS_DIR)/%, $(notdir $(SRCS_RL:.c=.o)))
 OBJECT_SH = $(patsubst %, $(OBJS_DIR)/%, $(notdir $(SRCS_SH:.c=.o)))
@@ -62,15 +74,15 @@ OBJECT_PR = $(patsubst %, $(OBJS_DIR)/%, $(notdir $(SRCS_PR:.c=.o)))
 CC = gcc
 CFLAGS = -Wall -Werror -Wextra
 
-BoldRed = 
-BoldGreen =
-BoldBlue = 
-BoldYellow = 
-ED = \033[0m 
+BoldRed = \033[1;31m
+BoldGreen = \033[1;32m
+BoldBlue = \033[1;34m
+BoldYellow = \033[01;33m
+ED = \033[0m
 
 all: $(NAME)
 
-$(NAME): $(OBJS_DIR) $(OBJECT_SH) $(OBJECT_RL) $(OBJECT_PR)
+$(NAME): $(OBJS_DIR) $(OBJECT_RL) $(OBJECT_SH) $(OBJECT_PR)
 	@make -C libft/
 	@echo "$(BoldBlue)Linking...$(ED)"
 	@$(CC) $(OBJECT_RL) $(OBJECT_SH) $(OBJECT_PR) $(LIBS_DIR) -o $(NAME)
@@ -97,11 +109,11 @@ $(OBJS_DIR)/%.o : $(SRCS_RL_DIR)/%.c
 	@$(CC) $(CFLAGS) $(INCS_RL_DIR) -c $< -o $@
 
 $(OBJS_DIR)/%.o : $(SRCS_SH_DIR)/%.c
-	@echo "$(BoldYellow)Compiling 21shell Srcs...$(ED)"
+	@echo "$(BoldYellow)Compiling shell Srcs...$(ED)"
 	@$(CC) $(CFLAGS) $(INCS_SH_DIR) -c $< -o $@
 
 $(OBJS_DIR)/%.o : $(SRCS_PR_DIR)/%.c
-	@echo "$(BoldYellow)Compiling 21shell Srcs...$(ED)"
+	@echo "$(BoldYellow)Compiling shell Srcs...$(ED)"
 	@$(CC) $(CFLAGS) $(INCS_SH_DIR) -c $< -o $@
 clean:
 	@echo "$(BoldRed)Remove Libft binaries...$(ED)"

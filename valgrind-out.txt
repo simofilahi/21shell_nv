@@ -8,94 +8,94 @@
 ==20330== Conditional jump or move depends on uninitialised value(s)
 ==20330==    at 0x10000B3D3: ft_strlen (in ./21sh)
 ==20330==    by 0x10000A01E: mc_maker (in ./21sh)
-==20330==    by 0x100005823: minishell (in ./21sh)
+==20330==    by 0x100005823: shell (in ./21sh)
 ==20330==    by 0x100005956: main (in ./21sh)
 ==20330==  Uninitialised value was created by a heap allocation
 ==20330==    at 0x1000A6626: malloc (in /Users/mfilahi/.brew/Cellar/valgrind/3.14.0/lib/valgrind/vgpreload_memcheck-amd64-darwin.so)
 ==20330==    by 0x100008344: skip_quote (in ./21sh)
 ==20330==    by 0x1000091B6: parsin (in ./21sh)
 ==20330==    by 0x10000A009: mc_maker (in ./21sh)
-==20330==    by 0x100005823: minishell (in ./21sh)
+==20330==    by 0x100005823: shell (in ./21sh)
 ==20330==    by 0x100005956: main (in ./21sh)
 ==20330== 
 ==20330== Conditional jump or move depends on uninitialised value(s)
 ==20330==    at 0x10000A02A: mc_maker (in ./21sh)
-==20330==    by 0x100005823: minishell (in ./21sh)
+==20330==    by 0x100005823: shell (in ./21sh)
 ==20330==    by 0x100005956: main (in ./21sh)
 ==20330==  Uninitialised value was created by a heap allocation
 ==20330==    at 0x1000A6626: malloc (in /Users/mfilahi/.brew/Cellar/valgrind/3.14.0/lib/valgrind/vgpreload_memcheck-amd64-darwin.so)
 ==20330==    by 0x100008344: skip_quote (in ./21sh)
 ==20330==    by 0x1000091B6: parsin (in ./21sh)
 ==20330==    by 0x10000A009: mc_maker (in ./21sh)
-==20330==    by 0x100005823: minishell (in ./21sh)
+==20330==    by 0x100005823: shell (in ./21sh)
 ==20330==    by 0x100005956: main (in ./21sh)
 ==20330== 
 ==20330== Conditional jump or move depends on uninitialised value(s)
 ==20330==    at 0x10000B7D6: ft_words_count (in ./21sh)
 ==20330==    by 0x10000B576: ft_strsplit (in ./21sh)
 ==20330==    by 0x10000A056: mc_maker (in ./21sh)
-==20330==    by 0x100005823: minishell (in ./21sh)
+==20330==    by 0x100005823: shell (in ./21sh)
 ==20330==    by 0x100005956: main (in ./21sh)
 ==20330==  Uninitialised value was created by a heap allocation
 ==20330==    at 0x1000A6626: malloc (in /Users/mfilahi/.brew/Cellar/valgrind/3.14.0/lib/valgrind/vgpreload_memcheck-amd64-darwin.so)
 ==20330==    by 0x100008344: skip_quote (in ./21sh)
 ==20330==    by 0x1000091B6: parsin (in ./21sh)
 ==20330==    by 0x10000A009: mc_maker (in ./21sh)
-==20330==    by 0x100005823: minishell (in ./21sh)
+==20330==    by 0x100005823: shell (in ./21sh)
 ==20330==    by 0x100005956: main (in ./21sh)
 ==20330== 
 ==20330== Conditional jump or move depends on uninitialised value(s)
 ==20330==    at 0x10000B73C: ft_words_count (in ./21sh)
 ==20330==    by 0x10000B576: ft_strsplit (in ./21sh)
 ==20330==    by 0x10000A056: mc_maker (in ./21sh)
-==20330==    by 0x100005823: minishell (in ./21sh)
+==20330==    by 0x100005823: shell (in ./21sh)
 ==20330==    by 0x100005956: main (in ./21sh)
 ==20330==  Uninitialised value was created by a heap allocation
 ==20330==    at 0x1000A6626: malloc (in /Users/mfilahi/.brew/Cellar/valgrind/3.14.0/lib/valgrind/vgpreload_memcheck-amd64-darwin.so)
 ==20330==    by 0x100008344: skip_quote (in ./21sh)
 ==20330==    by 0x1000091B6: parsin (in ./21sh)
 ==20330==    by 0x10000A009: mc_maker (in ./21sh)
-==20330==    by 0x100005823: minishell (in ./21sh)
+==20330==    by 0x100005823: shell (in ./21sh)
 ==20330==    by 0x100005956: main (in ./21sh)
 ==20330== 
 ==20330== Conditional jump or move depends on uninitialised value(s)
 ==20330==    at 0x10000B8AA: ft_word_len (in ./21sh)
 ==20330==    by 0x10000B647: ft_strsplit (in ./21sh)
 ==20330==    by 0x10000A056: mc_maker (in ./21sh)
-==20330==    by 0x100005823: minishell (in ./21sh)
+==20330==    by 0x100005823: shell (in ./21sh)
 ==20330==    by 0x100005956: main (in ./21sh)
 ==20330==  Uninitialised value was created by a heap allocation
 ==20330==    at 0x1000A6626: malloc (in /Users/mfilahi/.brew/Cellar/valgrind/3.14.0/lib/valgrind/vgpreload_memcheck-amd64-darwin.so)
 ==20330==    by 0x100008344: skip_quote (in ./21sh)
 ==20330==    by 0x1000091B6: parsin (in ./21sh)
 ==20330==    by 0x10000A009: mc_maker (in ./21sh)
-==20330==    by 0x100005823: minishell (in ./21sh)
+==20330==    by 0x100005823: shell (in ./21sh)
 ==20330==    by 0x100005956: main (in ./21sh)
 ==20330== 
 ==20330== Conditional jump or move depends on uninitialised value(s)
 ==20330==    at 0x10000B674: ft_strsplit (in ./21sh)
 ==20330==    by 0x10000A056: mc_maker (in ./21sh)
-==20330==    by 0x100005823: minishell (in ./21sh)
+==20330==    by 0x100005823: shell (in ./21sh)
 ==20330==    by 0x100005956: main (in ./21sh)
 ==20330==  Uninitialised value was created by a heap allocation
 ==20330==    at 0x1000A6626: malloc (in /Users/mfilahi/.brew/Cellar/valgrind/3.14.0/lib/valgrind/vgpreload_memcheck-amd64-darwin.so)
 ==20330==    by 0x100008344: skip_quote (in ./21sh)
 ==20330==    by 0x1000091B6: parsin (in ./21sh)
 ==20330==    by 0x10000A009: mc_maker (in ./21sh)
-==20330==    by 0x100005823: minishell (in ./21sh)
+==20330==    by 0x100005823: shell (in ./21sh)
 ==20330==    by 0x100005956: main (in ./21sh)
 ==20330== 
 ==20330== Conditional jump or move depends on uninitialised value(s)
 ==20330==    at 0x10000B5BF: ft_strsplit (in ./21sh)
 ==20330==    by 0x10000A056: mc_maker (in ./21sh)
-==20330==    by 0x100005823: minishell (in ./21sh)
+==20330==    by 0x100005823: shell (in ./21sh)
 ==20330==    by 0x100005956: main (in ./21sh)
 ==20330==  Uninitialised value was created by a heap allocation
 ==20330==    at 0x1000A6626: malloc (in /Users/mfilahi/.brew/Cellar/valgrind/3.14.0/lib/valgrind/vgpreload_memcheck-amd64-darwin.so)
 ==20330==    by 0x100008344: skip_quote (in ./21sh)
 ==20330==    by 0x1000091B6: parsin (in ./21sh)
 ==20330==    by 0x10000A009: mc_maker (in ./21sh)
-==20330==    by 0x100005823: minishell (in ./21sh)
+==20330==    by 0x100005823: shell (in ./21sh)
 ==20330==    by 0x100005956: main (in ./21sh)
 ==20330== 
 ==20414== Syscall param execve(filename) points to unaddressable byte(s)
@@ -104,14 +104,14 @@
 ==20414==    by 0x1000050DE: sys_cmd (in ./21sh)
 ==20414==    by 0x10000518E: child_pid (in ./21sh)
 ==20414==    by 0x100006BAC: darlin_g (in ./21sh)
-==20414==    by 0x10000589C: minishell (in ./21sh)
+==20414==    by 0x10000589C: shell (in ./21sh)
 ==20414==    by 0x100005956: main (in ./21sh)
 ==20414==  Address 0x100c57ac0 is 0 bytes inside a block of size 23 free'd
 ==20414==    at 0x1000A6A03: free (in /Users/mfilahi/.brew/Cellar/valgrind/3.14.0/lib/valgrind/vgpreload_memcheck-amd64-darwin.so)
 ==20414==    by 0x1000050A5: sys_cmd (in ./21sh)
 ==20414==    by 0x10000518E: child_pid (in ./21sh)
 ==20414==    by 0x100006BAC: darlin_g (in ./21sh)
-==20414==    by 0x10000589C: minishell (in ./21sh)
+==20414==    by 0x10000589C: shell (in ./21sh)
 ==20414==    by 0x100005956: main (in ./21sh)
 ==20414==  Block was alloc'd at
 ==20414==    at 0x1000A6626: malloc (in /Users/mfilahi/.brew/Cellar/valgrind/3.14.0/lib/valgrind/vgpreload_memcheck-amd64-darwin.so)
@@ -119,7 +119,7 @@
 ==20414==    by 0x10000506D: sys_cmd (in ./21sh)
 ==20414==    by 0x10000518E: child_pid (in ./21sh)
 ==20414==    by 0x100006BAC: darlin_g (in ./21sh)
-==20414==    by 0x10000589C: minishell (in ./21sh)
+==20414==    by 0x10000589C: shell (in ./21sh)
 ==20414==    by 0x100005956: main (in ./21sh)
 ==20414== 
 ==20414== Syscall param execve(argv[i]) points to unaddressable byte(s)
@@ -128,14 +128,14 @@
 ==20414==    by 0x1000050DE: sys_cmd (in ./21sh)
 ==20414==    by 0x10000518E: child_pid (in ./21sh)
 ==20414==    by 0x100006BAC: darlin_g (in ./21sh)
-==20414==    by 0x10000589C: minishell (in ./21sh)
+==20414==    by 0x10000589C: shell (in ./21sh)
 ==20414==    by 0x100005956: main (in ./21sh)
 ==20414==  Address 0x100c57ac0 is 0 bytes inside a block of size 23 free'd
 ==20414==    at 0x1000A6A03: free (in /Users/mfilahi/.brew/Cellar/valgrind/3.14.0/lib/valgrind/vgpreload_memcheck-amd64-darwin.so)
 ==20414==    by 0x1000050A5: sys_cmd (in ./21sh)
 ==20414==    by 0x10000518E: child_pid (in ./21sh)
 ==20414==    by 0x100006BAC: darlin_g (in ./21sh)
-==20414==    by 0x10000589C: minishell (in ./21sh)
+==20414==    by 0x10000589C: shell (in ./21sh)
 ==20414==    by 0x100005956: main (in ./21sh)
 ==20414==  Block was alloc'd at
 ==20414==    at 0x1000A6626: malloc (in /Users/mfilahi/.brew/Cellar/valgrind/3.14.0/lib/valgrind/vgpreload_memcheck-amd64-darwin.so)
@@ -143,7 +143,7 @@
 ==20414==    by 0x10000506D: sys_cmd (in ./21sh)
 ==20414==    by 0x10000518E: child_pid (in ./21sh)
 ==20414==    by 0x100006BAC: darlin_g (in ./21sh)
-==20414==    by 0x10000589C: minishell (in ./21sh)
+==20414==    by 0x10000589C: shell (in ./21sh)
 ==20414==    by 0x100005956: main (in ./21sh)
 ==20414== 
 ==20414== Syscall param access(pathname) points to unaddressable byte(s)
@@ -152,14 +152,14 @@
 ==20414==    by 0x1000050DE: sys_cmd (in ./21sh)
 ==20414==    by 0x10000518E: child_pid (in ./21sh)
 ==20414==    by 0x100006BAC: darlin_g (in ./21sh)
-==20414==    by 0x10000589C: minishell (in ./21sh)
+==20414==    by 0x10000589C: shell (in ./21sh)
 ==20414==    by 0x100005956: main (in ./21sh)
 ==20414==  Address 0x100c57ac0 is 0 bytes inside a block of size 23 free'd
 ==20414==    at 0x1000A6A03: free (in /Users/mfilahi/.brew/Cellar/valgrind/3.14.0/lib/valgrind/vgpreload_memcheck-amd64-darwin.so)
 ==20414==    by 0x1000050A5: sys_cmd (in ./21sh)
 ==20414==    by 0x10000518E: child_pid (in ./21sh)
 ==20414==    by 0x100006BAC: darlin_g (in ./21sh)
-==20414==    by 0x10000589C: minishell (in ./21sh)
+==20414==    by 0x10000589C: shell (in ./21sh)
 ==20414==    by 0x100005956: main (in ./21sh)
 ==20414==  Block was alloc'd at
 ==20414==    at 0x1000A6626: malloc (in /Users/mfilahi/.brew/Cellar/valgrind/3.14.0/lib/valgrind/vgpreload_memcheck-amd64-darwin.so)
@@ -167,7 +167,7 @@
 ==20414==    by 0x10000506D: sys_cmd (in ./21sh)
 ==20414==    by 0x10000518E: child_pid (in ./21sh)
 ==20414==    by 0x100006BAC: darlin_g (in ./21sh)
-==20414==    by 0x10000589C: minishell (in ./21sh)
+==20414==    by 0x10000589C: shell (in ./21sh)
 ==20414==    by 0x100005956: main (in ./21sh)
 ==20414== 
 ==20414== Syscall param access(pathname) points to unaddressable byte(s)
@@ -176,14 +176,14 @@
 ==20414==    by 0x1000050DE: sys_cmd (in ./21sh)
 ==20414==    by 0x10000518E: child_pid (in ./21sh)
 ==20414==    by 0x100006BAC: darlin_g (in ./21sh)
-==20414==    by 0x10000589C: minishell (in ./21sh)
+==20414==    by 0x10000589C: shell (in ./21sh)
 ==20414==    by 0x100005956: main (in ./21sh)
 ==20414==  Address 0x100c57ac0 is 0 bytes inside a block of size 23 free'd
 ==20414==    at 0x1000A6A03: free (in /Users/mfilahi/.brew/Cellar/valgrind/3.14.0/lib/valgrind/vgpreload_memcheck-amd64-darwin.so)
 ==20414==    by 0x1000050A5: sys_cmd (in ./21sh)
 ==20414==    by 0x10000518E: child_pid (in ./21sh)
 ==20414==    by 0x100006BAC: darlin_g (in ./21sh)
-==20414==    by 0x10000589C: minishell (in ./21sh)
+==20414==    by 0x10000589C: shell (in ./21sh)
 ==20414==    by 0x100005956: main (in ./21sh)
 ==20414==  Block was alloc'd at
 ==20414==    at 0x1000A6626: malloc (in /Users/mfilahi/.brew/Cellar/valgrind/3.14.0/lib/valgrind/vgpreload_memcheck-amd64-darwin.so)
@@ -191,7 +191,7 @@
 ==20414==    by 0x10000506D: sys_cmd (in ./21sh)
 ==20414==    by 0x10000518E: child_pid (in ./21sh)
 ==20414==    by 0x100006BAC: darlin_g (in ./21sh)
-==20414==    by 0x10000589C: minishell (in ./21sh)
+==20414==    by 0x10000589C: shell (in ./21sh)
 ==20414==    by 0x100005956: main (in ./21sh)
 ==20414== 
 ==20414== 
@@ -205,7 +205,7 @@
 ==20414==    by 0x10000B1E1: ft_strdup (in ./21sh)
 ==20414==    by 0x100008E40: parsin (in ./21sh)
 ==20414==    by 0x10000A009: mc_maker (in ./21sh)
-==20414==    by 0x100005823: minishell (in ./21sh)
+==20414==    by 0x100005823: shell (in ./21sh)
 ==20414==    by 0x100005956: main (in ./21sh)
 ==20414== 
 ==20414== 6 bytes in 1 blocks are definitely lost in loss record 4 of 123
@@ -215,13 +215,13 @@
 ==20414==    by 0x100009DB2: not_known_as_if (in ./21sh)
 ==20414==    by 0x100009ED0: well_you_know (in ./21sh)
 ==20414==    by 0x100009FB3: last_splice (in ./21sh)
-==20414==    by 0x100005883: minishell (in ./21sh)
+==20414==    by 0x100005883: shell (in ./21sh)
 ==20414==    by 0x100005956: main (in ./21sh)
 ==20414== 
 ==20414== 8 bytes in 4 blocks are definitely lost in loss record 6 of 123
 ==20414==    at 0x1000A6626: malloc (in /Users/mfilahi/.brew/Cellar/valgrind/3.14.0/lib/valgrind/vgpreload_memcheck-amd64-darwin.so)
 ==20414==    by 0x10000B4FC: ft_strnew (in ./21sh)
-==20414==    by 0x100005847: minishell (in ./21sh)
+==20414==    by 0x100005847: shell (in ./21sh)
 ==20414==    by 0x100005956: main (in ./21sh)
 ==20414== 
 ==20414== 64 bytes in 1 blocks are definitely lost in loss record 66 of 123
@@ -231,7 +231,7 @@
 ==20414==    by 0x10000502D: sys_cmd (in ./21sh)
 ==20414==    by 0x10000518E: child_pid (in ./21sh)
 ==20414==    by 0x100006BAC: darlin_g (in ./21sh)
-==20414==    by 0x10000589C: minishell (in ./21sh)
+==20414==    by 0x10000589C: shell (in ./21sh)
 ==20414==    by 0x100005956: main (in ./21sh)
 ==20414== 
 ==20414== 72 bytes in 3 blocks are possibly lost in loss record 67 of 123
@@ -258,21 +258,21 @@
 ==20414==    by 0x100002287: get_input (in ./21sh)
 ==20414==    by 0x100002315: ft_readline (in ./21sh)
 ==20414==    by 0x100005687: call_readline (in ./21sh)
-==20414==    by 0x100005754: minishell (in ./21sh)
+==20414==    by 0x100005754: shell (in ./21sh)
 ==20414==    by 0x100005956: main (in ./21sh)
 ==20414== 
 ==20414== 120 bytes in 5 blocks are definitely lost in loss record 73 of 123
 ==20414==    at 0x1000A6626: malloc (in /Users/mfilahi/.brew/Cellar/valgrind/3.14.0/lib/valgrind/vgpreload_memcheck-amd64-darwin.so)
 ==20414==    by 0x100009EDC: well_you_know (in ./21sh)
 ==20414==    by 0x100009FB3: last_splice (in ./21sh)
-==20414==    by 0x100005883: minishell (in ./21sh)
+==20414==    by 0x100005883: shell (in ./21sh)
 ==20414==    by 0x100005956: main (in ./21sh)
 ==20414== 
 ==20414== 152 (64 direct, 88 indirect) bytes in 4 blocks are definitely lost in loss record 77 of 123
 ==20414==    at 0x1000A6626: malloc (in /Users/mfilahi/.brew/Cellar/valgrind/3.14.0/lib/valgrind/vgpreload_memcheck-amd64-darwin.so)
 ==20414==    by 0x1000091FA: mc_lst (in ./21sh)
 ==20414==    by 0x10000A063: mc_maker (in ./21sh)
-==20414==    by 0x100005823: minishell (in ./21sh)
+==20414==    by 0x100005823: shell (in ./21sh)
 ==20414==    by 0x100005956: main (in ./21sh)
 ==20414== 
 ==20414== 211 bytes in 5 blocks are definitely lost in loss record 86 of 123
@@ -281,7 +281,7 @@
 ==20414==    by 0x10000B1E1: ft_strdup (in ./21sh)
 ==20414==    by 0x100002340: ft_readline (in ./21sh)
 ==20414==    by 0x100005687: call_readline (in ./21sh)
-==20414==    by 0x100005754: minishell (in ./21sh)
+==20414==    by 0x100005754: shell (in ./21sh)
 ==20414==    by 0x100005956: main (in ./21sh)
 ==20414== 
 ==20414== 211 bytes in 5 blocks are definitely lost in loss record 87 of 123
@@ -291,7 +291,7 @@
 ==20414==    by 0x10000706B: heredoc_handler (in ./21sh)
 ==20414==    by 0x100006F7D: recall_readline (in ./21sh)
 ==20414==    by 0x100005713: call_readline (in ./21sh)
-==20414==    by 0x100005754: minishell (in ./21sh)
+==20414==    by 0x100005754: shell (in ./21sh)
 ==20414==    by 0x100005956: main (in ./21sh)
 ==20414== 
 ==20414== 211 bytes in 5 blocks are definitely lost in loss record 88 of 123
@@ -299,27 +299,27 @@
 ==20414==    by 0x100008344: skip_quote (in ./21sh)
 ==20414==    by 0x1000091B6: parsin (in ./21sh)
 ==20414==    by 0x10000A009: mc_maker (in ./21sh)
-==20414==    by 0x100005823: minishell (in ./21sh)
+==20414==    by 0x100005823: shell (in ./21sh)
 ==20414==    by 0x100005956: main (in ./21sh)
 ==20414== 
 ==20414== 291 (80 direct, 211 indirect) bytes in 5 blocks are definitely lost in loss record 95 of 123
 ==20414==    at 0x1000A6626: malloc (in /Users/mfilahi/.brew/Cellar/valgrind/3.14.0/lib/valgrind/vgpreload_memcheck-amd64-darwin.so)
 ==20414==    by 0x10000B58B: ft_strsplit (in ./21sh)
 ==20414==    by 0x10000A056: mc_maker (in ./21sh)
-==20414==    by 0x100005823: minishell (in ./21sh)
+==20414==    by 0x100005823: shell (in ./21sh)
 ==20414==    by 0x100005956: main (in ./21sh)
 ==20414== 
 ==20414== 328 (96 direct, 232 indirect) bytes in 4 blocks are definitely lost in loss record 97 of 123
 ==20414==    at 0x1000A6626: malloc (in /Users/mfilahi/.brew/Cellar/valgrind/3.14.0/lib/valgrind/vgpreload_memcheck-amd64-darwin.so)
 ==20414==    by 0x100009F7A: last_splice (in ./21sh)
-==20414==    by 0x100005883: minishell (in ./21sh)
+==20414==    by 0x100005883: shell (in ./21sh)
 ==20414==    by 0x100005956: main (in ./21sh)
 ==20414== 
 ==20414== 1,030 (720 direct, 310 indirect) bytes in 5 blocks are definitely lost in loss record 107 of 123
 ==20414==    at 0x1000A6626: malloc (in /Users/mfilahi/.brew/Cellar/valgrind/3.14.0/lib/valgrind/vgpreload_memcheck-amd64-darwin.so)
 ==20414==    by 0x100008183: init_cases (in ./21sh)
 ==20414==    by 0x100009FF4: mc_maker (in ./21sh)
-==20414==    by 0x100005823: minishell (in ./21sh)
+==20414==    by 0x100005823: shell (in ./21sh)
 ==20414==    by 0x100005956: main (in ./21sh)
 ==20414== 
 ==20414== 1,670 (80 direct, 1,590 indirect) bytes in 5 blocks are definitely lost in loss record 110 of 123
@@ -327,7 +327,7 @@
 ==20414==    by 0x10000808A: fill_lst (in ./21sh)
 ==20414==    by 0x10000830C: init_cases (in ./21sh)
 ==20414==    by 0x100009FF4: mc_maker (in ./21sh)
-==20414==    by 0x100005823: minishell (in ./21sh)
+==20414==    by 0x100005823: shell (in ./21sh)
 ==20414==    by 0x100005956: main (in ./21sh)
 ==20414== 
 ==20414== 2,064 (16 direct, 2,048 indirect) bytes in 1 blocks are definitely lost in loss record 117 of 123
@@ -341,7 +341,7 @@
 ==20414==    by 0x1002C0436: fork (in /usr/lib/system/libsystem_c.dylib)
 ==20414==    by 0x10000510B: child_pid (in ./21sh)
 ==20414==    by 0x100006BAC: darlin_g (in ./21sh)
-==20414==    by 0x10000589C: minishell (in ./21sh)
+==20414==    by 0x10000589C: shell (in ./21sh)
 ==20414==    by 0x100005956: main (in ./21sh)
 ==20414== 
 ==20414== 2,064 (16 direct, 2,048 indirect) bytes in 1 blocks are definitely lost in loss record 118 of 123
@@ -355,7 +355,7 @@
 ==20414==    by 0x1002C0436: fork (in /usr/lib/system/libsystem_c.dylib)
 ==20414==    by 0x10000510B: child_pid (in ./21sh)
 ==20414==    by 0x100006BAC: darlin_g (in ./21sh)
-==20414==    by 0x10000589C: minishell (in ./21sh)
+==20414==    by 0x10000589C: shell (in ./21sh)
 ==20414==    by 0x100005956: main (in ./21sh)
 ==20414== 
 ==20414== 17,662 bytes in 206 blocks are definitely lost in loss record 123 of 123
@@ -363,7 +363,7 @@
 ==20414==    by 0x100007FE4: ft_joinchar (in ./21sh)
 ==20414==    by 0x10000917D: parsin (in ./21sh)
 ==20414==    by 0x10000A009: mc_maker (in ./21sh)
-==20414==    by 0x100005823: minishell (in ./21sh)
+==20414==    by 0x100005823: shell (in ./21sh)
 ==20414==    by 0x100005956: main (in ./21sh)
 ==20414== 
 ==20414== LEAK SUMMARY:
@@ -388,7 +388,7 @@
 ==20330==    by 0x100006E4F: meta_hander_ctrl_c_d (in ./21sh)
 ==20330==    by 0x100006FC9: recall_readline (in ./21sh)
 ==20330==    by 0x100005713: call_readline (in ./21sh)
-==20330==    by 0x100005754: minishell (in ./21sh)
+==20330==    by 0x100005754: shell (in ./21sh)
 ==20330==    by 0x100005956: main (in ./21sh)
 ==20330==  Address 0x100c6d540 is 0 bytes inside a block of size 100,144 free'd
 ==20330==    at 0x1000A6A03: free (in /Users/mfilahi/.brew/Cellar/valgrind/3.14.0/lib/valgrind/vgpreload_memcheck-amd64-darwin.so)
@@ -396,7 +396,7 @@
 ==20330==    by 0x100006E4F: meta_hander_ctrl_c_d (in ./21sh)
 ==20330==    by 0x100006FC9: recall_readline (in ./21sh)
 ==20330==    by 0x100005713: call_readline (in ./21sh)
-==20330==    by 0x100005754: minishell (in ./21sh)
+==20330==    by 0x100005754: shell (in ./21sh)
 ==20330==    by 0x100005956: main (in ./21sh)
 ==20330==  Block was alloc'd at
 ==20330==    at 0x1000A6626: malloc (in /Users/mfilahi/.brew/Cellar/valgrind/3.14.0/lib/valgrind/vgpreload_memcheck-amd64-darwin.so)
@@ -406,7 +406,7 @@
 ==20330==    by 0x100006E4F: meta_hander_ctrl_c_d (in ./21sh)
 ==20330==    by 0x100006FC9: recall_readline (in ./21sh)
 ==20330==    by 0x100005713: call_readline (in ./21sh)
-==20330==    by 0x100005754: minishell (in ./21sh)
+==20330==    by 0x100005754: shell (in ./21sh)
 ==20330==    by 0x100005956: main (in ./21sh)
 ==20330== 
 ==20330== Invalid read of size 4
@@ -420,7 +420,7 @@
 ==20330==    by 0x100006E4F: meta_hander_ctrl_c_d (in ./21sh)
 ==20330==    by 0x100006FC9: recall_readline (in ./21sh)
 ==20330==    by 0x100005713: call_readline (in ./21sh)
-==20330==    by 0x100005754: minishell (in ./21sh)
+==20330==    by 0x100005754: shell (in ./21sh)
 ==20330==    by 0x100005956: main (in ./21sh)
 ==20330==  Address 0x100c85bf0 is 100,016 bytes inside a block of size 100,144 free'd
 ==20330==    at 0x1000A6A03: free (in /Users/mfilahi/.brew/Cellar/valgrind/3.14.0/lib/valgrind/vgpreload_memcheck-amd64-darwin.so)
@@ -428,7 +428,7 @@
 ==20330==    by 0x100006E4F: meta_hander_ctrl_c_d (in ./21sh)
 ==20330==    by 0x100006FC9: recall_readline (in ./21sh)
 ==20330==    by 0x100005713: call_readline (in ./21sh)
-==20330==    by 0x100005754: minishell (in ./21sh)
+==20330==    by 0x100005754: shell (in ./21sh)
 ==20330==    by 0x100005956: main (in ./21sh)
 ==20330==  Block was alloc'd at
 ==20330==    at 0x1000A6626: malloc (in /Users/mfilahi/.brew/Cellar/valgrind/3.14.0/lib/valgrind/vgpreload_memcheck-amd64-darwin.so)
@@ -438,7 +438,7 @@
 ==20330==    by 0x100006E4F: meta_hander_ctrl_c_d (in ./21sh)
 ==20330==    by 0x100006FC9: recall_readline (in ./21sh)
 ==20330==    by 0x100005713: call_readline (in ./21sh)
-==20330==    by 0x100005754: minishell (in ./21sh)
+==20330==    by 0x100005754: shell (in ./21sh)
 ==20330==    by 0x100005956: main (in ./21sh)
 ==20330== 
 ==20330== Invalid read of size 1
@@ -452,7 +452,7 @@
 ==20330==    by 0x100006E4F: meta_hander_ctrl_c_d (in ./21sh)
 ==20330==    by 0x100006FC9: recall_readline (in ./21sh)
 ==20330==    by 0x100005713: call_readline (in ./21sh)
-==20330==    by 0x100005754: minishell (in ./21sh)
+==20330==    by 0x100005754: shell (in ./21sh)
 ==20330==    by 0x100005956: main (in ./21sh)
 ==20330==  Address 0x5 is not stack'd, malloc'd or (recently) free'd
 ==20330== 
@@ -469,7 +469,7 @@
 ==20330==    by 0x100006E4F: meta_hander_ctrl_c_d (in ./21sh)
 ==20330==    by 0x100006FC9: recall_readline (in ./21sh)
 ==20330==    by 0x100005713: call_readline (in ./21sh)
-==20330==    by 0x100005754: minishell (in ./21sh)
+==20330==    by 0x100005754: shell (in ./21sh)
 ==20330==    by 0x100005956: main (in ./21sh)
 ==20330==  If you believe this happened as a result of a stack
 ==20330==  overflow in your program's main thread (unlikely but
@@ -487,13 +487,13 @@
 ==20330==    by 0x10000B1E1: ft_strdup (in ./21sh)
 ==20330==    by 0x100008E40: parsin (in ./21sh)
 ==20330==    by 0x10000A009: mc_maker (in ./21sh)
-==20330==    by 0x100005823: minishell (in ./21sh)
+==20330==    by 0x100005823: shell (in ./21sh)
 ==20330==    by 0x100005956: main (in ./21sh)
 ==20330== 
 ==20330== 10 bytes in 5 blocks are definitely lost in loss record 7 of 111
 ==20330==    at 0x1000A6626: malloc (in /Users/mfilahi/.brew/Cellar/valgrind/3.14.0/lib/valgrind/vgpreload_memcheck-amd64-darwin.so)
 ==20330==    by 0x10000B4FC: ft_strnew (in ./21sh)
-==20330==    by 0x100005847: minishell (in ./21sh)
+==20330==    by 0x100005847: shell (in ./21sh)
 ==20330==    by 0x100005956: main (in ./21sh)
 ==20330== 
 ==20330== 15 bytes in 5 blocks are definitely lost in loss record 18 of 111
@@ -508,7 +508,7 @@
 ==20330==    by 0x100006E4F: meta_hander_ctrl_c_d (in ./21sh)
 ==20330==    by 0x100006FC9: recall_readline (in ./21sh)
 ==20330==    by 0x100005713: call_readline (in ./21sh)
-==20330==    by 0x100005754: minishell (in ./21sh)
+==20330==    by 0x100005754: shell (in ./21sh)
 ==20330== 
 ==20330== 72 bytes in 3 blocks are possibly lost in loss record 62 of 111
 ==20330==    at 0x1000A6C8A: calloc (in /Users/mfilahi/.brew/Cellar/valgrind/3.14.0/lib/valgrind/vgpreload_memcheck-amd64-darwin.so)
@@ -528,14 +528,14 @@
 ==20330==    at 0x1000A6626: malloc (in /Users/mfilahi/.brew/Cellar/valgrind/3.14.0/lib/valgrind/vgpreload_memcheck-amd64-darwin.so)
 ==20330==    by 0x100009EDC: well_you_know (in ./21sh)
 ==20330==    by 0x100009FB3: last_splice (in ./21sh)
-==20330==    by 0x100005883: minishell (in ./21sh)
+==20330==    by 0x100005883: shell (in ./21sh)
 ==20330==    by 0x100005956: main (in ./21sh)
 ==20330== 
 ==20330== 152 (64 direct, 88 indirect) bytes in 4 blocks are definitely lost in loss record 71 of 111
 ==20330==    at 0x1000A6626: malloc (in /Users/mfilahi/.brew/Cellar/valgrind/3.14.0/lib/valgrind/vgpreload_memcheck-amd64-darwin.so)
 ==20330==    by 0x1000091FA: mc_lst (in ./21sh)
 ==20330==    by 0x10000A063: mc_maker (in ./21sh)
-==20330==    by 0x100005823: minishell (in ./21sh)
+==20330==    by 0x100005823: shell (in ./21sh)
 ==20330==    by 0x100005956: main (in ./21sh)
 ==20330== 
 ==20330== 177 bytes in 38 blocks are definitely lost in loss record 74 of 111
@@ -548,7 +548,7 @@
 ==20330==    by 0x100002287: get_input (in ./21sh)
 ==20330==    by 0x100002315: ft_readline (in ./21sh)
 ==20330==    by 0x100005687: call_readline (in ./21sh)
-==20330==    by 0x100005754: minishell (in ./21sh)
+==20330==    by 0x100005754: shell (in ./21sh)
 ==20330==    by 0x100005956: main (in ./21sh)
 ==20330== 
 ==20330== 211 bytes in 5 blocks are definitely lost in loss record 81 of 111
@@ -556,7 +556,7 @@
 ==20330==    by 0x100008344: skip_quote (in ./21sh)
 ==20330==    by 0x1000091B6: parsin (in ./21sh)
 ==20330==    by 0x10000A009: mc_maker (in ./21sh)
-==20330==    by 0x100005823: minishell (in ./21sh)
+==20330==    by 0x100005823: shell (in ./21sh)
 ==20330==    by 0x100005956: main (in ./21sh)
 ==20330== 
 ==20330== 224 bytes in 6 blocks are definitely lost in loss record 82 of 111
@@ -565,7 +565,7 @@
 ==20330==    by 0x10000B1E1: ft_strdup (in ./21sh)
 ==20330==    by 0x100002340: ft_readline (in ./21sh)
 ==20330==    by 0x100005687: call_readline (in ./21sh)
-==20330==    by 0x100005754: minishell (in ./21sh)
+==20330==    by 0x100005754: shell (in ./21sh)
 ==20330==    by 0x100005956: main (in ./21sh)
 ==20330== 
 ==20330== 224 bytes in 6 blocks are definitely lost in loss record 83 of 111
@@ -575,27 +575,27 @@
 ==20330==    by 0x10000706B: heredoc_handler (in ./21sh)
 ==20330==    by 0x100006F7D: recall_readline (in ./21sh)
 ==20330==    by 0x100005713: call_readline (in ./21sh)
-==20330==    by 0x100005754: minishell (in ./21sh)
+==20330==    by 0x100005754: shell (in ./21sh)
 ==20330==    by 0x100005956: main (in ./21sh)
 ==20330== 
 ==20330== 291 (80 direct, 211 indirect) bytes in 5 blocks are definitely lost in loss record 90 of 111
 ==20330==    at 0x1000A6626: malloc (in /Users/mfilahi/.brew/Cellar/valgrind/3.14.0/lib/valgrind/vgpreload_memcheck-amd64-darwin.so)
 ==20330==    by 0x10000B58B: ft_strsplit (in ./21sh)
 ==20330==    by 0x10000A056: mc_maker (in ./21sh)
-==20330==    by 0x100005823: minishell (in ./21sh)
+==20330==    by 0x100005823: shell (in ./21sh)
 ==20330==    by 0x100005956: main (in ./21sh)
 ==20330== 
 ==20330== 328 (96 direct, 232 indirect) bytes in 4 blocks are definitely lost in loss record 92 of 111
 ==20330==    at 0x1000A6626: malloc (in /Users/mfilahi/.brew/Cellar/valgrind/3.14.0/lib/valgrind/vgpreload_memcheck-amd64-darwin.so)
 ==20330==    by 0x100009F7A: last_splice (in ./21sh)
-==20330==    by 0x100005883: minishell (in ./21sh)
+==20330==    by 0x100005883: shell (in ./21sh)
 ==20330==    by 0x100005956: main (in ./21sh)
 ==20330== 
 ==20330== 1,030 (720 direct, 310 indirect) bytes in 5 blocks are definitely lost in loss record 100 of 111
 ==20330==    at 0x1000A6626: malloc (in /Users/mfilahi/.brew/Cellar/valgrind/3.14.0/lib/valgrind/vgpreload_memcheck-amd64-darwin.so)
 ==20330==    by 0x100008183: init_cases (in ./21sh)
 ==20330==    by 0x100009FF4: mc_maker (in ./21sh)
-==20330==    by 0x100005823: minishell (in ./21sh)
+==20330==    by 0x100005823: shell (in ./21sh)
 ==20330==    by 0x100005956: main (in ./21sh)
 ==20330== 
 ==20330== 1,670 (80 direct, 1,590 indirect) bytes in 5 blocks are definitely lost in loss record 103 of 111
@@ -603,7 +603,7 @@
 ==20330==    by 0x10000808A: fill_lst (in ./21sh)
 ==20330==    by 0x10000830C: init_cases (in ./21sh)
 ==20330==    by 0x100009FF4: mc_maker (in ./21sh)
-==20330==    by 0x100005823: minishell (in ./21sh)
+==20330==    by 0x100005823: shell (in ./21sh)
 ==20330==    by 0x100005956: main (in ./21sh)
 ==20330== 
 ==20330== 17,662 bytes in 206 blocks are definitely lost in loss record 110 of 111
@@ -611,7 +611,7 @@
 ==20330==    by 0x100007FE4: ft_joinchar (in ./21sh)
 ==20330==    by 0x10000917D: parsin (in ./21sh)
 ==20330==    by 0x10000A009: mc_maker (in ./21sh)
-==20330==    by 0x100005823: minishell (in ./21sh)
+==20330==    by 0x100005823: shell (in ./21sh)
 ==20330==    by 0x100005956: main (in ./21sh)
 ==20330== 
 ==20330== LEAK SUMMARY:
