@@ -6,7 +6,7 @@
 /*   By: mfilahi <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/04 20:31:34 by mfilahi           #+#    #+#             */
-/*   Updated: 2019/05/14 17:10:21 by mfilahi          ###   ########.fr       */
+/*   Updated: 2019/08/07 10:22:18 by mfilahi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,9 +63,9 @@ void	swap(t_env **head_ref, char *path)
 	char	*pwdvar;
 
 	if (!(get_var("OLDPWD=", head_ref)))
-			return ;
+		return ;
 	else if (!(pwdvar = get_var("PWD=", head_ref)))
-			return ;
+		return ;
 	current = *head_ref;
 	while (current)
 	{

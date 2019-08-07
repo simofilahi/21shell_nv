@@ -6,7 +6,7 @@
 /*   By: mfilahi <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/04 18:59:55 by mfilahi           #+#    #+#             */
-/*   Updated: 2019/05/14 17:30:10 by mfilahi          ###   ########.fr       */
+/*   Updated: 2019/08/07 10:19:44 by mfilahi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,7 +123,7 @@ void	add_node(t_env **head_ref, char *s, int flag)
 		new_node->var = ft_strdup(s);
 		new_node->value = NULL;
 	}
-	else 
+	else
 	{
 		len = len_of_var(s);
 		new_node->var = ft_strsub(s, 0, len);

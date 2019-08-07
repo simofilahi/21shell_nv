@@ -6,7 +6,7 @@
 /*   By: mfilahi <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/04 19:56:52 by mfilahi           #+#    #+#             */
-/*   Updated: 2019/07/20 15:00:54 by aariss           ###   ########.fr       */
+/*   Updated: 2019/08/07 10:17:52 by mfilahi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,6 @@ void	execute(char **command, char *path_found, t_env **head_ref)
 	ft_free2d(env);
 }
 
-
 char	**get_path(t_env **head_ref)
 {
 	t_env	*current;
@@ -58,7 +57,7 @@ void	signal_handler(int sign)
 	if (sign == SIGINT && g_signal_num > 0)
 	{
 		end_key(p);
-		ft_putchar('\n');	
+		ft_putchar('\n');
 		ft_putstr_fd("\033[1;34m$> \033[0m", 1);
 		g_signal_num = 2;
 	}

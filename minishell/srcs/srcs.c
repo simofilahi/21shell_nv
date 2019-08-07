@@ -6,7 +6,7 @@
 /*   By: mfilahi <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/04 20:27:06 by mfilahi           #+#    #+#             */
-/*   Updated: 2019/05/10 14:29:31 by mfilahi          ###   ########.fr       */
+/*   Updated: 2019/08/07 10:14:04 by mfilahi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,13 +41,13 @@ void	_free_list(t__mc	*lst)
 	}
 }
 
-void	_env_gerror()
+void	env_gerror(void)
 {
 	ft_putstr_fd("setenv: ", 2);
 	ft_putendl_fd("\033[0;31mToo many arguments.\033[0m", 2);
 }
 
-void	_chdir_gerror(char *path, int flag)
+void	chdir_gerror(char *path, int flag)
 {
 	if (path == NULL)
 		return;
@@ -61,4 +61,14 @@ void	_chdir_gerror(char *path, int flag)
 	ft_putstr_fd(path, 2);
 	ft_putstr_fd("\033[0m", 2);
 	ft_putchar_fd('\n', 2);
+}
+
+void	free_structure(t_holder *h)
+{
+	ft_strdel(&h->homepath);
+	ft_strdel(&h->ptr);
+	free_list(&h->head_ref);
+	_free_list(h->mclst);
+	free(h);
+	ft_putendl_fd("\033[01;33mBye!\033[0m", 2);
 }

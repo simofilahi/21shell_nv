@@ -6,7 +6,7 @@
 /*   By: mfilahi <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/04 18:50:38 by mfilahi           #+#    #+#             */
-/*   Updated: 2019/07/07 12:37:41 by aariss           ###   ########.fr       */
+/*   Updated: 2019/08/07 10:13:04 by mfilahi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,8 +60,7 @@ void	which_cmd(char *arg, t_env **head_ref)
 	ft_free2d(tab);
 }
 
-
-int specialchar(char *s)
+int		specialchar(char *s)
 {
 	while (*s)
 		if (!ft_isalpha(*s++))
@@ -73,7 +72,7 @@ int specialchar(char *s)
 ** set new variables to environment;
 */
 
-int  setenv_cmd(char *arg, char *sarg, t_env **head_ref, int flag)
+int		setenv_cmd(char *arg, char *sarg, t_env **head_ref, int flag)
 {
 	char *tmp;
 	char *s;
@@ -81,7 +80,8 @@ int  setenv_cmd(char *arg, char *sarg, t_env **head_ref, int flag)
 	tmp = NULL;
 	if (specialchar(arg))
 	{
-		ft_putendl_fd("setenv: Variable name must contain alphanumeric characters.", 2);
+		ft_putendl_fd("setenv: Variable name must contain alphanumeric \
+				characters.", 2);
 		return (0);
 	}
 	else
@@ -101,16 +101,6 @@ int  setenv_cmd(char *arg, char *sarg, t_env **head_ref, int flag)
 	return (1);
 }
 
-void	free_structure(t_holder *h)
-{
-	ft_strdel(&h->homepath);
-	ft_strdel(&h->ptr);
-	free_list(&h->head_ref);
-	_free_list(h->mclst);
-	free(h);
-	ft_putendl_fd("\033[01;33mBye!\033[0m", 2);
-}
-
 void	_builtin_cmds(t_holder *h, int j, int i, int flag)
 {
 	while (h->lst->cmd[i])
@@ -128,7 +118,8 @@ void	_builtin_cmds(t_holder *h, int j, int i, int flag)
 		else if (j == 3)
 		{
 			flag = (h->lst->cmd[i + 1]) ? 1 : 0;
-			if (!setenv_cmd(h->lst->cmd[i], h->lst->cmd[i + 1], &h->head_ref, flag) || flag)
+			if (!setenv_cmd(h->lst->cmd[i], h->lst->cmd[i + 1], \
+				&h->head_ref, flag) || flag)
 				return ;
 		}
 		else if (j == 4)
@@ -142,7 +133,7 @@ void	_builtin_cmds(t_holder *h, int j, int i, int flag)
 void	builtin_cmds(t_holder *h, int j)
 {
 	int flag;
-	
+
 	flag = 0;
 	if (j == 5)
 		print_env(&h->head_ref);
