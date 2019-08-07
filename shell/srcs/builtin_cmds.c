@@ -6,7 +6,7 @@
 /*   By: mfilahi <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/04 18:50:38 by mfilahi           #+#    #+#             */
-/*   Updated: 2019/08/07 10:13:04 by mfilahi          ###   ########.fr       */
+/*   Updated: 2019/08/07 17:42:42 by mfilahi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,7 +101,7 @@ int		setenv_cmd(char *arg, char *sarg, t_env **head_ref, int flag)
 	return (1);
 }
 
-void	_builtin_cmds(t_holder *h, int j, int i, int flag)
+void	builtin_cmds(t_holder *h, int j, int i, int flag)
 {
 	while (h->lst->cmd[i])
 	{
@@ -145,7 +145,7 @@ void	builtin_cmds(t_holder *h, int j)
 		exit(0);
 	}
 	else
-		_builtin_cmds(h, j, 1, flag);
+		builtin_cmds(h, j, 1, flag);
 }
 
 int		own_commands(char *cmd)

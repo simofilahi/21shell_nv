@@ -27,7 +27,6 @@ FILE *fd2;
 
 # define TRUE 1
 # define FALSE 0
-# define BUFF_SIZE 100
 # define BUFFER_SIZE 100000
 
 int					g_signal_num;
@@ -59,10 +58,6 @@ typedef struct		s_package
 	struct winsize	w;
 }					t_package;
 
-/*
-** Get history lines
-*/
-int					gline(const int fd, char **line_target, int delimiter);
 /*
 ** Manipulation of line :
 ** 						- insertion & deletion

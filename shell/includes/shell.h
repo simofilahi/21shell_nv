@@ -159,6 +159,7 @@ t_cmd		*last_splice(t__mc **old_lst, t_env *env);
 int			count_arg(char **cmd);
 int			count_mclst(t__mc *lst);
 int			count_lstgod(t_cmd *lst);
+int			len_of_list(t_env **head_ref);
 
 /*
 ** CHECK;
@@ -169,6 +170,8 @@ int			ft_iswhite(char c);
 int			got_no_token(char *kratos);
 int			is_a_builtin(char *cmd);
 int			check_red(t_info *lst);
+int			just_spaces(char *line);
+int			cmd_is_found(char **tab, char **ptrcmd, char *temp);
 
 /*
 ** $ FUNCTIONS;
@@ -178,31 +181,25 @@ char		*dollar_get_simple(char *name, t_env *env, char **ptr);
 char		*dollar_get_quoted(char *name, t_env *env, char **ptr);
 char		*dollar_handle_simple(char *toto, char *line, int *i, t_env *env);
 char		*dollar_handle_quoted(char *toto, char *line, int *i, t_quote sp);
-void		free_list_mc(t__mc *lst);
 
 /*
-** OTHERS;
+** SHELL FUNCTIONS;
 */
 
+void		shell(t_holder *h);
+void		child_pid(char **command, t_cmd *lst, t_env **head_ref, pid_t *get);
 void		print_lstra(t_cmd *lst);
 int			retrieve_the_digit(char *name, int	delimiter);
 void		darlin_g(t_holder *h);
 int			deathly_hallows(t_info *lst, t_info **head);
-void		free_main_lst(t_cmd *lst);
 t_childs	*create_child(pid_t child_pid, int *t);
 void		kill_pid(t_childs **child, t_childs *c_head, int *keeper);
 void		cheap_trick(int *keeper, int trick);
-
-void		shell(t_holder *h);
-//void		child_pid_1(t_holder *h, int count);
-void		child_pid(char **command, t_cmd *lst, t_env **head_ref, pid_t *get);
 void		sys_cmd(char **command, char *path_found, t_env **head_ref);
 void		execute(char **command, char *path_found, t_env **head_ref);
 char		**get_env(t_env **head_ref);
-int			len_of_list(t_env **head_ref);
 void		builtin_cmds(t_holder *h, int j);
 void		which_cmd(char *arg, t_env **head_ref);
-int			cmd_is_found(char **tab, char **ptrcmd, char *temp);
 void		env_gerror(void);
 int			own_commands(char *ptab);
 void		del_node(char *s, t_env **head_ref);
@@ -218,10 +215,7 @@ void		createlist(t_env **head_ref, t_env **tail, char *var);
 char		**get_path(t_env **head_ref);
 int			find_path(char *penv);
 void		signal_handler(int sign);
-void		free_list_env(t_env **head_ref);
 int			setenv_cmd(char *arg, char *sarg, t_env **head_ref, int flag);
-void		free_structure(t_holder *h);
-int			just_spaces(char *line);
 void		keephistorylst(t_his **his_tail, char *hline);
 
 /*
@@ -236,5 +230,14 @@ int			heredoc_handler(t_holder *h, char **line);
 int			meta_handler(char *line, int *flag);
 int			get_len_before_heredoc(char *str, int counter);
 int			get_len_of_needle(char *s);
+
+/*
+** FREE;
+*/
+
+void		free_structure(t_holder *h);
+void		free_list_mc(t__mc *lst);
+void		free_list_env(t_env **head_ref);
+void		free_main_lst(t_cmd *lst);
 
 #endif
